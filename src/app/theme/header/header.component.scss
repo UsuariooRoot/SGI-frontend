@@ -1,0 +1,14 @@
+.matero-header {
+  --mat-toolbar-container-background-color: transparent;
+
+  position: relative;
+  z-index: 200;
+  display: block;
+  background-color: var(--header-background-color);
+  backdrop-filter: blur(8px);
+}
+
+:host ::ng-deep .mat-badge-content {
+  --mat-badge-background-color: #ef0000;
+  --mat-badge-text-color: #fff;
+}
