@@ -1,8 +1,7 @@
 <div
   class="matero-container-wrap"
-  [class.matero-sidenav-collapsed]="options.sidenavCollapsed && options.navPos !== 'top'"
-  [class.matero-navbar-side]="options.navPos === 'side'"
-  [class.matero-navbar-top]="options.navPos === 'top'"
+  [class.matero-sidenav-collapsed]="options.sidenavCollapsed"
+  [class.matero-navbar-side]="true"
   [class.matero-header-above]="options.headerPos === 'above'"
   [class.matero-header-fixed]="options.headerPos === 'fixed'"
   [dir]="options.dir"
@@ -23,7 +22,7 @@
       #sidenav
       class="matero-sidenav"
       [mode]="isOver ? 'over' : 'side'"
-      [opened]="options.navPos === 'side' && options.sidenavOpened && !isOver"
+      [opened]="options.sidenavOpened && !isOver"
       (openedChange)="onSidenavOpenedChange($event)"
       (closedStart)="onSidenavClosedStart()"
     >
@@ -44,15 +43,11 @@
     <mat-sidenav-content #content class="matero-content">
       @if (options.showHeader && options.headerPos !== 'above') {
         <app-header
-          [showToggle]="!options.sidenavCollapsed && options.navPos !== 'top'"
-          [showBranding]="options.navPos === 'top'"
+          [showToggle]="!options.sidenavCollapsed"
+          [showBranding]="false"
           (toggleSidenav)="sidenav.toggle()"
           (toggleSidenavNotice)="sidenavNotice.toggle()"
         />
-      }
-
-      @if (options.navPos === 'top') {
-        <app-topmenu />
       }
 
       <main class="matero-page-content">

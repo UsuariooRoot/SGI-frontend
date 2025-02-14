@@ -1,7 +1,6 @@
 export type AppTheme = 'light' | 'dark' | 'auto';
 
 export interface AppSettings {
-  navPos: 'side' | 'top';
   dir: 'ltr' | 'rtl';
   theme: AppTheme;
   showHeader: boolean;
@@ -13,7 +12,6 @@ export interface AppSettings {
 }
 
 export const defaults: AppSettings = {
-  navPos: 'side',
   dir: 'ltr',
   theme: 'auto',
   showHeader: true,

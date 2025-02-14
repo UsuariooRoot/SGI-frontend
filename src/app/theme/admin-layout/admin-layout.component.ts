@@ -19,7 +19,6 @@ import { CustomizerComponent } from '../customizer/customizer.component';
 import { HeaderComponent } from '../header/header.component';
 import { SidebarNoticeComponent } from '../sidebar-notice/sidebar-notice.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
-import { TopmenuComponent } from '../topmenu/topmenu.component';
 
 const MOBILE_MEDIAQUERY = 'screen and (max-width: 599px)';
 const TABLET_MEDIAQUERY = 'screen and (min-width: 600px) and (max-width: 959px)';
@@ -37,7 +36,6 @@ const MONITOR_MEDIAQUERY = 'screen and (min-width: 960px)';
     NgProgressbar,
     NgProgressRouter,
     HeaderComponent,
-    TopmenuComponent,
     SidebarComponent,
     SidebarNoticeComponent,
     CustomizerComponent,
@@ -65,22 +63,14 @@ export class AdminLayoutComponent implements OnDestroy {
 
   @HostBinding('class.matero-content-width-fix')
   get contentWidthFix() {
-    return (
-      this.isContentWidthFixed &&
-      this.options.navPos === 'side' &&
-      this.options.sidenavOpened &&
-      !this.isOver
-    );
+    return this.isContentWidthFixed && this.options.sidenavOpened && !this.isOver;
   }
 
   private isContentWidthFixed = true;
 
   @HostBinding('class.matero-sidenav-collapsed-fix')
   get collapsedWidthFix() {
-    return (
-      this.isCollapsedWidthFixed &&
-      (this.options.navPos === 'top' || (this.options.sidenavOpened && this.isOver))
-    );
+    return this.isCollapsedWidthFixed && this.options.sidenavOpened && this.isOver;
   }
 
   private isCollapsedWidthFixed = false;
@@ -91,7 +81,6 @@ export class AdminLayoutComponent implements OnDestroy {
     this.layoutChangesSubscription = this.breakpointObserver
       .observe([MOBILE_MEDIAQUERY, TABLET_MEDIAQUERY, MONITOR_MEDIAQUERY])
       .subscribe(state => {
-        // SidenavOpened must be reset true when layout changes
         this.options.sidenavOpened = true;
 
         this.isMobileScreen = state.breakpoints[MOBILE_MEDIAQUERY];

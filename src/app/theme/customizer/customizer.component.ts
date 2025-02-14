@@ -54,10 +54,6 @@ export class CustomizerComponent {
     return this.form.get('headerPos')?.value === 'above';
   }
 
-  get isNavPosTop() {
-    return this.form.get('navPos')?.value === 'top';
-  }
-
   get isShowHeader() {
     return this.form.get('showHeader')?.value === true;
   }
