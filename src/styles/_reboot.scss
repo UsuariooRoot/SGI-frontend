@@ -10,25 +10,26 @@
   --link-hover-color: var(--mat-sys-primary);
   --code-border-color: light-dark(rgba(19, 28, 43, .08), rgba(218, 226, 249, .08));
   --code-background-color: light-dark(rgba(19, 28, 43, .04), rgba(218, 226, 249, .04));
-  --header-background-color: #720405; // light-dark(rgba(239, 237, 240, .8), rgba(31, 32, 34, .8));
+  --header-background-color: #720405; // background color of the main header
   --user-panel-background-color: var(--mat-sys-surface-container);
   --user-panel-hover-background-color: var(--mat-sys-surface-variant);
-  --sidemenu-heading-text-color: white; // color de texto por defecto de los items
+  --sidemenu-heading-text-color: white; // default text color of items
   --sidemenu-heading-hover-background-color: var(--mat-sys-surface-container-highest);
-  --sidemenu-active-heading-text-color: #720405; // var(--mat-sys-primary); color item activo
-  --sidemenu-active-heading-background-color: #72040685;// var(--mat-sys-primary-container);
-  --sidemenu-active-heading-hover-background-color: #72040685; // var(--mat-sys-primary-container);
+  --sidemenu-active-heading-text-color: #720405; // sidemenu color when activated
+  --sidemenu-active-heading-background-color: #72040685; // sidemenu background-color when activated
+  --sidemenu-active-heading-hover-background-color: #72040685; // background-color when hovering over an item in an active sidemenu
   --sidemenu-expanded-background-color: var(--mat-sys-surface-container);
-  --sidemenu-expanded-text-color: #141212;
+  --sidemenu-expanded-text-color: #141212; // sidemenu color when expanded
   --topmenu-text-color: var(--mat-sys-on-background);
   --topmenu-background-color: var(--header-background-color);
   --topmenu-item-active-background-color: var(--mat-sys-primary-container);
   --topmenu-dropdown-item-active-text-color: var(--mat-sys-primary);
-  --mat-sidenav-container-background-color: #a11009; // sidebar izquierdo
-  --mat-toolbar-container-background-color: #a11009; // header del sidebar
-  --mat-sidenav-container-width: var(--sidenav-width);
+  --mat-sidenav-container-background-color: #a11009; // left sidebar
+  --mat-toolbar-container-background-color: #a11009; // background-color header del sidebar
+  --mat-sidenav-container-width: var(--sidenav-width); // sidebar header background color
   --mat-toolbar-standard-height: 4rem;
   --mat-toolbar-mobile-height: 3.5rem;
+  --mdc-icon-button-icon-color: white; // general color for icons
 }
 
 *,
