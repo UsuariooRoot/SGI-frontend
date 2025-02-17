@@ -5,7 +5,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import screenfull from 'screenfull';
 
 import { BrandingComponent } from '../widgets/branding.component';
-import { NotificationComponent } from '../widgets/notification.component';
 import { UserComponent } from '../widgets/user.component';
 
 @Component({
@@ -21,7 +20,6 @@ import { UserComponent } from '../widgets/user.component';
     MatButtonModule,
     MatIconModule,
     BrandingComponent,
-    NotificationComponent,
     UserComponent,
   ],
 })
