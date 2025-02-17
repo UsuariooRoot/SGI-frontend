@@ -3,7 +3,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { DOCUMENT } from '@angular/common';
 import { Injectable, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { AppDirectionality, LocalStorageService } from '@shared';
+import { LocalStorageService } from '@shared';
 import { enUS, Locale, zhCN, zhTW } from 'date-fns/locale';
 import { BehaviorSubject } from 'rxjs';
 import { AppSettings, AppTheme, defaults } from '../settings';
@@ -18,7 +18,6 @@ export class SettingsService {
   private readonly translate = inject(TranslateService);
   private readonly store = inject(LocalStorageService);
   private readonly mediaMatcher = inject(MediaMatcher);
-  private readonly dir = inject(AppDirectionality);
 
   private readonly notify$ = new BehaviorSubject<Partial<AppSettings>>({});
 
@@ -48,14 +47,6 @@ export class SettingsService {
     this.options = Object.assign(defaults, this.options, options);
     this.store.set(this.key, this.options);
     this.notify$.next(this.options);
-  }
-
-  setDirection(dir?: Direction) {
-    if (dir) {
-      this.setOptions({ dir });
-    }
-    this.dir.value = this.options.dir;
-    this.htmlElement.dir = this.options.dir;
   }
 
   getThemeColor() {

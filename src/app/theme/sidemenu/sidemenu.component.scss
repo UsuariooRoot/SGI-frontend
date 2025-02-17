@@ -68,11 +68,6 @@
     line-height: 1.5rem;
     text-align: center;
 
-    [dir='rtl'] & {
-      margin-right: 0;
-      margin-left: 0.75rem;
-    }
-
     &.submenu-icon {
       position: absolute;
       left: 0.75rem;
@@ -81,11 +76,6 @@
       font-size: 1rem;
       line-height: 1.5rem;
       opacity: 0;
-
-      [dir='rtl'] & {
-        right: 0.75rem;
-        left: 0;
-      }
     }
   }
 
@@ -124,28 +114,13 @@
 
   &.level-1>li>.menu-heading {
     padding-left: 3rem;
-
-    [dir='rtl'] & {
-      padding-right: 3rem;
-      padding-left: 1rem;
-    }
   }
 
   &.level-2>li>.menu-heading {
     padding-left: 4rem;
-
-    [dir='rtl'] & {
-      padding-right: 4rem;
-      padding-left: 1rem;
-    }
   }
 
   &.level-2 [class^='level-']>li>.menu-heading {
     padding-left: 5rem;
-
-    [dir='rtl'] & {
-      padding-right: 5rem;
-      padding-left: 1rem;
-    }
   }
 }

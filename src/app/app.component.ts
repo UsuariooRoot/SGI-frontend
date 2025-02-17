@@ -12,7 +12,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   private readonly settings = inject(SettingsService);
 
   ngOnInit() {
-    this.settings.setDirection();
     this.settings.setTheme();
   }
 

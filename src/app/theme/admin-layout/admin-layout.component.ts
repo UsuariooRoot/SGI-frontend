@@ -126,7 +126,6 @@ export class AdminLayoutComponent implements OnDestroy {
   updateOptions(options: AppSettings) {
     this.options = options;
     this.settings.setOptions(options);
-    this.settings.setDirection();
     this.settings.setTheme();
   }
 }

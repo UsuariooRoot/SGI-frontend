@@ -1,7 +1,6 @@
 export type AppTheme = 'light' | 'dark' | 'auto';
 
 export interface AppSettings {
-  dir: 'ltr' | 'rtl';
   theme: AppTheme;
   showHeader: boolean;
   headerPos: 'fixed' | 'static' | 'above';
@@ -12,7 +11,6 @@ export interface AppSettings {
 }
 
 export const defaults: AppSettings = {
-  dir: 'ltr',
   theme: 'auto',
   showHeader: true,
   headerPos: 'fixed',
