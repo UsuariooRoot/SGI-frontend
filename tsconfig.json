@@ -27,7 +27,11 @@
       "@testing": ["testing"],
       "@testing/*": ["testing/*"],
       "@env": ["environments"],
-      "@env/*": ["environments/*"]
+      "@env/*": ["environments/*"],
+      "@features": ["app/features"],
+      "@features/*": ["app/features/*"],
+      "@layout": ["app/layout"],
+      "@layout/*": ["app/layout/*"],
     },
     "useDefineForClassFields": false,
     "esModuleInterop": true

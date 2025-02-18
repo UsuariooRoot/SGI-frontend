@@ -15,10 +15,10 @@ import { NgProgressRouter } from 'ngx-progressbar/router';
 import { Subscription, filter } from 'rxjs';
 
 import { AppSettings, SettingsService } from '@core';
-import { CustomizerComponent } from '../customizer/customizer.component';
-import { HeaderComponent } from '../header/header.component';
-import { SidebarNoticeComponent } from '../sidebar-notice/sidebar-notice.component';
-import { SidebarComponent } from '../sidebar/sidebar.component';
+import { CustomizerComponent } from '@theme/customizer/customizer.component';
+import { HeaderComponent } from '@theme/header/header.component';
+import { SidebarNoticeComponent } from '@theme/sidebar-notice/sidebar-notice.component';
+import { SidebarComponent } from '@theme/sidebar/sidebar.component';
 
 const MOBILE_MEDIAQUERY = 'screen and (max-width: 599px)';
 const TABLET_MEDIAQUERY = 'screen and (min-width: 600px) and (max-width: 959px)';
