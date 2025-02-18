@@ -1,0 +1,49 @@
+{
+  "data": [
+    {
+      "id_ticket": 1,
+      "titulo": "Error en sistema de nómina",
+      "descripcion": "No se pueden generar los recibos de pago debido a un error en el servidor.",
+      "fecha_creacion": "1712345678000",
+      "estado": "Pendiente",
+      "reportado_por": "Carlos Mendoza",
+      "asignado_a": null
+    },
+    {
+      "id_ticket": 2,
+      "titulo": "Fallo en conexión de red",
+      "descripcion": "El área de contabilidad no tiene acceso a la red interna.",
+      "fecha_creacion": "1712345689000",
+      "estado": "Asignado",
+      "reportado_por": "María Rodríguez",
+      "asignado_a": "Luis Fernández"
+    },
+    {
+      "id_ticket": 3,
+      "titulo": "Correo corporativo bloqueado",
+      "descripcion": "No puedo acceder a mi correo, indica credenciales incorrectas.",
+      "fecha_creacion": "1712345690000",
+      "estado": "Atendido",
+      "reportado_por": "Andrea Castro",
+      "asignado_a": "José Ramírez"
+    },
+    {
+      "id_ticket": 4,
+      "titulo": "Problema con impresora",
+      "descripcion": "La impresora de recursos humanos no responde ni imprime documentos.",
+      "fecha_creacion": "1712345701000",
+      "estado": "Cancelado",
+      "reportado_por": "David Ortega",
+      "asignado_a": "Pedro Gómez"
+    },
+    {
+      "id_ticket": 5,
+      "titulo": "Actualización de software no completada",
+      "descripcion": "El sistema ERP muestra errores después de la actualización automática.",
+      "fecha_creacion": "1712345712000",
+      "estado": "Emitido a SD",
+      "reportado_por": "Lorena Pérez",
+      "asignado_a": "Ricardo Díaz"
+    }
+  ]
+}
