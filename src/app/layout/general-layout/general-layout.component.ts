@@ -41,9 +41,8 @@ const MONITOR_MEDIAQUERY = 'screen and (min-width: 960px)';
     CustomizerComponent,
   ],
 })
-
-export class GeneralLayoutComponent {
-@ViewChild('sidenav', { static: true }) sidenav!: MatSidenav;
+export class GeneralLayoutComponent implements OnDestroy {
+  @ViewChild('sidenav', { static: true }) sidenav!: MatSidenav;
   @ViewChild('content', { static: true }) content!: MatSidenavContent;
 
   private readonly breakpointObserver = inject(BreakpointObserver);
