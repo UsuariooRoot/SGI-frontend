@@ -1,5 +1,5 @@
 @use '@angular/material' as mat;
-@use '@theme/style/breakpoints';
+@use '../../theme/style/breakpoints';
 
 .matero-container-wrap,
 .matero-container {
@@ -81,16 +81,6 @@
 .matero-sidenav-collapsed {
   .matero-content {
     margin-left: var(--sidenav-collapsed-width) !important;
-
-    [dir='rtl'] & {
-      margin-right: var(--sidenav-collapsed-width) !important;
-      margin-left: auto !important;
-    }
-  }
-
-  &[dir='rtl'] .matero-content {
-    margin-right: var(--sidenav-collapsed-width) !important;
-    margin-left: auto !important;
   }
 }
 
@@ -102,11 +92,6 @@
 
   .matero-branding {
     margin-left: 1rem;
-
-    [dir='rtl'] & {
-      margin-right: 1rem;
-      margin-left: auto;
-    }
   }
 }
 
@@ -132,21 +117,10 @@
 .matero-content-width-fix {
   .matero-content {
     margin-left: var(--sidenav-width) !important;
-
-    [dir='rtl'] & {
-      margin-right: var(--sidenav-width) !important;
-      margin-left: auto !important;
-    }
   }
 }
 
 .matero-page-content {
   position: relative;
   padding: var(--gutter);
-
-  .matero-header + &,
-  .matero-header-above &,
-  .matero-navbar-top & {
-    padding-top: 0;
-  }
 }

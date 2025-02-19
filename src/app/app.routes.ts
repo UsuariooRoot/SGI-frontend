@@ -4,11 +4,12 @@ import { AdminLayoutComponent } from '@layout/admin-layout/admin-layout.componen
 import { AuthLayoutComponent } from '@layout/auth-layout/auth-layout.component';
 import { LoginComponent } from './routes/sessions/login/login.component';
 import { RegisterComponent } from './routes/sessions/register/register.component';
+import { GeneralLayoutComponent } from '@layout/general-layout/general-layout.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: AdminLayoutComponent,
+    component: GeneralLayoutComponent,
     canActivate: [authGuard],
     canActivateChild: [authGuard],
     children: [

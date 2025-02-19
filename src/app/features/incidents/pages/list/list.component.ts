@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IncidentTableComponent } from "../../components/incident-table/incident-table.component";
+import { IncidentTableComponent } from '@features/incidents/components/incident-table/incident-table.component';
 import { IncidentService, ITicket } from '@features/incidents/services/incident.service';
 
 @Component({
@@ -14,10 +14,10 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {
     this.incidentService.getIncidents().subscribe({
-      next: (data) => {
+      next: data => {
         this.incidents = data;
       },
-      error: (err) => console.error('Error al obtener incidentes:', err)
+      error: err => console.error('Error al obtener incidentes:', err),
     });
   }
 }
