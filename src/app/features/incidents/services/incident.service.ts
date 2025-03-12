@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-export interface ITicket {
+export interface Ticket {
   id_ticket:      number;
   titulo:         string;
   descripcion:    string;
@@ -25,8 +25,8 @@ export class IncidentService {
    * Obtiene la lista de incidentes desde el archivo JSON simulado.
    * @returns Observable con un array de ITicket[]
    */
-  getIncidents(): Observable<ITicket[]> {
-    return this.http.get<{ data: ITicket[] }>(this.dataUrl).pipe(
+  getIncidents(): Observable<Ticket[]> {
+    return this.http.get<{ data: Ticket[] }>(this.dataUrl).pipe(
       map(response => response.data)
     );
   }

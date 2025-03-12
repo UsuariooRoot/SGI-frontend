@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '@core';
-import { AdminLayoutComponent } from '@layout/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from '@layout/auth-layout/auth-layout.component';
 import { LoginComponent } from './routes/sessions/login/login.component';
 import { RegisterComponent } from './routes/sessions/register/register.component';
@@ -14,7 +13,7 @@ export const routes: Routes = [
     canActivateChild: [authGuard],
     children: [
       {
-        path: 'incidentes',
+        path: 'incidents',
         loadChildren: () => import('./features/incidents/incidents.module').then(m => m.IncidentsModule)
       },
     ]

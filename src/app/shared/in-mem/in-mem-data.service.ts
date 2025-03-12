@@ -84,6 +84,7 @@ function is(reqInfo: RequestInfo, path: string) {
   providedIn: 'root',
 })
 export class InMemDataService implements InMemoryDbService {
+  // diplock -> Acá se agregan los usuarios
   private users: User[] = [
     {
       id: 1,
@@ -113,9 +114,12 @@ export class InMemDataService implements InMemoryDbService {
     return { users: this.users };
   }
 
+  // las peticiones get al mismo dominio serán capturadas aquí
   get(reqInfo: RequestInfo) {
     const { headers, url } = reqInfo;
 
+    // diplock -> seen
+    // devuelve el contenido de /public/menu.json
     if (is(reqInfo, 'user/menu')) {
       return ajax('data/menu.json?_t=' + Date.now()).pipe(
         map((response: any) => {

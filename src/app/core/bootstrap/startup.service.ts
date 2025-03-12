@@ -13,6 +13,7 @@ export class StartupService {
   private readonly permissonsService = inject(NgxPermissionsService);
   private readonly rolesService = inject(NgxRolesService);
 
+  // diplock -> seen
   /**
    * Load the application only after get the menu or other essential informations
    * such as permissions and roles.
@@ -33,19 +34,18 @@ export class StartupService {
     });
   }
 
+  // diplock -> seen
   private setMenu(menu: Menu[]) {
     this.menuService.addNamespace(menu, 'menu');
     this.menuService.set(menu);
   }
 
+  // diplock -> seen
   private setPermissions(user: User) {
     // In a real app, you should get permissions and roles from the user information.
     const permissions = ['canAdd', 'canDelete', 'canEdit', 'canRead'];
     this.permissonsService.loadPermissions(permissions);
-    this.rolesService.flushRoles();
-    this.rolesService.addRoles({ ADMIN: permissions });
-
-    // Tips: Alternatively you can add permissions with role at the same time.
-    // this.rolesService.addRolesWithPermissions({ ADMIN: permissions });
+    this.rolesService.flushRoles(); // remueve todo los roles registrados en ese NgxPermissionsService -> https://github.com/AlexKhymenko/ngx-permissions?tab=readme-ov-file#removing-roles
+    this.rolesService.addRoles({ ADMIN: permissions }); // agrega un roles con sus permisos
   }
 }

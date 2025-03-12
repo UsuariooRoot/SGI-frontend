@@ -44,6 +44,186 @@
       "estado": "Emitido a SD",
       "reportado_por": "Lorena Pérez",
       "asignado_a": "Ricardo Díaz"
+    },
+    {
+      "id_ticket": 6,
+      "titulo": "Error en acceso a VPN",
+      "descripcion": "Los empleados remotos no pueden conectarse a la VPN corporativa.",
+      "fecha_creacion": "1712345723000",
+      "estado": "Pendiente",
+      "reportado_por": "Fernando López",
+      "asignado_a": null
+    },
+    {
+      "id_ticket": 7,
+      "titulo": "Pantalla azul en equipo de diseño",
+      "descripcion": "Una computadora en el área de diseño gráfico muestra una pantalla azul al iniciar.",
+      "fecha_creacion": "1712345734000",
+      "estado": "Asignado",
+      "reportado_por": "Sofía Martínez",
+      "asignado_a": "Diego Torres"
+    },
+    {
+      "id_ticket": 8,
+      "titulo": "Problema con autenticación en sistema interno",
+      "descripcion": "Varios empleados no pueden autenticarse en el sistema de gestión.",
+      "fecha_creacion": "1712345745000",
+      "estado": "Atendido",
+      "reportado_por": "Gustavo Ríos",
+      "asignado_a": "Ana Herrera"
+    },
+    {
+      "id_ticket": 9,
+      "titulo": "Aplicación de ventas no responde",
+      "descripcion": "El software de ventas está congelado y no permite registrar pedidos.",
+      "fecha_creacion": "1712345756000",
+      "estado": "Cancelado",
+      "reportado_por": "Patricia León",
+      "asignado_a": "Carlos Medina"
+    },
+    {
+      "id_ticket": 10,
+      "titulo": "Falla en proyector de sala de reuniones",
+      "descripcion": "El proyector de la sala principal no enciende ni responde.",
+      "fecha_creacion": "1712345767000",
+      "estado": "Emitido a SD",
+      "reportado_por": "Alejandro Gómez",
+      "asignado_a": "Javier Paredes"
+    },
+    {
+      "id_ticket": 11,
+      "titulo": "Error en sincronización de correos",
+      "descripcion": "Los correos no se sincronizan en dispositivos móviles.",
+      "fecha_creacion": "1712345778000",
+      "estado": "Pendiente",
+      "reportado_por": "Carolina Suárez",
+      "asignado_a": null
+    },
+    {
+      "id_ticket": 12,
+      "titulo": "Corte de energía en servidores",
+      "descripcion": "Los servidores se reiniciaron inesperadamente por una falla eléctrica.",
+      "fecha_creacion": "1712345789000",
+      "estado": "Asignado",
+      "reportado_por": "Tomás Villalobos",
+      "asignado_a": "Raúl Sánchez"
+    },
+    {
+      "id_ticket": 13,
+      "titulo": "Problema con firma digital",
+      "descripcion": "No se pueden firmar documentos electrónicos con el certificado digital.",
+      "fecha_creacion": "1712345790000",
+      "estado": "Atendido",
+      "reportado_por": "Beatriz Ramírez",
+      "asignado_a": "Carmen López"
+    },
+    {
+      "id_ticket": 14,
+      "titulo": "Sistema de inventario no actualiza datos",
+      "descripcion": "Los cambios en el inventario no se reflejan en la base de datos.",
+      "fecha_creacion": "1712345801000",
+      "estado": "Cancelado",
+      "reportado_por": "Roberto Díaz",
+      "asignado_a": "Mario Vargas"
+    },
+    {
+      "id_ticket": 15,
+      "titulo": "Cámaras de seguridad sin conexión",
+      "descripcion": "Las cámaras de seguridad del almacén dejaron de transmitir video.",
+      "fecha_creacion": "1712345812000",
+      "estado": "Emitido a SD",
+      "reportado_por": "Daniela Estévez",
+      "asignado_a": "Germán Salazar"
+    },
+    {
+      "id_ticket": 16,
+      "titulo": "Aplicación de ventas no responde",
+      "descripcion": "El sistema de ventas se congela al intentar procesar una nueva orden.",
+      "fecha_creacion": "1712345723000",
+      "estado": "Pendiente",
+      "reportado_por": "Sofía Martínez",
+      "asignado_a": null
+    },
+    {
+      "id_ticket": 17,
+      "titulo": "Fallo en autenticación de VPN",
+      "descripcion": "Los empleados remotos no pueden conectarse a la VPN de la empresa.",
+      "fecha_creacion": "1712345734000",
+      "estado": "Asignado",
+      "reportado_por": "Juan López",
+      "asignado_a": "Fernando Ruiz"
+    },
+    {
+      "id_ticket": 18,
+      "titulo": "Pantalla azul en equipo de finanzas",
+      "descripcion": "El equipo de un analista financiero muestra pantalla azul al iniciar sesión.",
+      "fecha_creacion": "1712345745000",
+      "estado": "Pendiente",
+      "reportado_por": "Valeria Núñez",
+      "asignado_a": null
+    },
+    {
+      "id_ticket": 19,
+      "titulo": "Errores en sistema de inventario",
+      "descripcion": "El módulo de inventario no refleja las actualizaciones recientes de productos.",
+      "fecha_creacion": "1712345756000",
+      "estado": "Asignado",
+      "reportado_por": "Roberto Chávez",
+      "asignado_a": "Patricia Gómez"
+    },
+    {
+      "id_ticket": 20,
+      "titulo": "No se pueden abrir archivos adjuntos en Outlook",
+      "descripcion": "Los usuarios reportan que los archivos adjuntos no se descargan correctamente.",
+      "fecha_creacion": "1712345767000",
+      "estado": "Atendido",
+      "reportado_por": "Lucía Fernández",
+      "asignado_a": "José Ramírez"
+    },
+    {
+      "id_ticket": 21,
+      "titulo": "Sistema CRM extremadamente lento",
+      "descripcion": "Los tiempos de respuesta en el CRM han aumentado significativamente.",
+      "fecha_creacion": "1712345778000",
+      "estado": "Emitido a SD",
+      "reportado_por": "Miguel Torres",
+      "asignado_a": "Ricardo Díaz"
+    },
+    {
+      "id_ticket": 22,
+      "titulo": "Error al generar reportes de clientes",
+      "descripcion": "La función de generación de reportes no exporta datos correctamente.",
+      "fecha_creacion": "1712345789000",
+      "estado": "Pendiente",
+      "reportado_por": "Daniela Castro",
+      "asignado_a": null
+    },
+    {
+      "id_ticket": 23,
+      "titulo": "Problema con acceso a base de datos",
+      "descripcion": "Los desarrolladores no pueden conectarse a la base de datos principal.",
+      "fecha_creacion": "1712345800000",
+      "estado": "Asignado",
+      "reportado_por": "Ernesto Suárez",
+      "asignado_a": "Gabriela Ríos"
+    },
+    {
+      "id_ticket": 24,
+      "titulo": "Error de sincronización en OneDrive",
+      "descripcion": "Los archivos compartidos no se sincronizan correctamente entre usuarios.",
+      "fecha_creacion": "1712345811000",
+      "estado": "Atendido",
+      "reportado_por": "Andrea Morales",
+      "asignado_a": "Luis Fernández"
+    },
+    {
+      "id_ticket": 25,
+      "titulo": "Problema con firma digital",
+      "descripcion": "Los documentos electrónicos no pueden ser firmados digitalmente.",
+      "fecha_creacion": "1712345822000",
+      "estado": "Pendiente",
+      "reportado_por": "Héctor Ramírez",
+      "asignado_a": null
     }
   ]
 }

@@ -1,0 +1,41 @@
+.mat-checkbox {
+  display: inline-block;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+label {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid gray;
+
+  & > input {
+    display: none;
+  }
+}
+
+.filtters {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ticket__statuses {
+  display: flex;
+  gap: 12px;
+}
+
+.active {
+  background-color: rgb(37, 121, 191);
+}
+
+.by_employees > div {
+  display: flex;
+
+  gap: 12px;
+
+  label {
+    border: none;
+    outline: none;
+  }
+}

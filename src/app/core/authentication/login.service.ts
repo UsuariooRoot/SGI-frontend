@@ -12,6 +12,8 @@ export class LoginService {
   protected readonly http = inject(HttpClient);
 
   login(username: string, password: string, rememberMe = false) {
+    // diplock -> Cómo no hay un servidor a la escucha para procesar esta peticion se está simulando...
+    // Esta petición esta siento capturada por @shared/in-mem/in-mem-data.service.ts
     return this.http.post<Token>('/auth/login', { username, password, rememberMe });
   }
 
@@ -27,6 +29,8 @@ export class LoginService {
     return this.http.get<User>('/user');
   }
 
+  // diplock -> seen
+  // HTTP request GET /user/menu
   menu() {
     return this.http.get<{ menu: Menu[] }>('/user/menu').pipe(map(res => res.menu));
   }

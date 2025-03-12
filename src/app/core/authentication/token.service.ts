@@ -51,6 +51,8 @@ export class TokenService implements OnDestroy {
     this.save();
   }
 
+  // diplock -> seen
+  // veririfica si el JWT token es valido
   valid() {
     return this.token?.valid() ?? false;
   }
