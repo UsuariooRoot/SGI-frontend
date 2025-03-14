@@ -1,0 +1,46 @@
+label {
+  max-width: 200px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid gray;
+  text-align: center;
+  flex-grow: 1;
+
+
+  & > input {
+    display: none;
+  }
+}
+
+.filtters {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ticket__statuses {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.active {
+  background-color: rgb(37, 121, 191);
+}
+
+.by_employees > div {
+  display: flex;
+
+  gap: 12px;
+
+  label {
+    border: none;
+    outline: none;
+  }
+}
+
+.date__range {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}

@@ -1,65 +1,8 @@
-<mat-card appearance="outlined">
-  <mat-card-header>
-    <mat-card-title>Filtros</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <div class="ticket__statuses">
-      <label [class.active]="showNewTickets">
-        Nuevo
-        <input type="checkbox" [(ngModel)]="showNewTickets" />
-      </label>
-      <label [class.active]="showPendingTickets">
-        Pendiente
-        <input type="checkbox" [(ngModel)]="showPendingTickets" />
-      </label>
-      <label [class.active]="showCanceledTickets">
-        Cancelado
-        <input type="checkbox" [(ngModel)]="showCanceledTickets" />
-      </label>
-      <label [class.active]="showAttendedTickets">
-        Atendido
-        <input type="checkbox" [(ngModel)]="showAttendedTickets" />
-      </label>
-      <label [class.active]="showTicketsIssuedToSD">
-        Emitido a SD
-        <input type="checkbox" [(ngModel)]="showTicketsIssuedToSD" />
-      </label>
-    </div>
-    <div class="by_employees">
-      <div>
-        <label>Por persona a cargo:</label>
-        <mat-form-field class="w-full">
-          <mat-label>Julio Cesar...</mat-label>
-          <mtx-select
-            [items]="empleados"
-            bindLabel="name"
-            bindValue="id"
-          />
-        </mat-form-field>
-      </div>
-      <div>
-        <label>Por solicitante:</label>
-        <mat-form-field class="w-full">
-          <mat-label>Julio Cesar...</mat-label>
-          <mtx-select
-            [items]="solicitantes"
-            bindLabel="name"
-            bindValue="id"
-          />
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="date__range">
-
-    </div>
-  </mat-card-content>
-
-</mat-card>
-
 <mtx-grid
   [data]="incidents"
   [columns]="columns"
-  [rowHover]="rowHover"
-  [rowStriped]="rowStriped"
+  [rowHover]="true"
+  [rowStriped]="true"
   [rowSelectable]="true"
+  [multiSelectable]="true"
 ></mtx-grid>

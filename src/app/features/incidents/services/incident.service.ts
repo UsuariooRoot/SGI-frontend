@@ -13,21 +13,45 @@ export interface Ticket {
   asignado_a:     null | string;
 }
 
+export interface Incident {
+  id:   number;
+  name: string;
+}
+
+export interface IncidentCategory {
+  categoryId: number;
+  category:   string;
+  incidents:  Incident[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class IncidentService {
-  private dataUrl = 'data/incidents.json';
+  private ticketsUrl = 'data/incidents.json';
+  private incidentsUrl = 'data/list-incidents.json';
 
   constructor(private http: HttpClient) {}
 
   /**
-   * Obtiene la lista de incidentes desde el archivo JSON simulado.
+   * Obtiene la lista de tickets desde el archivo JSON simulado.
    * @returns Observable con un array de ITicket[]
    */
-  getIncidents(): Observable<Ticket[]> {
-    return this.http.get<{ data: Ticket[] }>(this.dataUrl).pipe(
+  getTickets(): Observable<Ticket[]> {
+    return this.http.get<{ data: Ticket[] }>(this.ticketsUrl).pipe(
       map(response => response.data)
     );
   }
+
+  /**
+   * Obtiene la lista categoría de incidentes desde el archivo JSON simulado.
+   * @returns Observable con un array de IncidentCategory[]
+   */
+  getIncidents(): Observable<IncidentCategory[]> {
+    return this.http.get<{ data: IncidentCategory[] }>(this.incidentsUrl).pipe(
+      map(response => response.data)
+    );
+  }
+
+
 }

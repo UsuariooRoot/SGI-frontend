@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { FiltersComponent } from '@features/incidents/components/filters/filters.component';
 import { IncidentTableComponent } from '@features/incidents/components/incident-table/incident-table.component';
 import { IncidentService, Ticket } from '@features/incidents/services/incident.service';
 
 @Component({
   selector: 'app-list',
-  imports: [IncidentTableComponent],
+  imports: [IncidentTableComponent, FiltersComponent],
   templateUrl: './list.component.html',
 })
 export class ListComponent implements OnInit {
+  private readonly incidentService = inject(IncidentService)
+
+
   incidents: Ticket[] = [];
 
-  constructor(private incidentService: IncidentService) {}
-
   ngOnInit(): void {
-    this.incidentService.getIncidents().subscribe({
+    this.incidentService.getTickets().subscribe({
       next: data => {
         this.incidents = data;
       },
