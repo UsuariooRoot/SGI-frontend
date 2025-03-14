@@ -1,31 +1,37 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Crea un ticket</mat-card-title>
-  </mat-card-header>
+<section class="container">
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>Crea un ticket</mat-card-title>
+    </mat-card-header>
 
-  <mat-card-content class="filtters">
-    <form [formGroup]="form" (ngSubmit)="submit()">
-      <!-- <formly-form [form]="form" [fields]="fields" [model]="model" /> -->
-      <mat-form-field class="w-full">
-        <mat-label>Selecciona un incidente</mat-label>
-        <mtx-select
-          [items]="incidentsList"
-          [groupBy]="'category'"
-          bindLabel="name"
-          [(ngModel)]="selectedIncident"
-        >
-        </mtx-select>
-      </mat-form-field>
+    <mat-card-content>
+        <mat-form-field class="w-full">
+          <mat-label>Selecciona un incidente</mat-label>
+          <mtx-select
+            [items]="incidentCategory"
+            groupBy="category"
+            bindLabel="name"
+            bindValue="id"
+            [(ngModel)]="newIncident.incident"
+          ></mtx-select>
+        </mat-form-field>
 
-      <mat-form-field class="w-full">
-        <mat-label>Añade un descripción</mat-label>
-        <textarea matInput placeholder="Ejemplo: No puedo acceder al SIJ..."></textarea>
-      </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-label>Añade un descripción</mat-label>
+          <textarea
+            matInput
+            placeholder="Ejemplo: No puedo acceder al SIJ..."
+            rows="10"
+            cols="12"
+            [(ngModel)]="newIncident.description"
+            style="resize: none"
+          ></textarea>
+        </mat-form-field>
 
-      <div class="d-flex justify-content-end m-t-8">
-        <button mat-button class="m-x-8" type="button">Cancel</button>
-        <button mat-flat-button>Submit</button>
-      </div>
-    </form>
-  </mat-card-content>
-</mat-card>
+        <div class="d-flex justify-content-end m-t-8">
+          <button mat-button class="m-x-8" type="button">Cancel</button>
+          <button mat-flat-button (click)="submit()">Submit</button>
+        </div>
+    </mat-card-content>
+  </mat-card>
+</section>
