@@ -20,7 +20,6 @@ export abstract class BaseToken {
     return this.attributes.exp;
   }
 
-  // diplock -> seen
   valid() {
     return this.hasAccessToken() && !this.isExpired();
   }
@@ -39,12 +38,10 @@ export abstract class BaseToken {
     return timeLeft((this.exp ?? 0) - 5);
   }
 
-  // diplock -> seen
   private hasAccessToken() {
     return !!this.access_token;
   }
 
-  // diplock -> seen
   private isExpired() {
     return this.exp !== undefined && this.exp - currentTimestamp() <= 0;
   }

@@ -12,10 +12,9 @@ export class AuthService {
   private readonly loginService = inject(LoginService);
   private readonly tokenService = inject(TokenService);
 
-  // diplock -> seen
   private user$ = new BehaviorSubject<User>({});
-  // diplock -> seen
-  // Observable que ejejcuta this.assignUser() cuando el token cambia o se refresca: Observable<User>
+
+  // Observable that calls this.assignUser() when the token changes or refreshes. Returns an Observable<User>
   private change$ = merge(
     this.tokenService.change(),
     this.tokenService.refresh().pipe(switchMap(() => this.refresh()))
@@ -28,13 +27,10 @@ export class AuthService {
     return new Promise<void>(resolve => this.change$.subscribe(() => resolve()));
   }
 
-  // diplock -> seen
   change() {
     return this.change$;
   }
 
-  // diplock -> seen
-  // veririfica si el JWT token es valido
   check() {
     return this.tokenService.valid();
   }
@@ -67,14 +63,11 @@ export class AuthService {
     return this.user$.pipe(share());
   }
 
-  // diplock -> seen
-  // Si this.check() devuelve `true` se ejecuta this.loginService.menu()
   menu() {
     return iif(() => this.check(), this.loginService.menu(), of([]));
   }
 
-  // diplock -> seen
-  // Devulve un Observable de un User o {} si el JWT token no es valido
+  // Returns an Observable of a User or {} if the JWT token is not valid
   private assignUser() {
     if (!this.check()) {
       return of({}).pipe(tap(user => this.user$.next(user)));

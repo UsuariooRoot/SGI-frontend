@@ -137,11 +137,6 @@ export class MenuService {
     return tmpArr;
   }
 
-  // diplock -> seen
-  // Cada elemento de Menu[] viene con una propiedad name y las traducciones se hacen a partir de un objeto y para
-  // recuperar el valor correcto se le agrega el namespace al valor de la propiedad name. por ejemplo, digamos que
-  // su valor es "dashboard" pero en la para recuperar la traduccion la propiedad que mapea a la del objeto de las
-  // traducciones es "menu.dashboard" entonces se debe agregar el namespace "menu".
   /** Add namespace for translation. */
   addNamespace(menu: Menu[] | MenuChildrenItem[], namespace: string) {
     menu.forEach(menuItem => {
