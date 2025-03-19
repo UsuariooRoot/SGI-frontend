@@ -41,16 +41,14 @@
                 [ngTemplateOutletContext]="{ item: menuItem, level: level }"
               />
             </a>
-          }
-          @if (menuItem.type === 'extLink') {
+          } @else if (menuItem.type === 'extLink') {
             <a class="menu-heading" [href]="menuItem.route" matRipple [matRippleDisabled]="!ripple">
               <ng-container
                 [ngTemplateOutlet]="linkTypeTpl"
                 [ngTemplateOutletContext]="{ item: menuItem, level: level }"
               />
             </a>
-          }
-          @if (menuItem.type === 'extTabLink') {
+          } @else if (menuItem.type === 'extTabLink') {
             <a
               class="menu-heading"
               [href]="menuItem.route"
@@ -63,8 +61,7 @@
                 [ngTemplateOutletContext]="{ item: menuItem, level: level }"
               />
             </a>
-          }
-          @if (menuItem.type === 'sub') {
+          } @else if (menuItem.type === 'sub') {
             <button
               navAccordionToggle
               class="menu-heading menu-toggle"
