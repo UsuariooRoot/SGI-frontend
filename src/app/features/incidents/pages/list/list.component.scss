@@ -1,0 +1,25 @@
+.incident-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+app-filters {
+  flex: 2;
+}
+
+app-actions {
+  flex: 1.2;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  .incident-controls {
+    flex-direction: column;
+  }
+
+  app-filters, app-actions {
+    width: 100%;
+    height: max-content;
+  }
+}

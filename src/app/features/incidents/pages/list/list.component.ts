@@ -2,11 +2,13 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FiltersComponent } from '@features/incidents/components/filters/filters.component';
 import { IncidentTableComponent } from '@features/incidents/components/incident-table/incident-table.component';
 import { IncidentService, Ticket } from '@features/incidents/services/incident.service';
+import { ActionsComponent } from "../../components/actions/actions.component";
 
 @Component({
   selector: 'app-list',
-  imports: [IncidentTableComponent, FiltersComponent],
+  imports: [IncidentTableComponent, FiltersComponent, ActionsComponent],
   templateUrl: './list.component.html',
+  styleUrl: './list.component.scss'
 })
 export class ListComponent implements OnInit {
   private readonly incidentService = inject(IncidentService)
