@@ -1,10 +1,9 @@
-import { Direction } from '@angular/cdk/bidi';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { DOCUMENT } from '@angular/common';
 import { Injectable, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { LocalStorageService } from '@shared';
-import { enUS, Locale, zhCN, zhTW } from 'date-fns/locale';
+import { enUS, Locale, zhCN, zhTW, es } from 'date-fns/locale';
 import { BehaviorSubject } from 'rxjs';
 import { AppSettings, AppTheme, defaults } from '../settings';
 
@@ -12,7 +11,9 @@ import { AppSettings, AppTheme, defaults } from '../settings';
   providedIn: 'root',
 })
 export class SettingsService {
-  private readonly key = 'ng-matero-settings';
+
+  // name with which the settings will be saved in local storage
+  private readonly key = 'csjlima-sgi-settings';
 
   private readonly document = inject(DOCUMENT);
   private readonly translate = inject(TranslateService);
@@ -31,11 +32,12 @@ export class SettingsService {
 
   options: AppSettings = Object.assign(defaults, this.storedOptions);
 
-  languages = ['en-US', 'zh-CN', 'zh-TW'];
+  languages = ['en-US', 'zh-CN', 'zh-TW', 'es'];
 
-  localeMap: Record<string, Locale> = { 'en-US': enUS, 'zh-CN': zhCN, 'zh-TW': zhTW };
+  localeMap: Record<string, Locale> = { 'en-US': enUS, 'zh-CN': zhCN, 'zh-TW': zhTW, es };
 
   constructor() {
+    // registers the available languages ​​in the global TranslateService object
     this.translate.addLangs(this.languages);
   }
 
