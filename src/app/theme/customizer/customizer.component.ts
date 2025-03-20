@@ -14,7 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MtxDrawer, MtxDrawerModule, MtxDrawerRef } from '@ng-matero/extensions/drawer';
+import { MtxDrawer, MtxDrawerRef } from '@ng-matero/extensions/drawer';
 import { Subscription } from 'rxjs';
 
 import { AppSettings, SettingsService } from '@core';
@@ -33,9 +33,7 @@ import { DisableControlDirective } from '@shared';
     MatDividerModule,
     MatIconModule,
     MatRadioModule,
-    MatSlideToggleModule,
     MatTooltipModule,
-    MtxDrawerModule,
     DisableControlDirective,
   ],
 })
@@ -73,7 +71,7 @@ export class CustomizerComponent {
     }
 
     this.drawerRef = this.drawer.open(templateRef, {
-      position: this.form.get('dir')?.value === 'rtl' ? 'left' : 'right',
+      position: 'right',
       width: '320px',
     });
 
