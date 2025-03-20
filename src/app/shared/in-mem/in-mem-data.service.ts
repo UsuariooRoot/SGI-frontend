@@ -120,7 +120,7 @@ export class InMemDataService implements InMemoryDbService {
 
     // returns the contents of /public/menu.json
     if (is(reqInfo, 'user/menu')) {
-      return ajax('data/menu.json?_t=' + Date.now()).pipe(
+      return ajax('data/api/user/menu/menu.json?_t=' + Date.now()).pipe(
         map((response: any) => {
           return { headers, url, status: STATUS.OK, body: { menu: response.response.menu } };
         }),

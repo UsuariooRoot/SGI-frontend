@@ -1,0 +1,9 @@
+{
+  "data": [
+    { "id": 1, "name": "Juan Pérez" },
+    { "id": 2, "name": "Ricardo Gómez" },
+    { "id": 3, "name": "Angela Rosario" },
+    { "id": 4, "name": "Richard Stalmant" },
+    { "id": 5, "name": "Camila Sánchez" }
+  ]
+}

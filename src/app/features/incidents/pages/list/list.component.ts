@@ -1,7 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FiltersComponent } from '@features/incidents/components/filters/filters.component';
+import { FiltersComponent, ItTeamEmployee, RequesterEmployee } from '@features/incidents/components/filters/filters.component';
 import { IncidentTableComponent } from '@features/incidents/components/incident-table/incident-table.component';
 import { IncidentService, Ticket } from '@features/incidents/services/incident.service';
+import { FilterService } from '@features/incidents/services/filter.service';
 import { ActionsComponent } from "../../components/actions/actions.component";
 
 @Component({
@@ -12,7 +13,6 @@ import { ActionsComponent } from "../../components/actions/actions.component";
 })
 export class ListComponent implements OnInit {
   private readonly incidentService = inject(IncidentService)
-
 
   incidents: Ticket[] = [];
 

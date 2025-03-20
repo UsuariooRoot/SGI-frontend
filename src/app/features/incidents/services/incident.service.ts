@@ -28,8 +28,8 @@ export interface IncidentCategory {
   providedIn: 'root'
 })
 export class IncidentService {
-  private ticketsUrl = 'data/incidents.json';
-  private incidentsUrl = 'data/list-incidents.json';
+  private ticketsUrl = 'data/api/tickets/incidents/incidents.json';
+  private incidentsUrl = 'data/api/incidents/list/incident-category.json';
 
   constructor(private http: HttpClient) {}
 
@@ -52,6 +52,5 @@ export class IncidentService {
       map(response => response.data)
     );
   }
-
 
 }
