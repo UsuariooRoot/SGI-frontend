@@ -11,11 +11,13 @@ const routes: Routes = [
   {
     path: 'create',
     component: CreateComponent, // Path -> "/incidentes/create"
-  }
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forChild(routes)
+  ],
+  exports: [RouterModule],
 })
 export class IncidentsRoutingModule {}

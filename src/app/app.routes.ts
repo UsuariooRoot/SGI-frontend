@@ -14,7 +14,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'incidents',
-        loadChildren: () => import('./features/incidents/incidents.module').then(m => m.IncidentsModule)
+        loadChildren: () => import('./features/incidents/incidents-routing.module').then(m => m.IncidentsRoutingModule)
       },
     ]
   },
