@@ -10,7 +10,7 @@
           "route": "",
           "name": "all",
           "type": "link",
-          "icon": "list",
+          "icon": "group_work",
           "badge": {
             "color": "red-50",
             "value": "5"
@@ -20,7 +20,7 @@
           "route": "assigned",
           "name": "assigned",
           "type": "link",
-          "icon": "list",
+          "icon": "inbox",
           "badge": {
             "color": "red-50",
             "value": "5"
@@ -30,7 +30,7 @@
           "route": "me",
           "name": "me",
           "type": "link",
-          "icon": "list",
+          "icon": "inbox",
           "badge": {
             "color": "red-50",
             "value": "5"
