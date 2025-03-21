@@ -21,6 +21,7 @@
             [items]="itTeamEmployees"
             bindLabel="name"
             bindValue="id"
+            [(ngModel)]="filters.idItEmployee"
             [tabIndex]="1"
           />
         </mat-form-field>
@@ -32,6 +33,7 @@
             [items]="requesterEmployees"
             bindLabel="name"
             bindValue="id"
+            [(ngModel)]="filters.idRequesterEmployee"
             [tabIndex]="2"
           />
         </mat-form-field>
@@ -41,7 +43,7 @@
       <div class="from">
         <mat-form-field>
           <mat-label>Desde</mat-label>
-          <input matInput [matDatepicker]="picker_from" [tabIndex]="3" />
+          <input matInput [matDatepicker]="picker_from" [(ngModel)]="filters.from" [tabIndex]="3" />
           <mat-datepicker-toggle matIconSuffix [for]="picker_from"></mat-datepicker-toggle>
           <mat-datepicker #picker_from></mat-datepicker>
         </mat-form-field>
@@ -49,11 +51,15 @@
       <div class="to">
         <mat-form-field>
           <mat-label>Hasta</mat-label>
-          <input matInput [matDatepicker]="picker_to" [tabIndex]="4" />
+          <input matInput [matDatepicker]="picker_to" [(ngModel)]="filters.to" [tabIndex]="4" />
           <mat-datepicker-toggle matIconSuffix [for]="picker_to"></mat-datepicker-toggle>
           <mat-datepicker #picker_to></mat-datepicker>
         </mat-form-field>
       </div>
+    </div>
+    <div class="d-flex justify-content-end m-t-8">
+      <button mat-button class="m-x-16" type="button" (click)="cleanFilters()">Limpiar</button>
+      <button mat-flat-button (click)="applyFilters()">Filtrar</button>
     </div>
   </mat-card-content>
 </mat-card>

@@ -51,12 +51,15 @@ export interface IncidentTicketFilters {
 })
 export class FiltersComponent implements OnInit {
   private readonly filterService = inject(FilterService);
+  private readonly toast = inject(ToastrService);
 
   @Input({ required: true }) idItTeam!: number;
 
   TICKET_STATUSES: TicketStatus[] = [];
   itTeamEmployees: ItTeamEmployee[] = [];
   requesterEmployees: RequesterEmployee[] = [];
+
+  filters: IncidentTicketFilters = this.getInitialStateOfFilters();
 
   ngOnInit(): void {
     this.getIncidentTicketStatuses();
@@ -94,5 +97,29 @@ export class FiltersComponent implements OnInit {
       },
       error: err => console.error('Error al obtener los estados de los ticket de incidentes:', err),
     });
+  }
+
+  getInitialStateOfFilters(): IncidentTicketFilters {
+    return {
+      ticketStatuses: [],
+      idItEmployee: -1,
+      idRequesterEmployee: -1,
+      from: '',
+      to: '',
+    };
+  }
+
+  applyFilters() {
+    const statuses = this.TICKET_STATUSES.filter(ticket => ticket.active === true).map(
+      ticket => ticket.id
+    );
+
+    this.filters.ticketStatuses = statuses;
+
+    this.toast.success(JSON.stringify(this.filters));
+  }
+
+  cleanFilters() {
+    this.filters = this.getInitialStateOfFilters();
   }
 }
