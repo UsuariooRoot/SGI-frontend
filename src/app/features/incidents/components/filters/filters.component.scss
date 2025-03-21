@@ -1,3 +1,80 @@
+.cbx {
+  max-width: 200px;
+  flex-grow: 1;
+  justify-items: center;
+  background: #b2b1b1;
+  border: 1px solid gray;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.cbx input {
+  display: none;
+}
+
+.cbx label {
+  width: 100%;
+  padding: 8px 12px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s ease;
+  transition: color 0.2s ease;
+  user-select: none; /* Prevents text selection */
+  cursor: pointer;
+}
+
+.cbx label div {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+
+.cbx label div span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  border: 3px solid #282828;
+  border-radius: 50%;
+  transition: visibility 0 ease 0.2s;
+}
+
+.cbx svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.cbx svg path {
+  stroke: #FFF;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 19;
+  stroke-dashoffset: 19;
+  transition: stroke-dashoffset 0.2s ease;
+}
+
+.cbx input:checked + label > div span {
+  transition-delay: 0s;
+  visibility: hidden;
+}
+
+.cbx input:checked + label {
+  background-color: #000000;
+  color: #FFF;
+}
+
+.cbx input:checked + label > div > svg path {
+  stroke-dashoffset: 0;
+}
+
 .filters {
   display: flex;
   flex-direction: column;

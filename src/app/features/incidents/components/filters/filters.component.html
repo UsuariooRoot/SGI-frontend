@@ -8,6 +8,12 @@
         <div class="cbx">
           <input type="checkbox" [id]="status.id" [(ngModel)]="status.active">
           <label [class.active]="status.active" [htmlFor]="status.id">
+            <div>
+              <span></span>
+              <svg fill="none" viewBox="0 0 15 14" height="14" width="15">
+                <path d="M2 8.36364L6.23077 12L13 2"></path>
+              </svg>
+            </div>
             {{ status.name }}
           </label>
         </div>
