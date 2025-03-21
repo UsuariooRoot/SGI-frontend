@@ -5,23 +5,35 @@
   <mat-card-content class="filters">
     <div class="ticket__statuses">
       @for (status of TICKET_STATUSES; track $index) {
-        <label [class.active]="status.active">
-          {{status.name}}
-          <input type="checkbox" [(ngModel)]="status.active" />
-        </label>
+        <div class="cbx">
+          <input type="checkbox" [id]="status.id" [(ngModel)]="status.active">
+          <label [class.active]="status.active" [htmlFor]="status.id">
+            {{ status.name }}
+          </label>
+        </div>
       }
     </div>
     <div class="by_employees">
       <div>
         <mat-form-field class="w-full">
           <mat-label>Por persona a cargo</mat-label>
-          <mtx-select [tabIndex]="1" [items]="itTeamEmployees" bindLabel="name" bindValue="id" />
+          <mtx-select
+            [items]="itTeamEmployees"
+            bindLabel="name"
+            bindValue="id"
+            [tabIndex]="1"
+          />
         </mat-form-field>
       </div>
       <div>
         <mat-form-field class="w-full">
           <mat-label>Por solicitante</mat-label>
-          <mtx-select [tabIndex]="2" [items]="requesterEmployees" bindLabel="name" bindValue="id" />
+          <mtx-select
+            [items]="requesterEmployees"
+            bindLabel="name"
+            bindValue="id"
+            [tabIndex]="2"
+          />
         </mat-form-field>
       </div>
     </div>
@@ -29,7 +41,7 @@
       <div class="from">
         <mat-form-field>
           <mat-label>Desde</mat-label>
-          <input matInput [matDatepicker]="picker_from" [tabIndex]="3">
+          <input matInput [matDatepicker]="picker_from" [tabIndex]="3" />
           <mat-datepicker-toggle matIconSuffix [for]="picker_from"></mat-datepicker-toggle>
           <mat-datepicker #picker_from></mat-datepicker>
         </mat-form-field>
@@ -37,7 +49,7 @@
       <div class="to">
         <mat-form-field>
           <mat-label>Hasta</mat-label>
-          <input matInput [matDatepicker]="picker_to" [tabIndex]="4">
+          <input matInput [matDatepicker]="picker_to" [tabIndex]="4" />
           <mat-datepicker-toggle matIconSuffix [for]="picker_to"></mat-datepicker-toggle>
           <mat-datepicker #picker_to></mat-datepicker>
         </mat-form-field>

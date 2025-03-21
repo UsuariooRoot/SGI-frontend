@@ -1,5 +1,6 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -7,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FilterService } from '@features/incidents/services/filter.service';
 import { MtxSelectModule } from '@ng-matero/extensions/select';
+import { ToastrService } from 'ngx-toastr';
 
 export interface RequesterEmployee {
   id: number;
@@ -24,6 +26,14 @@ export interface TicketStatus {
   active?: boolean;
 }
 
+export interface IncidentTicketFilters {
+  ticketStatuses: number[];
+  idItEmployee: number;
+  idRequesterEmployee: number;
+  from: string;
+  to: string;
+}
+
 @Component({
   selector: 'app-filters',
   imports: [
@@ -34,6 +44,7 @@ export interface TicketStatus {
     MatDatepickerModule,
     MatFormFieldModule,
     MatInputModule,
+    MatButtonModule,
   ],
   templateUrl: './filters.component.html',
   styleUrl: './filters.component.scss',
@@ -41,25 +52,37 @@ export interface TicketStatus {
 export class FiltersComponent implements OnInit {
   private readonly filterService = inject(FilterService);
 
+  @Input({ required: true }) idItTeam!: number;
+
+  TICKET_STATUSES: TicketStatus[] = [];
   itTeamEmployees: ItTeamEmployee[] = [];
   requesterEmployees: RequesterEmployee[] = [];
-  TICKET_STATUSES: TicketStatus[] = [];
 
   ngOnInit(): void {
-    this.filterService.getEmployeesByItTeam(1).subscribe({
+    this.getIncidentTicketStatuses();
+    this.getEmployeesByItTeam(this.idItTeam);
+    this.getRequestersByItTeam(this.idItTeam);
+  }
+
+  getEmployeesByItTeam(idItTeam: number) {
+    return this.filterService.getEmployeesByItTeam(idItTeam).subscribe({
       next: data => {
         this.itTeamEmployees = data;
       },
       error: err => console.error('Error al obtener empleados por equipo TI:', err),
     });
+  }
 
-    this.filterService.getRequestersByItTeam(1).subscribe({
+  getRequestersByItTeam(idItTeam: number) {
+    return this.filterService.getRequestersByItTeam(idItTeam).subscribe({
       next: data => {
         this.requesterEmployees = data;
       },
       error: err => console.error('Error al obtener solicitantes por equipo de TI:', err),
     });
+  }
 
+  getIncidentTicketStatuses() {
     this.filterService.getIncidentTicketStatuses().subscribe({
       next: data => {
         const newTicketStatus: TicketStatus = {
