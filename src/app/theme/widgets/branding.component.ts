@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
     <a class="branding" href="/">
       <img src="images/matero.png" class="branding-logo" alt="logo" />
       @if (showName) {
-        <span class="branding-name">MATERO</span>
+        <span class="branding-name">Proyecto SGI</span>
       }
     </a>
   `,
@@ -17,7 +17,7 @@ import { Component, Input } from '@angular/core';
       margin: 0 0.5rem;
       text-decoration: none;
       white-space: nowrap;
-      color: inherit;
+      color: #FFF;
       border-radius: 50rem;
     }
 

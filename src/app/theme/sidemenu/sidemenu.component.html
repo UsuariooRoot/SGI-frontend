@@ -26,6 +26,7 @@
           navAccordionItem
           class="menu-item"
           routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
           [route]="menuItem.route"
           [type]="menuItem.type"
         >

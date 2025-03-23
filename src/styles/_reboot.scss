@@ -15,17 +15,17 @@
   --user-panel-hover-background-color: var(--mat-sys-surface-variant);
   --sidemenu-heading-text-color: white; // default text color of items
   --sidemenu-heading-hover-background-color: var(--mat-sys-surface-container-highest);
-  --sidemenu-active-heading-text-color: #720405; // sidemenu color when activated
-  --sidemenu-active-heading-background-color: #72040685; // sidemenu background-color when activated
-  --sidemenu-active-heading-hover-background-color: #72040685; // background-color when hovering over an item in an active sidemenu
+  --sidemenu-active-heading-text-color: light-dark(#720405, #FFF); // sidemenu color when activated
+  --sidemenu-active-heading-background-color: light-dark(#7900023c, #515151); // sidemenu background-color when activated
+  --sidemenu-active-heading-hover-background-color: light-dark(#7900023c, #515151); // background-color when hovering over an item in an active sidemenu
   --sidemenu-expanded-background-color: var(--mat-sys-surface-container);
-  --sidemenu-expanded-text-color: #141212; // sidemenu color when expanded
+  --sidemenu-expanded-text-color: light-dark(#141212, #cacaca); // sidemenu color when expanded
   --topmenu-text-color: var(--mat-sys-on-background);
   --topmenu-background-color: var(--header-background-color);
   --topmenu-item-active-background-color: var(--mat-sys-primary-container);
   --topmenu-dropdown-item-active-text-color: var(--mat-sys-primary);
   --mat-sidenav-container-background-color: #a11009; // left sidebar
-  --mat-toolbar-container-background-color: #a11009; // background-color header del sidebar
+  --mat-toolbar-container-background-color: transparent; // background-color header del sidebar
   --mat-sidenav-container-width: var(--sidenav-width); // sidebar header background color
   --mat-toolbar-standard-height: 4rem;
   --mat-toolbar-mobile-height: 3.5rem;
