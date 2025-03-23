@@ -33,6 +33,7 @@ import { DisableControlDirective } from '@shared';
     MatDividerModule,
     MatIconModule,
     MatRadioModule,
+    MatSlideToggleModule,
     MatTooltipModule,
     DisableControlDirective,
   ],
