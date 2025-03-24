@@ -2,8 +2,8 @@
   <mat-card-header>
     <mat-card-title>Filtros</mat-card-title>
   </mat-card-header>
-  <mat-card-content class="filters">
-    <div class="ticket__statuses">
+  <mat-card-content>
+    <div class="ticket-statuses">
       @for (status of TICKET_STATUSES; track $index) {
         <div class="cbx">
           <input type="checkbox" [id]="status.id" [(ngModel)]="status.active">
@@ -19,6 +19,8 @@
         </div>
       }
     </div>
+    <!-- separator -->
+    <div class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align"></div>
     <div class="by_employees">
       <div>
         <mat-form-field class="w-full">
@@ -33,7 +35,7 @@
         </mat-form-field>
       </div>
       <div>
-        <mat-form-field class="w-full">
+        <mat-form-field class="w-full" >
           <mat-label>Por solicitante</mat-label>
           <mtx-select
             [items]="requesterEmployees"
@@ -63,8 +65,8 @@
         </mat-form-field>
       </div>
     </div>
-    <div class="d-flex justify-content-end m-t-8">
-      <button mat-button class="m-x-16" type="button" (click)="cleanFilters()">Limpiar</button>
+    <div class="d-flex justify-content-end">
+      <button mat-raised-button class="m-x-16 text-red-20" (click)="cleanFilters()">Limpiar</button>
       <button mat-flat-button (click)="applyFilters()">Filtrar</button>
     </div>
   </mat-card-content>
