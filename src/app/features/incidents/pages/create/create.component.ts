@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { IncidentCategory, IncidentService } from '@features/incidents/services/incident.service';
+import { IncidentService } from '@features/incidents/services/incident.service';
 import { MtxSelectModule } from '@ng-matero/extensions/select';
 import { FormlyModule } from '@ngx-formly/core';
 import { ToastrService } from 'ngx-toastr';
@@ -46,13 +46,13 @@ export class CreateComponent implements OnInit {
   }
 
   getIncidentOptions() {
-    this.incidentService.getIncidents().subscribe({
+    this.incidentService.getIncidentCategory().subscribe({
       next: data => {
         const incidentList: any = [];
 
-        for (const { category, incidents } of data) {
+        for (const { name: categoryName, incidents } of data) {
           for (const { id, name } of incidents) {
-            incidentList.push({ id, name, category });
+            incidentList.push({ id, name, categoryName });
           }
         }
 

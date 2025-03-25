@@ -2,14 +2,14 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MtxGridColumn, MtxGridModule } from '@ng-matero/extensions/grid';
 
 
-export interface RowTicket {
-  id_ticket: number;
-  titulo: string;
-  descripcion: string;
-  fecha_creacion: string;
-  estado: string;
-  reportado_por: string;
-  asignado_a: null | string;
+export interface TicketRow {
+  id: number;
+  title: string;
+  description: string;
+  created_at: string;
+  status: string;
+  reported_by: string;
+  assigned_to: null | string;
 }
 
 @Component({
@@ -23,14 +23,14 @@ export interface RowTicket {
 })
 export class IncidentTableComponent {
   columns: MtxGridColumn[] = [
-    { header: 'Ticket ID', field: 'id_ticket' },
-    { header: 'Título', field: 'titulo' },
-    { header: 'Descripción', field: 'descripcion' },
+    { header: 'Ticket ID', field: 'id' },
+    { header: 'Título', field: 'title' },
+    { header: 'Descripción', field: 'description' },
     {
       header: 'Fecha creación',
-      field: 'fecha_creacion',
+      field: 'created_at',
       formatter: (data) => {
-        const date = new Date(Number(data.fecha_creacion))
+        const date = new Date(data.created_at)
 
         const options: Intl.DateTimeFormatOptions = {
           day: "numeric",
@@ -44,11 +44,11 @@ export class IncidentTableComponent {
         return date.toLocaleString("es-ES", options).replace(",", "");
       }
     },
-    { header: 'Estado', field: 'estado' },
-    { header: 'Usuario', field: 'reportado_por' },
-    { header: 'Asignado', field: 'asignado_a' },
+    { header: 'Estado', field: 'status' },
+    { header: 'Usuario', field: 'reported_by' },
+    { header: 'Asignado', field: 'assigned_to' },
   ];
 
-  @Input() incidents: RowTicket[] = [];
+  @Input() ticketRows: TicketRow[] = [];
 
 }

@@ -14,7 +14,7 @@ export class FilterService {
   private readonly assignedEmployeesUrl = 'data/api/it-team/id/employees/employees-by-it-team.json';
   private readonly requesterEmployeesUrl =
     'data/api/it-team/id/requesters/requesters-by-it-team.json';
-  private readonly ticketStatusesUrl = 'data/api/incidents/statuses/statuses.json';
+  private readonly ticketStatusesUrl = 'data/api/incidents/statuses.json';
 
   private readonly http = inject(HttpClient);
 
