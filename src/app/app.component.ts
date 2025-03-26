@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, inject } from '@angular/core';
-import { PreloaderService, SettingsService } from '@core';
 import { RouterOutlet } from '@angular/router';
+import { PreloaderService } from '@core/bootstrap/preloader.service';
+import { SettingsService } from '@core/bootstrap/settings.service';
 
 @Component({
   selector: 'app-root',

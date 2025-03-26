@@ -13,10 +13,10 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgxPermissionsModule } from 'ngx-permissions';
 
-import { MenuService } from '@core';
 import { NavAccordionItemDirective } from './nav-accordion-item.directive';
 import { NavAccordionToggleDirective } from './nav-accordion-toggle.directive';
 import { NavAccordionDirective } from './nav-accordion.directive';
+import { MenuService } from '@core/bootstrap/menu.service';
 
 @Component({
   selector: 'app-sidemenu',

@@ -6,7 +6,7 @@ import {
 } from '@features/incidents/components/incident-table/incident-table.component';
 import { IncidentService, IncidentTicket } from '@features/incidents/services/incident.service';
 import { ActionsComponent } from '../../components/actions/actions.component';
-import { User } from '@core';
+import { User } from '@core/authentication/interface';
 
 @Component({
   selector: 'app-list',

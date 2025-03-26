@@ -17,8 +17,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MtxDrawer, MtxDrawerRef } from '@ng-matero/extensions/drawer';
 import { Subscription } from 'rxjs';
 
-import { AppSettings, SettingsService } from '@core';
 import { DisableControlDirective } from '@shared';
+import { AppSettings } from '@core/settings';
+import { SettingsService } from '@core/bootstrap/settings.service';
 
 @Component({
   selector: 'app-customizer',

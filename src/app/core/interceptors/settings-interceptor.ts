@@ -1,6 +1,6 @@
 import { HttpHandlerFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { SettingsService } from '@core';
+import { SettingsService } from '@core/bootstrap/settings.service';
 
 export function settingsInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) {
   const settings = inject(SettingsService);

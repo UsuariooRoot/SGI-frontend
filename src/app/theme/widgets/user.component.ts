@@ -3,10 +3,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '@core/authentication/auth.service';
+import { User } from '@core/authentication/interface';
+import { SettingsService } from '@core/bootstrap/settings.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { debounceTime, tap } from 'rxjs';
-
-import { AuthService, SettingsService, User } from '@core';
 
 @Component({
   selector: 'app-user',

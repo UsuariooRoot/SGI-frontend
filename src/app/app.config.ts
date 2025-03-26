@@ -19,24 +19,16 @@ import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { provideToastr } from 'ngx-toastr';
 
-import {
-  apiInterceptor,
-  BASE_URL,
-  baseUrlInterceptor,
-  errorInterceptor,
-  loggingInterceptor,
-  noopInterceptor,
-  settingsInterceptor,
-  SettingsService,
-  StartupService,
-  tokenInterceptor,
-  TranslateLangService,
-} from '@core';
+
 import { environment } from '@env/environment';
 import { PaginatorI18nService } from '@shared';
 import { InMemDataService } from '@shared/in-mem/in-mem-data.service';
 import { routes } from './app.routes';
 import { FormlyConfigModule } from './formly-config';
+import { apiInterceptor, BASE_URL, baseUrlInterceptor, errorInterceptor, loggingInterceptor, noopInterceptor, settingsInterceptor, tokenInterceptor } from '@core/interceptors';
+import { TranslateLangService } from '@core/bootstrap/translate-lang.service';
+import { StartupService } from '@core/bootstrap/startup.service';
+import { SettingsService } from '@core/bootstrap/settings.service';
 
 // Required for AOT compilation
 function TranslateHttpLoaderFactory(http: HttpClient) {
