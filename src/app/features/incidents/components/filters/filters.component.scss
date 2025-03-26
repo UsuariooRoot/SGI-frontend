@@ -107,12 +107,3 @@
   flex-wrap: wrap;
   justify-content: space-between;
 }
-
-@keyframes pulse {
-  from {
-      transform: scale(1);
-  }
-  to {
-      transform: scale(1.05);
-  }
-}

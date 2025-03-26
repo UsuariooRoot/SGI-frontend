@@ -32,7 +32,6 @@ export interface Stat {
         </mat-card-content>
       </mat-card>
   `,
-  styleUrl: './progress-card.component.scss'
 })
 export class ProgressCardComponent {
   @Input() stat: Stat = {} as Stat;
