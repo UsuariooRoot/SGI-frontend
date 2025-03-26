@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '@core/authentication/auth.guard';
 import { AuthLayoutComponent } from '@layout/auth-layout/auth-layout.component';
-import { LoginComponent } from './routes/sessions/login/login.component';
-import { RegisterComponent } from './routes/sessions/register/register.component';
+import { LoginComponent } from './features/sessions/login/login.component';
+import { RegisterComponent } from './features/sessions/register/register.component';
 import { GeneralLayoutComponent } from '@layout/general-layout/general-layout.component';
 
 export const routes: Routes = [
