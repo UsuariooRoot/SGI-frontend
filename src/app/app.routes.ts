@@ -7,16 +7,11 @@ import { GeneralLayoutComponent } from '@layout/general-layout/general-layout.co
 
 export const routes: Routes = [
   {
-    path: '',
+    path: 'incidents',
     component: GeneralLayoutComponent,
     canActivate: [authGuard],
     canActivateChild: [authGuard],
-    children: [
-      {
-        path: 'incidents',
-        loadChildren: () => import('./features/incidents/incidents-routing.module').then(m => m.IncidentsRoutingModule)
-      },
-    ]
+    loadChildren: () => import('./features/incidents/incidents-routing.module').then(m => m.IncidentsRoutingModule)
   },
   {
     path: 'auth',
@@ -26,5 +21,5 @@ export const routes: Routes = [
       { path: 'register', component: RegisterComponent },
     ],
   },
-  { path: '**', redirectTo: 'dashboard' },
+  { path: '**', redirectTo: 'incidents' },
 ];
