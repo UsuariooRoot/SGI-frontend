@@ -17,9 +17,6 @@
                   <strong>ng-matero</strong>
                 </span>
               }
-              @if (username.errors?.remote) {
-                <span>{{ username.errors?.remote }}</span>
-              }
             </mat-error>
           }
         </mat-form-field>
@@ -41,13 +38,14 @@
                   <strong>ng-matero</strong>
                 </span>
               }
-              @if (password.errors?.remote) {
-                <span>{{ password.errors?.remote }}</span>
-              }
             </mat-error>
           }
         </mat-form-field>
-
+        @if (loginForm.errors?.remote) {
+          <mat-error>
+            <span>{{ loginForm.errors?.remote }}</span>
+          </mat-error>
+        }
         <mat-checkbox formControlName="rememberMe">{{ 'remember_me' | translate }}</mat-checkbox>
 
         <button

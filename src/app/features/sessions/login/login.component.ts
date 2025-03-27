@@ -12,7 +12,6 @@ import { MtxButtonModule } from '@ng-matero/extensions/button';
 import { TranslateModule } from '@ngx-translate/core';
 import { filter } from 'rxjs/operators';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -63,16 +62,13 @@ export class LoginComponent {
       .pipe(filter(authenticated => authenticated))
       .subscribe({
         next: () => {
+          // redirect to a previous route if there was one
           this.router.navigateByUrl('/');
         },
         error: (errorRes: HttpErrorResponse) => {
-          if (errorRes.status === 422) {
-            const form = this.loginForm;
-            const errors = errorRes.error.errors;
-            Object.keys(errors).forEach(key => {
-              form.get(key === 'email' ? 'username' : key)?.setErrors({
-                remote: errors[key][0],
-              });
+          if (errorRes.status === 401) {
+            this.loginForm.setErrors({
+              remote: errorRes.error.message,
             });
           }
           this.isSubmitting = false;

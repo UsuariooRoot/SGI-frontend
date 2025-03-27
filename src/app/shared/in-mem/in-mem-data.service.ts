@@ -176,17 +176,13 @@ export class InMemDataService implements InMemoryDbService {
     return from(this.users).pipe(
       find(user => user.username === username || user.email === username),
       map(user => {
-        if (!user) {
-          return { headers, url, status: STATUS.UNAUTHORIZED, body: {} };
-        }
-
-        if (user.password !== password) {
-          const result = {
-            status: STATUS.UNPROCESSABLE_ENTRY,
-            error: { errors: { password: ['The provided password is incorrect.'] } },
+        if (!user || user.password !== password) {
+          return {
+            headers,
+            url,
+            status: STATUS.UNAUTHORIZED,
+            error: { message: 'The username or password is incorrect...' },
           };
-
-          return Object.assign({ headers, url }, result);
         }
 
         const currentUser = Object.assign({}, user);
