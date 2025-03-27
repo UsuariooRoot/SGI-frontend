@@ -1,8 +1,9 @@
 import { Injectable, inject } from '@angular/core';
-import { AuthService, User } from '@core/authentication';
 import { NgxPermissionsService, NgxRolesService } from 'ngx-permissions';
 import { switchMap, tap } from 'rxjs';
 import { Menu, MenuService } from './menu.service';
+import { AuthService } from '@core/authentication/auth.service';
+import { User } from '@core/authentication/interface';
 
 @Injectable({
   providedIn: 'root',
@@ -39,10 +40,9 @@ export class StartupService {
   }
 
   private setPermissions(user: User) {
-    // In a real app, you should get permissions and roles from the user information.
-    const permissions = ['canAdd', 'canDelete', 'canEdit', 'canRead'];
-    this.permissonsService.loadPermissions(permissions);
-    this.rolesService.flushRoles(); // remueve todo los roles registrados en ese NgxPermissionsService -> https://github.com/AlexKhymenko/ngx-permissions?tab=readme-ov-file#removing-roles
-    this.rolesService.addRoles({ ADMIN: permissions }); // agrega un roles con sus permisos
+    const permissions = user.permissions ?? ['canRead'];
+    this.permissonsService.loadPermissions(permissions); // load user-specific permissions
+    this.rolesService.flushRoles(); // removes all roles registered in NgxPermissionsService -> https://github.com/AlexKhymenko/ngx-permissions?tab=readme-ov-file#removing-roles
+    this.rolesService.addRole(user.role ? user.role : 'GUEST', ['canRead']) // add a role with its own permissions
   }
 }

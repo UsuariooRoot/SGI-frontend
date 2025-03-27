@@ -5,7 +5,8 @@ import { from, Observable } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { find, map, switchMap } from 'rxjs/operators';
 import { environment } from '@env/environment';
-import { base64, currentTimestamp, filterObject, User } from '@core/authentication';
+import { base64, currentTimestamp, filterObject } from '@core/authentication/helpers';
+import { User } from '@core/authentication/interface';
 
 class JWT {
   generate(user: User) {
@@ -103,6 +104,16 @@ export class InMemDataService implements InMemoryDbService {
       avatar: 'images/heros/10.jpg',
       refresh_token: true,
     },
+    {
+      id: 1,
+      username: '1-rogelio',
+      password: '1-rogelio',
+      name: 'Rogelio Flores',
+      email: 'rogelio.flores@example.com',
+      role: 'IT_EMPLOYEE',
+      permissions: ['canAdd', 'canDelete', 'canEdit', 'canRead'],
+      avatar: 'images/avatar.jpg',
+    }
   ];
 
   createDb(

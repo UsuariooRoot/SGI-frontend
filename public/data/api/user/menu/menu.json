@@ -37,7 +37,7 @@
           },
           "permissions": {
             "only": [
-              "GUEST"
+              "NON-IT_EMPLOYEE"
             ]
           }
         },
@@ -45,7 +45,12 @@
           "route": "create",
           "name": "create",
           "type": "link",
-          "icon": "add"
+          "icon": "add",
+          "permissions": {
+            "only": [
+              "NON-IT_EMPLOYEE"
+            ]
+          }
         },
         {
           "route": "solutions",
@@ -56,7 +61,7 @@
       ],
       "permissions": {
         "only": [
-          "ADMIN"
+          "IT_EMPLOYEE"
         ]
       }
     },
@@ -85,7 +90,7 @@
       ],
       "permissions": {
         "only": [
-          "ADMIN"
+          "IT_EMPLOYEE"
         ]
       }
     }
