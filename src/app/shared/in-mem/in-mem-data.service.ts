@@ -5,71 +5,19 @@ import { from, Observable } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { find, map, switchMap } from 'rxjs/operators';
 import { environment } from '@env/environment';
-import { base64, currentTimestamp, filterObject } from '@core/authentication/helpers';
-import { User } from '@core/authentication/interface';
-
-class JWT {
-  generate(user: User) {
-    const expiresIn = 3600;
-    const refreshTokenExpiresIn = 86400;
-
-    return filterObject({
-      access_token: this.createToken(user, expiresIn),
-      token_type: 'bearer',
-      expires_in: user.refresh_token ? expiresIn : undefined,
-      refresh_token: user.refresh_token ? this.createToken(user, refreshTokenExpiresIn) : undefined,
-    });
-  }
-
-  getUser(req: HttpRequest<any>) {
-    let token = '';
-
-    if (req.body?.refresh_token) {
-      token = req.body.refresh_token;
-    } else if (req.headers.has('Authorization')) {
-      const authorization = req.headers.get('Authorization');
-      const result = (authorization as string).split(' ');
-      token = result[1];
-    }
-
-    try {
-      const now = new Date();
-      const data = JWT.parseToken(token);
-
-      return JWT.isExpired(data, now) ? null : data.user;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  createToken(user: User, expiresIn = 0) {
-    const exp = user.refresh_token ? currentTimestamp() + expiresIn : undefined;
-
-    return [
-      base64.encode(JSON.stringify({ typ: 'JWT', alg: 'HS256' })),
-      base64.encode(JSON.stringify(filterObject(Object.assign({ exp, user })))),
-      base64.encode('ng-matero'),
-    ].join('.');
-  }
-
-  private static parseToken(accessToken: string) {
-    const [, payload] = accessToken.split('.');
-
-    return JSON.parse(base64.decode(payload));
-  }
-
-  private static isExpired(data: any, now: Date) {
-    const expiresIn = new Date();
-    expiresIn.setTime(data.exp * 1000);
-    const diff = this.dateToSeconds(expiresIn) - this.dateToSeconds(now);
-
-    return diff <= 0;
-  }
-
-  private static dateToSeconds(date: Date) {
-    return Math.ceil(date.getTime() / 1000);
-  }
-}
+import { JWT } from './jwt';
+import { employees, users as usersdb } from './tables/employees';
+import { historical } from './tables/historical';
+import { categories } from './tables/incident-categories';
+import { incidents } from './tables/incidents';
+import { itTeams } from './tables/it-teams';
+import { ticketActions } from './tables/ticket-actions';
+import { ticketStatuses } from './tables/ticket-statuses';
+import { ticketPriorities } from './tables/ticket-priorities';
+import { Employee, History, IncidentTicket } from './tables/db-typings';
+import { incidentTiceks } from './tables/incident-tickets';
+import { IncidentTicketResponse, IncidentTicketFilter } from './api';
+import { getIncidentTickets } from './utils/filter-tickets';
 
 const jwt = new JWT();
 
@@ -86,35 +34,16 @@ function is(reqInfo: RequestInfo, path: string) {
 })
 export class InMemDataService implements InMemoryDbService {
   // Users are added here
-  private users: User[] = [
-    {
-      id: 1,
-      username: 'ng-matero',
-      password: 'ng-matero',
-      name: 'Zongbin',
-      email: 'nzb329@163.com',
-      avatar: 'images/avatar.jpg',
-    },
-    {
-      id: 2,
-      username: 'recca0120',
-      password: 'password',
-      name: 'recca0120',
-      email: 'recca0120@gmail.com',
-      avatar: 'images/heros/10.jpg',
-      refresh_token: true,
-    },
-    {
-      id: 1,
-      username: '1-rogelio',
-      password: '1-rogelio',
-      name: 'Rogelio Flores',
-      email: 'rogelio.flores@example.com',
-      role: 'IT_EMPLOYEE',
-      permissions: ['canAdd', 'canDelete', 'canEdit', 'canRead'],
-      avatar: 'images/avatar.jpg',
-    }
-  ];
+  private users = usersdb;
+  private employeesDb = employees;
+  private historicalDb = historical;
+  private incidentCategoriesDb = categories;
+  private incidentsDb = incidents;
+  private incidentTicketsDb = incidentTiceks;
+  private itTeams = itTeams;
+  private ticketActionsDb = ticketActions;
+  private ticketPrioritiesDb = ticketPriorities;
+  private ticketStatusesDb = ticketStatuses;
 
   createDb(
     reqInfo?: RequestInfo
@@ -145,6 +74,83 @@ export class InMemDataService implements InMemoryDbService {
         ? { status: STATUS.OK, body: user }
         : { status: STATUS.UNAUTHORIZED, body: {} };
       const response = Object.assign({ headers, url }, result);
+
+      return reqInfo.utils.createResponse$(() => response);
+    }
+
+    if (is(reqInfo, 'api/incidents')) {
+      const incidents = this.incidentCategoriesDb.map(category => {
+        return {
+          ...category,
+          incidents: this.incidentsDb.filter(({ category_id }) => category_id === category.id),
+        };
+      });
+      const result = { status: STATUS.OK, body: { data: incidents } };
+      const response = Object.assign({ headers, url }, result);
+
+      return reqInfo.utils.createResponse$(() => response);
+    }
+
+    if (is(reqInfo, 'api/tickets/statuses')) {
+      const result = { status: STATUS.OK, body: { data: this.ticketStatusesDb } };
+      const response = Object.assign({ headers, url }, result);
+
+      return reqInfo.utils.createResponse$(() => response);
+    }
+
+    if (is(reqInfo, 'api/employees')) {
+      const [idItTeam] = reqInfo.query.get('id_it_team') ?? ['0'];
+      const response: any = { headers, url, status: STATUS.OK };
+
+      if (idItTeam === '0') {
+        response.body = { data: this.employeesDb };
+        return reqInfo.utils.createResponse$(() => response);
+      }
+
+      const filterEmployees = this.employeesDb.filter(({ id_it_team }) => id_it_team === +idItTeam);
+      response.body = { data: filterEmployees };
+
+      return reqInfo.utils.createResponse$(() => response);
+    }
+
+    if (is(reqInfo, 'api/requesters')) {
+      const [idItTeam] = reqInfo.query.get('id_it_team') ?? ['0'];
+      const response: any = { headers, url, status: STATUS.OK };
+
+      if (idItTeam === '0') {
+        response.body = { data: this.employeesDb.filter(({ id_it_team }) => !id_it_team) };
+        return reqInfo.utils.createResponse$(() => response);
+      }
+
+      const filterEmployees: Set<Employee> = new Set();
+
+      const filterTickets = this.incidentTicketsDb.filter(({ id_current_history }) => {
+        return (
+          this.historicalDb.find(({ id }) => id_current_history === id)?.id_current_it_team ===
+          +idItTeam
+        );
+      });
+
+      filterTickets.forEach(({ id_employee_owner }) => {
+        const emp = this.employeesDb.find(({ id }) => id === id_employee_owner);
+        if (emp) filterEmployees.add(emp);
+      });
+
+      response.body = { data: Array.from(filterEmployees) };
+
+      return reqInfo.utils.createResponse$(() => response);
+    }
+
+    if (is(reqInfo, 'api/tickets/incidents')) {
+      const [idItTeam] = reqInfo.query.get('id_it_team') ?? ['0'];
+      const response: any = { headers, url, status: STATUS.OK };
+
+      if (idItTeam === '0') {
+        response.body = { data: getIncidentTickets(+idItTeam) };
+        return reqInfo.utils.createResponse$(() => response);
+      }
+
+      response.body = { data: getIncidentTickets(+idItTeam) };
 
       return reqInfo.utils.createResponse$(() => response);
     }

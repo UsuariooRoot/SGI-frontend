@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import {
@@ -6,35 +6,35 @@ import {
   RequesterEmployee,
   TicketStatus,
 } from '../components/filters/filters.component';
+import { Employee } from '../typings';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FilterService {
-  private readonly assignedEmployeesUrl = 'data/api/it-team/id/employees/employees-by-it-team.json';
-  private readonly requesterEmployeesUrl =
-    'data/api/it-team/id/requesters/requesters-by-it-team.json';
-  private readonly ticketStatusesUrl = 'data/api/incidents/statuses.json';
 
   private readonly http = inject(HttpClient);
 
-  getRequestersByItTeam(idItTeam: number): Observable<RequesterEmployee[]> {
+  getEmployeesByItTeam(idItTeam: number): Observable<Employee[]> {
+    const params = new HttpParams().set('id_it_team', idItTeam);
     return this.http
-      .get<{ data: RequesterEmployee[] }>(this.requesterEmployeesUrl)
+      .get<{ data: Employee[] }>("api/employees", { params})
       .pipe(map(response => response.data));
   }
 
-  getEmployeesByItTeam(idItTeam: number): Observable<ItTeamEmployee[]> {
+  getRequestersByItTeam(idItTeam: number): Observable<Employee[]> {
+    const params = new HttpParams().set('id_it_team', idItTeam);
     return this.http
-      .get<{ data: ItTeamEmployee[] }>(this.assignedEmployeesUrl)
+      .get<{ data: Employee[] }>("api/requesters", { params })
       .pipe(map(response => response.data));
   }
+
 
   getIncidentTicketStatuses(): Observable<TicketStatus[]> {
-    return this.http.get<{ data: TicketStatus[] }>(this.ticketStatusesUrl).pipe(
+    return this.http.get<{ data: TicketStatus[] }>('api/tickets/statuses').pipe(
       map(response =>
-        response.data.map(ticket => {
-          return { ...ticket, active: false };
+        response.data.map(status => {
+          return { ...status, active: false };
         })
       )
     );

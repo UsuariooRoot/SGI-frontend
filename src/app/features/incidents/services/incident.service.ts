@@ -1,18 +1,19 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { forkJoin, Observable } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Category, Employee, Incident, Status } from '../typings';
+import { Employee, Incident, TicketStatus } from '../typings';
+import { IncidentTicketFilter } from '../components/filters/filters.component';
 
-export interface IncidentTicket {
+export interface IncidentTicketResponse {
   id: number;
   description: string;
-  created_at: string;
-  status: Status;
+  status: TicketStatus;
   reported_by: Employee;
-  assigned_to: Employee;
+  assigned_to?: Employee;
   incident: Incident;
   id_it_team: number;
+  created_at: Date;
 }
 
 export interface IncidentCategory {
@@ -26,17 +27,22 @@ export interface IncidentCategory {
   providedIn: 'root',
 })
 export class IncidentService {
-  private ticketsUrl = 'data/api/tickets/incidents/all.json';
-
-  constructor(private http: HttpClient) {}
+  private readonly http = inject(HttpClient);
 
   /**
    * Obtiene la lista de tickets desde el archivo JSON simulado.
    * @returns Observable con un array de ITicket[]
    */
-  getIncidentTickets(): Observable<IncidentTicket[]> {
+  getIncidentTickets({
+    idItTeam,
+    filter
+  }: {
+    idItTeam: number;
+    filter?: IncidentTicketFilter;
+  }): Observable<IncidentTicketResponse[]> {
+    const params = new HttpParams().set('id_it_team', idItTeam);
     return this.http
-      .get<{ data: IncidentTicket[] }>(this.ticketsUrl)
+      .get<{ data: IncidentTicketResponse[] }>('api/tickets/incidents', { params })
       .pipe(map(response => response.data));
   }
 
@@ -45,20 +51,8 @@ export class IncidentService {
    * @returns Observable con un array de IncidentCategory[]
    */
   getIncidentCategory(): Observable<IncidentCategory[]> {
-    const incidents$ = this.http.get<{ data: Incident[] }>('data/api/incidents/all.json');
-    const categories$ = this.http.get<{ data: Category[] }>('data/api/incidents/categories.json');
-
-    const mergeData = (incidents: Incident[], categories: Category[]) => {
-      return categories.map(category => {
-        return {
-          ...category,
-          incidents: incidents.filter(({ category_id }) => category_id === category.id),
-        };
-      });
-    };
-
-    return forkJoin([incidents$, categories$]).pipe(
-      map(([incidents, categories]) => mergeData(incidents.data, categories.data))
-    );
+    return this.http
+      .get<{ data: IncidentCategory[] }>('api/incidents')
+      .pipe(map(response => response.data));
   }
 }

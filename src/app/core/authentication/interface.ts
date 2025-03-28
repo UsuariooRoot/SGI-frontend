@@ -1,11 +1,12 @@
 export interface User {
   [prop: string]: any;
 
-  id?: number | string | null;
+  id?: number;
   name?: string;
   email?: string;
   avatar?: string;
   role?: string;
+  id_it_team?: number;
   permissions?: any[];
 }
 

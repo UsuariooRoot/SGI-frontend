@@ -27,9 +27,9 @@
           <mat-label>Por persona a cargo</mat-label>
           <mtx-select
             [items]="itTeamEmployees"
-            bindLabel="name"
+            bindLabel="fullname"
             bindValue="id"
-            [(ngModel)]="filters.idItEmployee"
+            [(ngModel)]="filters.assigned_employee"
             [tabIndex]="1"
           />
         </mat-form-field>
@@ -39,9 +39,9 @@
           <mat-label>Por solicitante</mat-label>
           <mtx-select
             [items]="requesterEmployees"
-            bindLabel="name"
+            bindLabel="fullname"
             bindValue="id"
-            [(ngModel)]="filters.idRequesterEmployee"
+            [(ngModel)]="filters.employee_owner"
             [tabIndex]="2"
           />
         </mat-form-field>

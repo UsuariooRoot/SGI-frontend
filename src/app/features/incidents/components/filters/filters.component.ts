@@ -7,6 +7,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FilterService } from '@features/incidents/services/filter.service';
+import { Employee } from '@features/incidents/typings';
 import { MtxSelectModule } from '@ng-matero/extensions/select';
 import { ToastrService } from 'ngx-toastr';
 
@@ -26,12 +27,13 @@ export interface TicketStatus {
   active?: boolean;
 }
 
-export interface IncidentTicketFilters {
-  ticketStatuses: number[];
-  idItEmployee: number;
-  idRequesterEmployee: number;
-  from: string;
-  to: string;
+export interface IncidentTicketFilter {
+  news?: boolean;
+  statuses?: number[];
+  assigned_employee?: number;
+  employee_owner?: number;
+  from?: Date;
+  to?: Date;
 }
 
 @Component({
@@ -56,10 +58,10 @@ export class FiltersComponent implements OnInit {
   @Input({ required: true }) idItTeam!: number;
 
   TICKET_STATUSES: TicketStatus[] = [];
-  itTeamEmployees: ItTeamEmployee[] = [];
-  requesterEmployees: RequesterEmployee[] = [];
+  itTeamEmployees: Employee[] = [];
+  requesterEmployees: Employee[] = [];
 
-  filters: IncidentTicketFilters = this.getInitialStateOfFilters();
+  filters: IncidentTicketFilter = this.getInitialStateOfFilters();
 
   ngOnInit(): void {
     this.getIncidentTicketStatuses();
@@ -99,22 +101,17 @@ export class FiltersComponent implements OnInit {
     });
   }
 
-  getInitialStateOfFilters(): IncidentTicketFilters {
+  getInitialStateOfFilters(): IncidentTicketFilter {
     return {
-      ticketStatuses: [],
-      idItEmployee: -1,
-      idRequesterEmployee: -1,
-      from: '',
-      to: '',
+      news: false,
+      statuses: [],
     };
   }
 
   applyFilters() {
-    const statuses = this.TICKET_STATUSES.filter(ticket => ticket.active === true).map(
-      ticket => ticket.id
-    );
+    const statuses = this.TICKET_STATUSES.filter(ticket => ticket.active).map(ticket => ticket.id);
 
-    this.filters.ticketStatuses = statuses;
+    this.filters.statuses = statuses;
 
     this.toast.success(JSON.stringify(this.filters));
   }

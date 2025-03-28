@@ -14,6 +14,12 @@
           "badge": {
             "color": "red-50",
             "value": "5"
+          },
+          "permissions": {
+            "only": [
+              "IT_EMPLOYEE",
+              "IT_TEAM_LEADER"
+            ]
           }
         },
         {
@@ -24,6 +30,12 @@
           "badge": {
             "color": "red-50",
             "value": "5"
+          },
+          "permissions": {
+            "only": [
+              "IT_EMPLOYEE",
+              "IT_TEAM_LEADER"
+            ]
           }
         },
         {
@@ -56,14 +68,15 @@
           "route": "solutions",
           "name": "solutions",
           "type": "link",
-          "icon": "search"
+          "icon": "search",
+          "permissions": {
+            "only": [
+              "IT_EMPLOYEE",
+              "IT_TEAM_LEADER"
+            ]
+          }
         }
-      ],
-      "permissions": {
-        "only": [
-          "IT_EMPLOYEE"
-        ]
-      }
+      ]
     },
     {
       "route": "requests",
@@ -90,6 +103,7 @@
       ],
       "permissions": {
         "only": [
+          "NON-IT_EMPLOYEE",
           "IT_EMPLOYEE"
         ]
       }
