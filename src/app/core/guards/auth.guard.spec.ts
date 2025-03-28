@@ -3,8 +3,10 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Component } from '@angular/core';
 import { TestBed, inject } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
-import { AuthService, TokenService, authGuard } from '@core/authentication';
+import { AuthService } from '@core/authentication/auth.service';
+import { TokenService } from '@core/authentication/token.service';
 import { LocalStorageService, MemoryStorageService } from '@shared/services/storage.service';
+import { authGuard } from './auth.guard';
 
 @Component({
   template: '',
