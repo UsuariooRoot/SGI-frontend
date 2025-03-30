@@ -2,7 +2,7 @@
   "menu": {
     "incidents": "Incidentes",
     "incidents.all": "Todos",
-    "incidents.me": "Mis incidentes",
+    "incidents.owned": "Mis incidentes",
     "incidents.assigned": "Asignados",
     "incidents.create": "Crear ticket",
     "incidents.solutions": "Buscar solución",

@@ -39,8 +39,8 @@
           }
         },
         {
-          "route": "me",
-          "name": "me",
+          "route": "owned",
+          "name": "owned",
           "type": "link",
           "icon": "inbox",
           "badge": {
