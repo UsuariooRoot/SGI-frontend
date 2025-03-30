@@ -3,7 +3,7 @@ import { HttpRequest } from '@angular/common/http';
 import { InMemoryDbService, RequestInfo, STATUS } from 'angular-in-memory-web-api';
 import { from, Observable } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
-import { find, map, switchMap } from 'rxjs/operators';
+import { filter, find, map, switchMap } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { JWT } from './jwt';
 import { employees, users as usersdb } from './tables/employees';
@@ -14,10 +14,10 @@ import { itTeams } from './tables/it-teams';
 import { ticketActions } from './tables/ticket-actions';
 import { ticketStatuses } from './tables/ticket-statuses';
 import { ticketPriorities } from './tables/ticket-priorities';
-import { Employee, History, IncidentTicket } from './tables/db-typings';
+import { Employee } from './tables/db-typings';
 import { incidentTiceks } from './tables/incident-tickets';
-import { IncidentTicketResponse, IncidentTicketFilter } from './api';
-import { getIncidentTickets } from './utils/filter-tickets';
+import { getIncidentTickets } from './helpers/get-incident-tickets';
+import { IncidentTicketFilter } from './api';
 
 const jwt = new JWT();
 
@@ -142,15 +142,33 @@ export class InMemDataService implements InMemoryDbService {
     }
 
     if (is(reqInfo, 'api/tickets/incidents')) {
-      const [idItTeam] = reqInfo.query.get('id_it_team') ?? ['0'];
+      const { query } = reqInfo;
       const response: any = { headers, url, status: STATUS.OK };
+      response.body = { data: [] };
 
-      if (idItTeam === '0') {
-        response.body = { data: getIncidentTickets(+idItTeam) };
-        return reqInfo.utils.createResponse$(() => response);
+      if (query.size > 0) {
+        const filter: any = {};
+
+        query.forEach((value, key) => {
+          if (key === 'statuses') {
+            filter[key] = value.map(v => +v);
+          }
+          filter[key] = value[0];
+        });
+
+        const { news, id_it_team, statuses, employee_owner, assigned_employee, from, to } = filter;
+        const filterParams: IncidentTicketFilter = {
+          news: news ? news === 'true' : undefined,
+          id_it_team: id_it_team ? Number(id_it_team) : undefined,
+          statuses: statuses ? statuses.map((v: string) => Number(v)) : undefined,
+          employee_owner: employee_owner ? Number(employee_owner) : undefined,
+          assigned_employee: assigned_employee ? Number(assigned_employee) : undefined,
+          from: from ? new Date(from) : undefined,
+          to: to ? new Date(to) : undefined,
+        };
+
+        response.body = { data: getIncidentTickets(filterParams) };
       }
-
-      response.body = { data: getIncidentTickets(+idItTeam) };
 
       return reqInfo.utils.createResponse$(() => response);
     }

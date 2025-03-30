@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Employee, Incident, TicketStatus } from '../typings';
 import { IncidentTicketFilter } from '../components/filters/filters.component';
+import { employees } from '@shared/in-mem/tables/employees';
 
 export interface IncidentTicketResponse {
   id: number;
@@ -33,17 +34,21 @@ export class IncidentService {
    * Obtiene la lista de tickets desde el archivo JSON simulado.
    * @returns Observable con un array de ITicket[]
    */
-  getIncidentTickets({
-    idItTeam,
-    filter
-  }: {
-    idItTeam: number;
-    filter?: IncidentTicketFilter;
-  }): Observable<IncidentTicketResponse[]> {
-    const params = new HttpParams().set('id_it_team', idItTeam);
+  getIncidentTickets(filter?: IncidentTicketFilter): Observable<IncidentTicketResponse[]> {
+    let params = new HttpParams();
+    if (filter) {
+      const filterParameters = Object.entries(filter);
+      filterParameters.forEach(([key, value]) => {
+        params = params.set(key, value)
+      })
+    }
     return this.http
       .get<{ data: IncidentTicketResponse[] }>('api/tickets/incidents', { params })
-      .pipe(map(response => response.data));
+      .pipe(
+        map(response => {
+          return response.data;
+        })
+      );
   }
 
   /**

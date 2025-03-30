@@ -30,6 +30,7 @@ export interface TicketStatus {
 export interface IncidentTicketFilter {
   news?: boolean;
   statuses?: number[];
+  id_it_team?: number;
   assigned_employee?: number;
   employee_owner?: number;
   from?: Date;
@@ -117,6 +118,7 @@ export class FiltersComponent implements OnInit {
   }
 
   cleanFilters() {
+    this.getIncidentTicketStatuses();
     this.filters = this.getInitialStateOfFilters();
   }
 }

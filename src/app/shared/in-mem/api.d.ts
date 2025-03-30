@@ -14,6 +14,7 @@ export interface IncidentTicketResponse {
 export interface IncidentTicketFilter {
   news?: boolean;
   statuses?: number[];
+  id_it_team?: number;
   assigned_employee?: number;
   employee_owner?: number;
   from?: Date;
