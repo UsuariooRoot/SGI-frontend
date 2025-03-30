@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FilterService } from '@features/incidents/services/filter.service';
 import { Employee } from '@features/incidents/typings';
 import { MtxSelectModule } from '@ng-matero/extensions/select';
+import { NgxPermissionsModule } from 'ngx-permissions';
 import { ToastrService } from 'ngx-toastr';
 
 export interface RequesterEmployee {
@@ -48,6 +49,7 @@ export interface IncidentTicketFilter {
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    NgxPermissionsModule,
   ],
   templateUrl: './filters.component.html',
   styleUrl: './filters.component.scss',

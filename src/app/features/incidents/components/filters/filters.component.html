@@ -6,7 +6,7 @@
     <div class="ticket-statuses">
       @for (status of TICKET_STATUSES; track $index) {
         <div class="cbx">
-          <input type="checkbox" [id]="status.id" [(ngModel)]="status.active">
+          <input type="checkbox" [id]="status.id" [(ngModel)]="status.active" />
           <label [class.active]="status.active" [htmlFor]="status.id">
             <div>
               <span></span>
@@ -21,32 +21,34 @@
     </div>
     <!-- separator -->
     <div class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align"></div>
-    <div class="by_employees">
-      <div>
-        <mat-form-field class="w-full">
-          <mat-label>Por persona a cargo</mat-label>
-          <mtx-select
-            [items]="itTeamEmployees"
-            bindLabel="fullname"
-            bindValue="id"
-            [(ngModel)]="filters.assigned_employee"
-            [tabIndex]="1"
-          />
-        </mat-form-field>
+    <ng-template [ngxPermissionsOnly]="['IT_TEAM_LEADER', 'IT_EMPLOYEE']">
+      <div class="by_employees">
+        <div>
+          <mat-form-field class="w-full">
+            <mat-label>Por persona a cargo</mat-label>
+            <mtx-select
+              [items]="itTeamEmployees"
+              bindLabel="fullname"
+              bindValue="id"
+              [(ngModel)]="filters.assigned_employee"
+              [tabIndex]="1"
+            />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="w-full">
+            <mat-label>Por solicitante</mat-label>
+            <mtx-select
+              [items]="requesterEmployees"
+              bindLabel="fullname"
+              bindValue="id"
+              [(ngModel)]="filters.employee_owner"
+              [tabIndex]="2"
+            />
+          </mat-form-field>
+        </div>
       </div>
-      <div>
-        <mat-form-field class="w-full" >
-          <mat-label>Por solicitante</mat-label>
-          <mtx-select
-            [items]="requesterEmployees"
-            bindLabel="fullname"
-            bindValue="id"
-            [(ngModel)]="filters.employee_owner"
-            [tabIndex]="2"
-          />
-        </mat-form-field>
-      </div>
-    </div>
+    </ng-template>
     <div class="date__range">
       <div class="from">
         <mat-form-field>
