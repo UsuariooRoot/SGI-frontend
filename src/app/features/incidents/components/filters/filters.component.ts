@@ -12,12 +12,7 @@ import { MtxSelectModule } from '@ng-matero/extensions/select';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { ToastrService } from 'ngx-toastr';
 
-export interface RequesterEmployee {
-  id: number;
-  fullName: string;
-}
-
-export interface ItTeamEmployee {
+export interface GenericEmployee {
   id: number;
   fullName: string;
 }
@@ -58,57 +53,56 @@ export class FiltersComponent implements OnInit {
   private readonly filterService = inject(FilterService);
   private readonly toast = inject(ToastrService);
 
+
   @Input({ required: true }) idItTeam!: number;
 
   TICKET_STATUSES: TicketStatus[] = [];
-  itTeamEmployees: Employee[] = [];
-  requesterEmployees: Employee[] = [];
+  IT_TEAM_EMPLOYEES: Employee[] = [];
+  REQUESTER_EMPLOYEES: Employee[] = [];
 
-  filters: IncidentTicketFilter = this.getInitialStateOfFilters();
+  statuses: any = [];
+  filters: IncidentTicketFilter = {};
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.getIncidentTicketStatuses();
     this.getEmployeesByItTeam(this.idItTeam);
     this.getRequestersByItTeam(this.idItTeam);
   }
 
-  getEmployeesByItTeam(idItTeam: number) {
+  private getEmployeesByItTeam(idItTeam: number) {
     return this.filterService.getEmployeesByItTeam(idItTeam).subscribe({
       next: data => {
-        this.itTeamEmployees = data;
+        this.IT_TEAM_EMPLOYEES = data;
       },
       error: err => console.error('Error al obtener empleados por equipo TI:', err),
     });
   }
 
-  getRequestersByItTeam(idItTeam: number) {
+  private getRequestersByItTeam(idItTeam: number) {
     return this.filterService.getRequestersByItTeam(idItTeam).subscribe({
       next: data => {
-        this.requesterEmployees = data;
+        this.REQUESTER_EMPLOYEES = data;
       },
       error: err => console.error('Error al obtener solicitantes por equipo de TI:', err),
     });
   }
 
-  getIncidentTicketStatuses() {
+  private getIncidentTicketStatuses() {
     this.filterService.getIncidentTicketStatuses().subscribe({
-      next: data => {
-        const newTicketStatus: TicketStatus = {
+      next: statuses => {
+        const formattedStatuses: TicketStatus[] = statuses.map(status => {
+          return { ...status, active: false };
+        });
+        const newStatus: TicketStatus = {
           id: 0,
           name: 'Nuevo',
           active: false,
         };
-        this.TICKET_STATUSES = [newTicketStatus, ...data];
+        this.TICKET_STATUSES = [newStatus, ...formattedStatuses];
+        this.statuses = JSON.stringify(this.TICKET_STATUSES);
       },
       error: err => console.error('Error al obtener los estados de los ticket de incidentes:', err),
     });
-  }
-
-  getInitialStateOfFilters(): IncidentTicketFilter {
-    return {
-      news: false,
-      statuses: [],
-    };
   }
 
   applyFilters() {
@@ -120,7 +114,7 @@ export class FiltersComponent implements OnInit {
   }
 
   cleanFilters() {
-    this.getIncidentTicketStatuses();
-    this.filters = this.getInitialStateOfFilters();
+    this.TICKET_STATUSES = JSON.parse(this.statuses);
+    this.filters = {};
   }
 }

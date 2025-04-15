@@ -37,8 +37,8 @@ export class LoginComponent {
   isSubmitting = false;
 
   loginForm = this.fb.nonNullable.group({
-    username: ['ng-matero', [Validators.required]],
-    password: ['ng-matero', [Validators.required]],
+    username: ['1-rogelio', [Validators.required]],
+    password: ['1-rogelio', [Validators.required]],
     rememberMe: [false],
   });
 
@@ -63,7 +63,7 @@ export class LoginComponent {
       .subscribe({
         next: () => {
           // redirect to a previous route if there was one
-          this.router.navigateByUrl('/');
+          this.router.navigateByUrl('/incidents');
         },
         error: (errorRes: HttpErrorResponse) => {
           if (errorRes.status === 401) {

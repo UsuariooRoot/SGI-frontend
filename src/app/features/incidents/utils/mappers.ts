@@ -1,7 +1,7 @@
-import { IncidentTicketResponse } from "@shared/in-mem/api";
 import { TicketRow } from "../components/incident-table/incident-table.component";
 
-export function mapIncidentTicketToRowTicket(data: IncidentTicketResponse): TicketRow {
+// diplock
+export function mapIncidentTicketToRowTicket(data: any): TicketRow {
   const { id, created_at, description, incident, reported_by, status, assigned_to } = data;
 
   return {

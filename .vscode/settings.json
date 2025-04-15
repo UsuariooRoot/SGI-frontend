@@ -19,4 +19,14 @@
   },
   "ngx-translate.lookup.resourcesType": "json",
   "ngx-translate.lookup.resourcesPath": "public/i18n/zh-CN.json",
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "src/**/*.md": true,
+    "src/**/*.spec.ts": true
+  }
 }

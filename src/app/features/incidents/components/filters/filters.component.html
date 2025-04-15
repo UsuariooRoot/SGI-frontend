@@ -27,7 +27,7 @@
           <mat-form-field class="w-full">
             <mat-label>Por persona a cargo</mat-label>
             <mtx-select
-              [items]="itTeamEmployees"
+              [items]="IT_TEAM_EMPLOYEES"
               bindLabel="fullname"
               bindValue="id"
               [(ngModel)]="filters.assigned_employee"
@@ -39,7 +39,7 @@
           <mat-form-field class="w-full">
             <mat-label>Por solicitante</mat-label>
             <mtx-select
-              [items]="requesterEmployees"
+              [items]="REQUESTER_EMPLOYEES"
               bindLabel="fullname"
               bindValue="id"
               [(ngModel)]="filters.employee_owner"

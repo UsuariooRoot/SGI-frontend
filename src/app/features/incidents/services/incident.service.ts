@@ -1,10 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Employee, Incident, TicketStatus } from '../typings';
 import { IncidentTicketFilter } from '../components/filters/filters.component';
-import { employees } from '@shared/in-mem/tables/employees';
+import { INCIDENT_CATEGORIES, INCIDENT_TICKETS } from '../data/todos';
 
 export interface IncidentTicketResponse {
   id: number;
@@ -35,6 +35,8 @@ export class IncidentService {
    * @returns Observable con un array de ITicket[]
    */
   getIncidentTickets(filter?: IncidentTicketFilter): Observable<IncidentTicketResponse[]> {
+    return of(INCIDENT_TICKETS);
+    /*
     let params = new HttpParams();
     if (filter) {
       const filterParameters = Object.entries(filter);
@@ -49,6 +51,7 @@ export class IncidentService {
           return response.data;
         })
       );
+      */
   }
 
   /**
@@ -56,8 +59,11 @@ export class IncidentService {
    * @returns Observable con un array de IncidentCategory[]
    */
   getIncidentCategory(): Observable<IncidentCategory[]> {
+    return of(INCIDENT_CATEGORIES);
+    /*
     return this.http
       .get<{ data: IncidentCategory[] }>('api/incidents')
       .pipe(map(response => response.data));
+      */
   }
 }

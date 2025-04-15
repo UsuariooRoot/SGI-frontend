@@ -7,31 +7,32 @@ import { OwnedComponent } from './pages/owned/owned.component';
 const routes: Routes = [
   {
     path: '',
-    data: {
-      permissions: {
-        only: ['IT_EMPLOYEE'],
-      },
-    },
+    // data: {
+    //   permissions: {
+    //     only: ['IT_EMPLOYEE'],
+    //     redirectTo: '/incidents/owned'
+    //   },
+    // },
     component: ListComponent, // Path -> "/incidentes"
   },
   {
     path: 'owned',
-    data: {
-      permissions: {
-        only: ['NON-IT_EMPLOYEE'],
-        redirectTo: '/auth/no-access'
-      },
-    },
+    // data: {
+    //   permissions: {
+    //     only: ['NON-IT_EMPLOYEE'],
+    //     redirectTo: '/auth/no-access'
+    //   },
+    // },
     component: OwnedComponent, // Path -> "/incidentes/owned"
   },
   {
     path: 'create',
-    data: {
-      permissions: {
-        only: ['NON-IT_EMPLOYEE'],
-        redirectTo: '/auth/no-access'
-      },
-    },
+    // data: {
+    //   permissions: {
+    //     only: ['NON-IT_EMPLOYEE'],
+    //     // redirectTo: '/auth/no-access'
+    //   },
+    // },
     component: CreateComponent, // Path -> "/incidentes/create"
   },
 ];

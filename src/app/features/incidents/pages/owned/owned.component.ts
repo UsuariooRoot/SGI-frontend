@@ -8,7 +8,6 @@ import {
 } from '@features/incidents/components/incident-table/incident-table.component';
 import { IncidentService } from '@features/incidents/services/incident.service';
 import { mapIncidentTicketToRowTicket } from '@features/incidents/utils/mappers';
-import { IncidentTicketFilter } from '@shared/in-mem/api';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -34,7 +33,8 @@ export class OwnedComponent {
     });
   }
 
-  getTicketRows(filter?: IncidentTicketFilter) {
+  // diplock
+  getTicketRows(filter?: any) {
     this.incidentService.getIncidentTickets(filter).subscribe({
       next: data => {
         console.log(data);

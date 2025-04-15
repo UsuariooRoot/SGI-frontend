@@ -14,12 +14,6 @@
           "badge": {
             "color": "red-50",
             "value": "5"
-          },
-          "permissions": {
-            "only": [
-              "IT_EMPLOYEE",
-              "IT_TEAM_LEADER"
-            ]
           }
         },
         {
@@ -30,12 +24,6 @@
           "badge": {
             "color": "red-50",
             "value": "5"
-          },
-          "permissions": {
-            "only": [
-              "IT_EMPLOYEE",
-              "IT_TEAM_LEADER"
-            ]
           }
         },
         {
@@ -46,35 +34,19 @@
           "badge": {
             "color": "red-50",
             "value": "5"
-          },
-          "permissions": {
-            "only": [
-              "NON-IT_EMPLOYEE"
-            ]
           }
         },
         {
           "route": "create",
           "name": "create",
           "type": "link",
-          "icon": "add",
-          "permissions": {
-            "only": [
-              "NON-IT_EMPLOYEE"
-            ]
-          }
+          "icon": "add"
         },
         {
           "route": "solutions",
           "name": "solutions",
           "type": "link",
-          "icon": "search",
-          "permissions": {
-            "only": [
-              "IT_EMPLOYEE",
-              "IT_TEAM_LEADER"
-            ]
-          }
+          "icon": "search"
         }
       ]
     },
@@ -100,13 +72,7 @@
           "type": "link",
           "icon": "add"
         }
-      ],
-      "permissions": {
-        "only": [
-          "NON-IT_EMPLOYEE",
-          "IT_EMPLOYEE"
-        ]
-      }
+      ]
     }
   ]
 }

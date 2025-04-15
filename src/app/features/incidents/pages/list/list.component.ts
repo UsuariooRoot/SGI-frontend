@@ -13,6 +13,7 @@ import { User } from '@core/authentication/interface';
 import { AuthService } from '@core/authentication/auth.service';
 import { Observable } from 'rxjs';
 import { mapIncidentTicketToRowTicket } from '@features/incidents/utils/mappers';
+import { FilterService } from '@features/incidents/services/filter.service';
 
 @Component({
   selector: 'app-list',
@@ -24,12 +25,17 @@ export class ListComponent implements OnInit {
   private readonly incidentService = inject(IncidentService);
   private readonly authService = inject(AuthService);
   private user$: Observable<User> = this.authService.user();
+  private filterService = inject(FilterService);
+
   @Input({required: true}) filter!: IncidentTicketFilter;
 
   idItTeam = 0;
   ticketRows: TicketRow[] = [];
 
   ngOnInit(): void {
+    this.filterService.$currentFilters.subscribe(filters => {
+      this.applyFilters(filters);
+    });
     this.user$.subscribe({
       next: user => {
         this.idItTeam = this.getIdItTeam(user);
@@ -49,5 +55,9 @@ export class ListComponent implements OnInit {
 
   getIdItTeam(user: User): number {
     return user?.id_it_team ?? 0;
+  }
+
+  applyFilters(filters: IncidentTicketFilter) {
+    this.getTicketRows(filters);
   }
 }
