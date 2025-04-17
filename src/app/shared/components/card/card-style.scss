@@ -1,0 +1,6 @@
+@mixin base-card {
+  padding: 16px;
+  background-color: var(--mat-sys-surface);
+  border-radius: var(--mat-sys-corner-medium);
+  border: 1px solid var(--mat-sys-outline-variant);
+}

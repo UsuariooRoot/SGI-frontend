@@ -1,5 +1,6 @@
 @use '../../../../shared/components/input/input-style.scss' as input-style;
 @use '../../../../shared/components/button/button-style.scss' as button-style;
+@use '../../../../shared/components/card/card-style.scss' as card-style;
 
 // styles for the inputs of this component
 input {
@@ -21,12 +22,9 @@ h1 {
 }
 
 .register-container {
+  @include card-style.base-card;
   max-width: 700px;
   margin: 0 auto;
-  padding: 16px;
-  background-color: var(--mat-sys-surface);
-  border: 1px solid var(--mat-sys-outline);
-  border-radius: var(--mat-sys-corner-medium);
 }
 
 .register-content {
