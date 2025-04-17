@@ -30,6 +30,23 @@
   --mat-toolbar-standard-height: 4rem;
   --mat-toolbar-mobile-height: 3.5rem;
   // --mdc-icon-button-icon-color -> to change the color of the icons
+
+
+  /* Custom colors */
+  --primary-color: #720405;
+  --primary-text-color: #FFF;
+  --primary-color-hover: #860000;
+  --secondary-color: #616161;
+  --secondary-text-color: #510303;
+  --secondary-color-hover: #6161614d;
+
+  /* Custom font sizes */
+  --font-size-normal: 1rem;
+  --font-size-small: 0.875rem;
+  --font-size-medium: 1.25rem;
+  --font-size-large: 1.5rem;
+  --font-size-xlarge: 2rem;
+
 }
 
 *,
