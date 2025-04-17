@@ -7,7 +7,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MtxSelectModule } from '@ng-matero/extensions/select';
-import { SearchInputComponent } from '@shared/components/search-input/search-input.component';
 
 @Component({
   selector: 'app-register',
@@ -19,7 +18,6 @@ import { SearchInputComponent } from '@shared/components/search-input/search-inp
     MatDatepickerModule,
     MatFormFieldModule,
     MatInputModule,
-    SearchInputComponent,
     MatIconModule,
   ],
   templateUrl: './register.component.html',

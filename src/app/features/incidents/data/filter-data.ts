@@ -12,19 +12,19 @@ export const TICKET_STATUSES = [
     name: 'Cancelado',
   },
   {
-    id: 3,
+    id: 4,
     name: 'Atendido',
   },
   {
-    id: 3,
+    id: 5,
     name: 'Cerrado',
   },
   {
-    id: 3,
+    id: 6,
     name: 'Emitido a SD',
   },
   {
-    id: 3,
+    id: 7,
     name: 'Emitido a GAT',
   },
 ];
