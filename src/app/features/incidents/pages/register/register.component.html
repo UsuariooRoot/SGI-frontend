@@ -1,0 +1,37 @@
+<div class="register-container">
+  <h1>Registrar Incidentes</h1>
+  <div class="register-content">
+    <form action="/api/employees?name=" method="GET" class="form-search">
+      <!-- <app-search-input placeholder="Busca un empleado por su nombre"/> -->
+      <div class="search-input-container">
+        <input
+          id="search-input"
+          class="search-input"
+          type="text"
+          placeholder="Busca un empleado por su nombre"
+        />
+        <button for="search-input" class="search-icon-button">
+          <mat-icon>search</mat-icon>
+        </button>
+      </div>
+    </form>
+    <form action="/api/incidents/register" class="form-register">
+      <div class="form-register-item">
+        <label>ID:</label>
+        <input type="text" id="owner-id" placeholder="ID del empleado" disabled />
+      </div>
+      <div class="form-register-item">
+        <label for="owner-name">Empleado:</label>
+        <input type="text" id="owner-name" placeholder="Nombres completos" disabled />
+      </div>
+      <div class="form-register-item">
+        <label for="owner-name">Departamento:</label>
+        <input type="text" id="owner-name" placeholder="Departamento del empleado" disabled />
+      </div>
+      <div class="form-register-actions">
+        <button type="button">Limpiar</button>
+        <button type="submit">Registrar</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -43,6 +43,12 @@
           "icon": "add"
         },
         {
+          "route": "register",
+          "name": "register",
+          "type": "link",
+          "icon": "search"
+        },
+        {
           "route": "solutions",
           "name": "solutions",
           "type": "link",

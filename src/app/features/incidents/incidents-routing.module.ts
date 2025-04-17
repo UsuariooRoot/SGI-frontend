@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ListComponent } from './pages/list/list.component';
 import { CreateComponent } from './pages/create/create.component';
 import { OwnedComponent } from './pages/owned/owned.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,10 @@ const routes: Routes = [
     //   },
     // },
     component: CreateComponent, // Path -> "/incidentes/create"
+  },
+  {
+    path: 'register',
+    component: RegisterComponent, // Path -> "/incidentes/register"
   },
 ];
 

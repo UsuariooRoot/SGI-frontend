@@ -5,6 +5,7 @@
     "incidents.owned": "Mis incidentes",
     "incidents.assigned": "Asignados",
     "incidents.create": "Crear ticket",
+    "incidents.register": "Registrar incidente",
     "incidents.solutions": "Buscar solución",
 
     "requests": "Solicitudes",
