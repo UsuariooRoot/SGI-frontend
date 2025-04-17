@@ -1,6 +1,132 @@
-<mat-card appearance="outlined">
-  <mat-card-header>
-    <mat-card-title>Acciones</mat-card-title>
-  </mat-card-header>
-  <mat-card-content class="actions-container"></mat-card-content>
-</mat-card>
+<div class="actions-container">
+  <h2>Acciones</h2>
+
+  <ul class="action-tabs">
+    <li [class.active]="currentAction === 'Cambiar estado'" (click)="showAction('Cambiar estado')">
+      Cambiar estado
+    </li>
+    <li [class.active]="currentAction === 'Cambiar prioridad'" (click)="showAction('Cambiar prioridad')">
+      Cambiar prioridad
+    </li>
+    <li [class.active]="currentAction === 'Asignar'" (click)="showAction('Asignar')">
+      Asignar
+    </li>
+    <li [class.active]="currentAction === 'Otros'" (click)="showAction('Otros')">
+      Otros
+    </li>
+  </ul>
+
+  <!-- Cambiar estado -->
+  @if (currentAction === 'Cambiar estado') {
+    <div id="status-action" class="action-content">
+      <div class="form-group">
+        <label for="new-status">Nuevo estado:</label>
+        <select id="new-status">
+          <option value="">Seleccionar estado</option>
+          <option value="resolved">Atendido</option>
+          <option value="closed">Cerrado</option>
+          <option value="cancelled">Cancelado</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="status-comment">Comentario:</label>
+        <textarea
+          id="status-comment"
+          placeholder="Agregar comentario sobre el cambio de estado..."
+        ></textarea>
+      </div>
+
+      <div class="btn-container">
+        <button class="btn btn-secondary">Cancelar</button>
+        <button class="btn btn-primary">Aplicar</button>
+      </div>
+    </div>
+  }
+
+
+   <!-- Cambiar prioridad -->
+   @if (currentAction === 'Cambiar prioridad') {
+    <div id="status-action" class="action-content">
+      <div class="form-group">
+        <label for="new-priority">Nueva prioridad:</label>
+        <select id="new-priority">
+          <option value="">Seleccionar prioridad</option>
+          <option value="low">Baja</option>
+          <option value="medium">Media</option>
+          <option value="high">Alta</option>
+          <option value="critical">Crítica</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="status-comment">Comentario:</label>
+        <textarea
+          id="status-comment"
+          placeholder="Agregar comentario sobre el cambio de prioridad..."
+        ></textarea>
+      </div>
+
+      <div class="btn-container">
+        <button class="btn btn-secondary">Cancelar</button>
+        <button class="btn btn-primary">Aplicar</button>
+      </div>
+    </div>
+  }
+
+  <!-- Asignar -->
+  @if (currentAction === 'Asignar') {
+    <div id="assign-action" class="action-content">
+      <div class="form-group">
+        <label for="assign-employee">Asignar a:</label>
+        <select id="assign-employee">
+          <option value="">Seleccionar empleado</option>
+          <option value="1">Ana Gómez</option>
+          <option value="2">Carlos Ruiz</option>
+          <option value="3">Laura Martínez</option>
+          <option value="4">Miguel Torres</option>
+          <option value="5">Patricia Vega</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="assign-comment">Instrucciones para el asignado:</label>
+        <textarea
+          id="assign-comment"
+          placeholder="Agregar instrucciones o información relevante..."
+        ></textarea>
+      </div>
+
+      <div class="btn-container">
+        <button class="btn btn-secondary">Cancelar</button>
+        <button class="btn btn-primary">Asignar</button>
+      </div>
+    </div>
+  }
+
+  <!-- Otros -->
+  @if (currentAction === 'Otros') {
+    <div id="other-action" class="action-content">
+      <div class="form-group">
+        <button class="btn btn-primary" style="width: 100%; margin-bottom: 10px">
+          Ver incidente
+        </button>
+        <button class="btn btn-primary" style="width: 100%; margin-bottom: 10px">
+          Ver historico
+        </button>
+        <button class="btn btn-primary" style="width: 100%; margin-bottom: 10px">
+          Descargar como PDF
+        </button>
+        <button class="btn btn-primary" style="width: 100%; margin-bottom: 10px">
+          Adjuntar archivo
+        </button>
+        <button class="btn btn-primary" style="width: 100%; margin-bottom: 10px">
+          Notificar por correo
+        </button>
+        <button class="btn btn-primary" style="width: 100%; margin-bottom: 10px">
+          Reportar
+        </button>
+      </div>
+    </div>
+  }
+</div>
