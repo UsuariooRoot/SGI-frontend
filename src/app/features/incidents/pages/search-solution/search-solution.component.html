@@ -1,0 +1,23 @@
+<div class="search-solution-container">
+  <h1>Base de conocimiento</h1>
+  <div class="search-solution-content">
+    <form action="/api/employees?name=" method="GET" class="form-search">
+      <div class="search-input-container">
+        <input
+          id="search-input"
+          class="search-input"
+          type="text"
+          placeholder="Palabras claves"
+        />
+        <button for="search-input" class="search-icon-button">
+          <mat-icon>search</mat-icon>
+        </button>
+      </div>
+    </form>
+    <div class="knowledge-cards-container">
+      @for (knowledgeCard of knowledgeCards; track knowledgeCard.id) {
+        <app-knowledge-card [knowledgeCard]="knowledgeCard"></app-knowledge-card>
+      }
+    </div>
+  </div>
+</div>

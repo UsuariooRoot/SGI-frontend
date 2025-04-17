@@ -1,0 +1,15 @@
+<article class="knowledge-card">
+  <header class="header">
+    <h3>{{ knowledgeCard.titulo }}</h3>
+  </header>
+
+  <p class="descripcion">{{ knowledgeCard.descripcion }}</p>
+
+  <div class="info-extra">
+    <p><strong>Fecha de resolución:</strong> {{ knowledgeCard.fecha }}</p>
+    <p><strong>Autor:</strong> {{ knowledgeCard.autor }}</p>
+    <p><strong>Categoría:</strong> {{ knowledgeCard.categoria }}</p>
+  </div>
+
+  <button class="ver-mas-btn" (click)="verDetalle()">Ver detalle</button>
+</article>

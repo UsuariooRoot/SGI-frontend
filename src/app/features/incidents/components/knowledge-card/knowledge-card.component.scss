@@ -1,0 +1,62 @@
+.knowledge-card {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  color: #333;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      color: #800000;
+    }
+
+    .tag {
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      color: #fff;
+
+      &.alto {
+        background-color: #a00000;
+      }
+      &.medio {
+        background-color: #c95e00;
+      }
+    }
+  }
+
+  .descripcion {
+    margin: 0.75rem 0;
+    font-size: 0.95rem;
+    color: #555;
+  }
+
+  .info-extra p {
+    margin: 0.2rem 0;
+    font-size: 0.85rem;
+    color: #666;
+  }
+
+  .ver-mas-btn {
+    margin-top: 1rem;
+    background-color: #800000;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #a00000;
+    }
+  }
+}

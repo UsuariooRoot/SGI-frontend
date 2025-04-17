@@ -49,8 +49,8 @@
           "icon": "search"
         },
         {
-          "route": "solutions",
-          "name": "solutions",
+          "route": "search-solution",
+          "name": "search-solution",
           "type": "link",
           "icon": "search"
         }

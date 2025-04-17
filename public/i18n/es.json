@@ -6,7 +6,7 @@
     "incidents.assigned": "Asignados",
     "incidents.create": "Crear ticket",
     "incidents.register": "Registrar incidente",
-    "incidents.solutions": "Buscar solución",
+    "incidents.search-solution": "Buscar solución",
 
     "requests": "Solicitudes",
     "requests.me": "Mis solicitudes",

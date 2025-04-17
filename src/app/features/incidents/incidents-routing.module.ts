@@ -4,6 +4,7 @@ import { ListComponent } from './pages/list/list.component';
 import { CreateComponent } from './pages/create/create.component';
 import { OwnedComponent } from './pages/owned/owned.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { SearchSolutionComponent } from './pages/search-solution/search-solution.component';
 
 const routes: Routes = [
   {
@@ -39,6 +40,10 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent, // Path -> "/incidentes/register"
+  },
+  {
+    path: 'search-solution',
+    component: SearchSolutionComponent, // Path -> "/incidentes/search-solution"
   },
 ];
 
