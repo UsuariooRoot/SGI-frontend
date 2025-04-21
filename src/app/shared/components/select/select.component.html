@@ -1,0 +1,45 @@
+<div class="selector-container" [class.open]="isDropdownOpen" (click)="toggleDropdown()">
+  <div class="selected-value">
+    {{ selectedItem ? getDisplayLabel(selectedItem) : placeholder }}
+  </div>
+
+  <div class="selector-actions">
+    @if (selectedItem) {
+      <div class="clear-icon" (click)="clearSelection($event)">×</div>
+    }
+    <div class="dropdown-icon">▼</div>
+  </div>
+
+  @if (isDropdownOpen) {
+    <div class="dropdown-content">
+      @if (groupBy) {
+        <!-- Grouped options -->
+        @for (group of groupedItems; track group.groupName) {
+          <div class="option-group">
+            <div class="group-label">{{ group.groupName }}</div>
+            @for (item of group.items; track item[bindValue]) {
+              <div
+                class="option-item"
+                [class.selected]="selectedValue === item[bindValue]"
+                (click)="selectItem(item, $event)"
+              >
+                {{ getDisplayLabel(item) }}
+              </div>
+            }
+          </div>
+        }
+      } @else {
+        <!-- Ungrouped options -->
+        @for (item of items; track item[bindValue]) {
+          <div
+            class="option-item"
+            [class.selected]="selectedValue === item[bindValue]"
+            (click)="selectItem(item, $event)"
+          >
+            {{ getDisplayLabel(item) }}
+          </div>
+        }
+      }
+    </div>
+  }
+</div>

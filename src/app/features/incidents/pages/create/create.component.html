@@ -1,37 +1,36 @@
-<section class="container">
-  <mat-card class="card">
-    <mat-card-header>
-      <mat-card-title>Crea un ticket</mat-card-title>
-    </mat-card-header>
+<section class="card">
+  <header>
+    <h2>Crea un ticket</h2>
+  </header>
+  <main>
+    <form class="form">
+      <div class="form-field">
+        <label>Incident:</label>
+        <app-select
+          [items]="incidentCategory"
+          groupBy="categoryName"
+          bindLabel="name"
+          bindValue="id"
+          [(ngModel)]="newIncident.incident"
+          placeholder="Selecciona un incidente"
+        ></app-select>
+      </div>
 
-    <mat-card-content>
-        <mat-form-field class="w-full">
-          <mat-label>Selecciona un incidente</mat-label>
-          <mtx-select
-            [items]="incidentCategory"
-            groupBy="categoryName"
-            bindLabel="name"
-            bindValue="id"
-            [(ngModel)]="newIncident.incident"
-          ></mtx-select>
-        </mat-form-field>
+      <div class="form-field">
+        <label for="description">Añade una descripción:</label>
+        <textarea
+          id="description"
+          placeholder="Ejemplo: No puedo acceder al SIJ..."
+          style="resize: none"
+          rows="10"
+          [(ngModel)]="newIncident.description"
+        ></textarea>
+      </div>
 
-        <mat-form-field class="w-full">
-          <mat-label>Añade un descripción</mat-label>
-          <textarea
-            matInput
-            placeholder="Ejemplo: No puedo acceder al SIJ..."
-            rows="10"
-            cols="12"
-            [(ngModel)]="newIncident.description"
-            style="resize: none"
-          ></textarea>
-        </mat-form-field>
-
-        <div class="d-flex justify-content-end m-t-8">
-          <button mat-button class="m-x-16 text-red-20" type="button">Cancel</button>
-          <button mat-flat-button (click)="submit()">Submit</button>
-        </div>
-    </mat-card-content>
-  </mat-card>
+      <div class="d-flex justify-content-end m-t-8">
+        <button mat-button class="m-x-16 text-red-20" type="button">Cancel</button>
+        <button mat-flat-button (click)="submit()">Submit</button>
+      </div>
+    </form>
+  </main>
 </section>

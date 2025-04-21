@@ -8,12 +8,14 @@ import { IncidentService } from '@features/incidents/services/incident.service';
 import { MtxSelectModule } from '@ng-matero/extensions/select';
 import { FormlyModule } from '@ngx-formly/core';
 import { ToastrService } from 'ngx-toastr';
+import { SelectComponent } from "../../../../shared/components/select/select.component";
 
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss',
   imports: [
+    SelectComponent,
     FormsModule,
     ReactiveFormsModule,
     MatButtonModule,
@@ -22,7 +24,7 @@ import { ToastrService } from 'ngx-toastr';
     FormlyModule,
     MtxSelectModule,
     MatFormFieldModule,
-  ],
+],
 })
 export class CreateComponent implements OnInit {
   private readonly incidentService = inject(IncidentService);
@@ -33,9 +35,8 @@ export class CreateComponent implements OnInit {
     description: '',
   };
 
-  incidentCategory: any[] = [];
-
-  selectedIncident: any = null;
+  // Tu data de incidentes
+  incidentCategory = []
 
   submit() {
     this.toast.success(JSON.stringify(this.newIncident));
@@ -56,6 +57,7 @@ export class CreateComponent implements OnInit {
           }
         }
 
+        console.log(incidentList)
         this.incidentCategory = incidentList;
       },
       error: err => console.error('Error al obtener incidentes:', err),
