@@ -1,18 +1,12 @@
 :root {
-  --body-font-family: 'Roboto', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
-    'Lucida Grande', sans-serif;
-  --code-font-family: 'Roboto Mono', monospace;
+  --body-font-family: 'Roboto', sans-serif;
+  --body-background-color: light-dark(#ffffff, #1f2022);
   --gutter: 1rem;
   --sidenav-width: 15rem;
   --sidenav-collapsed-width: 4rem;
-  --body-background-color: var(--mat-sys-surface-container);
   --link-color: var(--mat-sys-primary);
   --link-hover-color: var(--mat-sys-primary);
-  --code-border-color: light-dark(rgba(19, 28, 43, .08), rgba(218, 226, 249, .08));
-  --code-background-color: light-dark(rgba(19, 28, 43, .04), rgba(218, 226, 249, .04));
   --header-background-color: #720405; // background color of the main header
-  --user-panel-background-color: var(--mat-sys-surface-container);
-  --user-panel-hover-background-color: var(--mat-sys-surface-variant);
   --sidemenu-heading-text-color: white; // default text color of items
   --sidemenu-heading-hover-background-color: var(--mat-sys-surface-container-highest);
   --sidemenu-active-heading-text-color: light-dark(#720405, #FFF); // sidemenu color when activated
@@ -87,15 +81,6 @@ samp {
   font-family: var(--code-font-family);
 }
 
-code {
-  padding: 0.125rem 0.25rem;
-  font-size: 80%;
-  word-break: break-word;
-  background-color: var(--code-background-color);
-  border: 1px solid var(--code-border-color);
-  border-radius: 0.25rem;
-}
-
 a {
   color: var(--link-color);
 
@@ -104,7 +89,7 @@ a {
   }
 }
 
-@media (width <=720px) {
+@media (width <= 720px) {
   .hide-small {
     display: none !important;
   }
