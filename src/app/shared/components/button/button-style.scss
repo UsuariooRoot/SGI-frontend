@@ -1,14 +1,17 @@
-@mixin primary-button {
-  display: block;
-  width: max-content;
-  background-color: var(--primary-color);
+@mixin base-button {
+  padding: 10px 16px;
+  border-radius: 8px;
   color: var(--primary-text-color);
-  font-size: var(--font-size-normal);
-  font-weight: 600;
-  border: none;
-  border-radius: 9999px;
-  padding: 16px 24px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
   cursor: pointer;
+}
+
+@mixin primary-button {
+  @include base-button;
+  background-color: #a11009;
+  border: none;
   transition: background-color 0.3s ease;
 
   &:hover {
@@ -17,8 +20,9 @@
 }
 
 @mixin secondary-button {
-  @include primary-button;
+  @include base-button;
   background-color: transparent;
+  border: 1px solid #ddd;
   color: var(--secondary-text-color);
   transition: background-color 0.5s ease;
 

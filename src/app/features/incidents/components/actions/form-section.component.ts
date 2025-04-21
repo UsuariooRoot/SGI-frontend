@@ -73,10 +73,10 @@ import { FormsModule } from '@angular/forms';
     }
 
     .btn {
-      padding: 8px 16px;
-      border-radius: 4px;
-      cursor: pointer;
+      padding: 10px 16px;
+      border-radius: 8px;
       font-weight: bold;
+      cursor: pointer;
       margin-left: 10px;
     }
 

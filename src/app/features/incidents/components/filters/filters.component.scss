@@ -1,3 +1,5 @@
+@use "../../../../shared/components/button/button-style.scss" as btn-style;
+
 .cbx {
   max-width: 200px;
   flex-grow: 1;
@@ -106,4 +108,19 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+}
+
+.btn-actions {
+  display: flex;
+  justify-content: end;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.btn-secondary {
+  @include btn-style.secondary-button;
+}
+
+.btn-primary {
+  @include btn-style.primary-button;
 }
