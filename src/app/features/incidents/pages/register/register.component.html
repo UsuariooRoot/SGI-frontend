@@ -8,7 +8,7 @@
         <div class="search-input-container">
           <input
             id="search-input"
-            class="search-input"
+            class="input-base"
             type="text"
             placeholder="Busca un empleado por su nombre"
           />
@@ -20,15 +20,15 @@
       <form action="/api/incidents/register" class="form-register m-t-16">
         <div class="form-register-item">
           <label>ID:</label>
-          <input type="text" id="owner-id" placeholder="ID del empleado" disabled />
+          <input type="text" id="owner-id" class="input-base" placeholder="ID del empleado" disabled />
         </div>
         <div class="form-register-item">
           <label for="owner-name">Empleado:</label>
-          <input type="text" id="owner-name" placeholder="Nombres completos" disabled />
+          <input type="text" id="owner-name" class="input-base" placeholder="Nombres completos" disabled />
         </div>
         <div class="form-register-item">
           <label for="owner-name">Departamento:</label>
-          <input type="text" id="owner-name" placeholder="Departamento del empleado" disabled />
+          <input type="text" id="owner-name" class="input-base" placeholder="Departamento del empleado" disabled />
         </div>
         <div class="d-flex justify-content-end m-t-8" style="gap: 12px">
           <button type="button" class="btn-secondary">Limpiar</button>
