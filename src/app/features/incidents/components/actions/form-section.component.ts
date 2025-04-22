@@ -7,9 +7,9 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, FormsModule],
   template: `
-    <div class="action-content">
+    <div class="form-group">
       @for (field of formConfig.fields; track field.id) {
-        <div class="form-group">
+        <div class="form-field">
           <label [for]="field.id">{{ field.label }}</label>
 
           @if (field.type === 'select') {
@@ -30,27 +30,13 @@ import { FormsModule } from '@angular/forms';
         </div>
       }
 
-      <div class="btn-container">
+      <div class="d-flex justify-content-end" style="gap: 12px">
         <button class="btn-secondary" (click)="cancel()">Cancelar</button>
         <button class="btn-primary" (click)="submit()">{{ formConfig.submitLabel }}</button>
       </div>
     </div>
   `,
   styles: `
-    .action-content {
-      padding: 15px 0;
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
-
     select,
     input,
     textarea {
@@ -64,13 +50,6 @@ import { FormsModule } from '@angular/forms';
     textarea {
       height: 100px;
       resize: vertical;
-    }
-
-    .btn-container {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 20px;
-      gap: 12px;
     }
   `,
 })
