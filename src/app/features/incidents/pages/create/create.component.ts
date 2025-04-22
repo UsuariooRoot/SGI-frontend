@@ -1,12 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 import { IncidentService } from '@features/incidents/services/incident.service';
-import { MtxSelectModule } from '@ng-matero/extensions/select';
-import { FormlyModule } from '@ngx-formly/core';
 import { ToastrService } from 'ngx-toastr';
 import { SelectComponent } from "../../../../shared/components/select/select.component";
 
@@ -17,13 +11,6 @@ import { SelectComponent } from "../../../../shared/components/select/select.com
   imports: [
     SelectComponent,
     FormsModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatInputModule,
-    MatCardModule,
-    FormlyModule,
-    MtxSelectModule,
-    MatFormFieldModule,
 ],
 })
 export class CreateComponent implements OnInit {
@@ -35,7 +22,6 @@ export class CreateComponent implements OnInit {
     description: '',
   };
 
-  // Tu data de incidentes
   incidentCategory = []
 
   submit() {

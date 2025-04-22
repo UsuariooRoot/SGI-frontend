@@ -1,7 +1,4 @@
-@use '../../../../shared/components/card/card-style.scss' as card-style;
-
-.card {
-  @include card-style.base-card;
+.card-base {
   margin: auto;
   max-width: 750px;
 }
