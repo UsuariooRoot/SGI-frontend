@@ -1,4 +1,4 @@
-@mixin base-button {
+.btn {
   padding: 10px 16px;
   border-radius: 8px;
   color: var(--primary-text-color);
@@ -8,8 +8,8 @@
   cursor: pointer;
 }
 
-@mixin primary-button {
-  @include base-button;
+.btn-primary {
+  @extend .btn;
   background-color: #a11009;
   border: none;
   transition: background-color 0.3s ease;
@@ -19,8 +19,8 @@
   }
 }
 
-@mixin secondary-button {
-  @include base-button;
+.btn-secondary {
+  @extend .btn;
   background-color: transparent;
   border: 1px solid #ddd;
   color: var(--secondary-text-color);

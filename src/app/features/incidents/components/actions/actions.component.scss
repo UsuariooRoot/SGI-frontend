@@ -1,5 +1,4 @@
 @use '../../../../shared/components/card/card-style.scss' as card-style;
-@use '../../../../shared/components/button/button-style.scss' as btn-style;
 
 .actions-container {
   @include card-style.base-card;
@@ -38,12 +37,4 @@ h2 {
     color: white;
     border-color: #8b0000;
   }
-}
-
-.btn {
-  @include btn-style.base-button;
-}
-
-.btn-primary {
-  @include btn-style.primary-button;
 }

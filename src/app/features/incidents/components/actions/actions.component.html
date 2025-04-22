@@ -1,27 +1,30 @@
-<div class="actions-container">
-  <h2>Acciones</h2>
+<section class="actions-container">
+  <header>
+    <h2>Acciones</h2>
+  </header>
+  <main>
+    <ul class="action-tabs">
+      @for (action of actions; track action.id) {
+        <li [class.active]="currentAction === action.id" (click)="showAction(action.id)">
+          {{ action.label }}
+        </li>
+      }
+    </ul>
 
-  <ul class="action-tabs">
-    @for (action of actions; track action.id) {
-      <li [class.active]="currentAction === action.id" (click)="showAction(action.id)">
-        {{ action.label }}
-      </li>
+    @if (currentAction !== 'others') {
+      <app-form-section [formConfig]="formConfigs[currentAction]" />
     }
-  </ul>
 
-  @if (currentAction !== 'others') {
-    <app-form-section [formConfig]="formConfigs[currentAction]" />
-  }
-
-  @if (currentAction === 'others') {
-    <div class="action-content">
-      <div class="form-group">
-        @for (action of otherActions; track action) {
-          <button class="btn btn-primary" style="width: 100%; margin-bottom: 10px">
-            {{ action }}
-          </button>
-        }
+    @if (currentAction === 'others') {
+      <div class="action-content">
+        <div class="form-group">
+          @for (action of otherActions; track action) {
+            <button class="btn-primary" style="width: 100%; margin-bottom: 10px">
+              {{ action }}
+            </button>
+          }
+        </div>
       </div>
-    </div>
-  }
-</div>
+    }
+  </main>
+</section>

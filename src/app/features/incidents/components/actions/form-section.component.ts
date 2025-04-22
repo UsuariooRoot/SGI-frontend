@@ -31,8 +31,8 @@ import { FormsModule } from '@angular/forms';
       }
 
       <div class="btn-container">
-        <button class="btn btn-secondary" (click)="cancel()">Cancelar</button>
-        <button class="btn btn-primary" (click)="submit()">{{ formConfig.submitLabel }}</button>
+        <button class="btn-secondary" (click)="cancel()">Cancelar</button>
+        <button class="btn-primary" (click)="submit()">{{ formConfig.submitLabel }}</button>
       </div>
     </div>
   `,
@@ -70,26 +70,7 @@ import { FormsModule } from '@angular/forms';
       display: flex;
       justify-content: flex-end;
       margin-top: 20px;
-    }
-
-    .btn {
-      padding: 10px 16px;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-left: 10px;
-    }
-
-    .btn-secondary {
-      background-color: #f5f5f5;
-      color: #333;
-      border: 1px solid #ddd;
-    }
-
-    .btn-primary {
-      background-color: #8b0000;
-      color: white;
-      border: 1px solid #8b0000;
+      gap: 12px;
     }
   `,
 })

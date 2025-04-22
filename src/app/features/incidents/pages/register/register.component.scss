@@ -1,5 +1,5 @@
 @use '../../../../shared/components/input/input-style.scss' as input-style;
-@use '../../../../shared/components/button/button-style.scss' as button-style;
+// @use '../../../../shared/components/button/button-style.scss' as button-style; diplock
 @use '../../../../shared/components/card/card-style.scss' as card-style;
 
 // styles for the inputs of this component
@@ -7,13 +7,13 @@ input {
   @include input-style.base-input;
 }
 
-button[type="button"] {
-  @include button-style.secondary-button;
-}
+// button[type="button"] {
+//   @include button-style.secondary-button;
+// }
 
-button[type="submit"] {
-  @include button-style.primary-button;
-}
+// button[type="submit"] {
+//   @include button-style.primary-button;
+// }
 
 h1 {
   text-align: center;
