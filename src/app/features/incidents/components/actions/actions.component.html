@@ -1,8 +1,8 @@
 <section class="card-base">
   <header>
-    <h2>Acciones</h2>
+    <h2 class="m-0">Acciones</h2>
   </header>
-  <main>
+  <main class="m-t-16">
     <ul class="action-tabs">
       @for (action of actions; track action.id) {
         <li [class.active]="currentAction === action.id" (click)="showAction(action.id)">

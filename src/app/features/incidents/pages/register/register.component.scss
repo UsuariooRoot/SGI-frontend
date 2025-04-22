@@ -3,7 +3,7 @@
 
 .card-base {
   margin: auto;
-  max-width: 750px;
+  max-width: 650px;
 }
 
 // styles for the inputs of this component
@@ -11,21 +11,10 @@ input {
   @include input-style.base-input;
 }
 
-h1 {
-  text-align: center;
-  font-size: 24px;
-  font-weight: 600;
-}
-
-.register-content {
-  width: 420px; // determina el ancho del cuerpo del formulario
-  margin: 0 auto;
-  margin-bottom: 16px;
-}
-
 // styles for the search input
 .form-search {
-  margin-bottom: 16px;
+  width: 90%;
+  margin: auto;
 }
 
 // styles for the form register

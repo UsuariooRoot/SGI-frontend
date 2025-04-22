@@ -1,8 +1,8 @@
-<mat-card appearance="outlined">
-  <mat-card-header>
-    <mat-card-title>Filtros</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
+<section class="card-base">
+  <header>
+    <h2 class="m-0">Filtros</h2>
+  </header>
+  <main class="m-t-16">
     <div class="ticket-statuses">
       @for (status of TICKET_STATUSES; track $index) {
         <div class="cbx">
@@ -19,37 +19,31 @@
         </div>
       }
     </div>
-    <!-- separator -->
-    <div class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align"></div>
     <ng-template [ngxPermissionsOnly]="['IT_TEAM_LEADER', 'IT_EMPLOYEE']">
-      <div class="by_employees">
-        <div>
-          <mat-form-field class="w-full">
-            <mat-label>Por persona a cargo</mat-label>
-            <mtx-select
-              [items]="IT_TEAM_EMPLOYEES"
-              bindLabel="fullname"
-              bindValue="id"
-              [(ngModel)]="filters.assigned_employee"
-              [tabIndex]="1"
-            />
-          </mat-form-field>
+      <div class="by_employees m-t-16">
+        <div class="form-field">
+          <label for="">Por persona a cargo</label>
+          <app-select
+            [items]="IT_TEAM_EMPLOYEES"
+            bindLabel="fullname"
+            bindValue="id"
+            [(ngModel)]="filters.assigned_employee"
+            [tabIndex]="1"
+          />
         </div>
-        <div>
-          <mat-form-field class="w-full">
-            <mat-label>Por solicitante</mat-label>
-            <mtx-select
-              [items]="REQUESTER_EMPLOYEES"
-              bindLabel="fullname"
-              bindValue="id"
-              [(ngModel)]="filters.employee_owner"
-              [tabIndex]="2"
-            />
-          </mat-form-field>
+        <div class="form-field">
+          <label>Por solicitante</label>
+          <app-select
+            [items]="REQUESTER_EMPLOYEES"
+            bindLabel="fullname"
+            bindValue="id"
+            [(ngModel)]="filters.employee_owner"
+            [tabIndex]="2"
+          />
         </div>
       </div>
     </ng-template>
-    <div class="date__range">
+    <div class="date__range m-t-16">
       <div class="from">
         <mat-form-field>
           <mat-label>Desde</mat-label>
@@ -71,5 +65,5 @@
       <button class="btn-secondary" (click)="cleanFilters()">Limpiar</button>
       <button class="btn-primary" (click)="applyFilters()">Filtrar</button>
     </div>
-  </mat-card-content>
-</mat-card>
+  </main>
+</section>

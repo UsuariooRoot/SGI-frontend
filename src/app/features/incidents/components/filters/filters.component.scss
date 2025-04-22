@@ -91,15 +91,10 @@
   background-color: rgb(37, 121, 191);
 }
 
-.by_employees > div {
+.by_employees {
   display: flex;
-
-  gap: 12px;
-
-  label {
-    border: none;
-    outline: none;
-  }
+  flex-direction: column;
+  gap: 16px;
 }
 
 .date__range {
@@ -113,4 +108,10 @@
   justify-content: end;
   gap: 12px;
   margin-top: 12px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }

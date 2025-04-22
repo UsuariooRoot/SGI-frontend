@@ -11,6 +11,7 @@ import { Employee } from '@features/incidents/typings';
 import { MtxSelectModule } from '@ng-matero/extensions/select';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { ToastrService } from 'ngx-toastr';
+import { SelectComponent } from "@shared/components/select/select.component";
 
 export interface GenericEmployee {
   id: number;
@@ -39,13 +40,15 @@ export interface IncidentTicketFilter {
     FormsModule,
     MatCheckboxModule,
     MatCardModule,
-    MtxSelectModule,
+    SelectComponent,
+    // MtxSelectModule,
     MatDatepickerModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     NgxPermissionsModule,
-  ],
+    SelectComponent
+],
   templateUrl: './filters.component.html',
   styleUrl: './filters.component.scss',
 })
