@@ -80,26 +80,3 @@
 .cbx input:checked + label > div > svg path {
   stroke-dashoffset: 0;
 }
-
-.ticket-statuses {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.active {
-  background-color: rgb(37, 121, 191);
-}
-
-.date__range {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.btn-actions {
-  display: flex;
-  justify-content: end;
-  gap: 12px;
-  margin-top: 12px;
-}

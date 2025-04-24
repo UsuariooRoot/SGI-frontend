@@ -1,23 +1,26 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { SelectComponent } from '@shared/components/select/select.component';
 
 @Component({
   selector: 'app-form-section',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SelectComponent],
   template: `
     <div class="form-group">
       @for (field of formConfig.fields; track field.id) {
         <div class="form-field">
-          <label [for]="field.id">{{ field.label }}</label>
+          <label>{{ field.label }}</label>
 
           @if (field.type === 'select') {
-            <select [id]="field.id" [(ngModel)]="formData[field.id]">
-              @for (option of field.options; track option.value) {
-                <option [value]="option.value">{{ option.label }}</option>
-              }
-            </select>
+            <app-select
+              [items]="field.options"
+              bindLabel="label"
+              bindValue="value"
+              [(ngModel)]="formData[field.id]"
+              [placeholder]="field.placeholder ?? 'Selecciona una opción'"
+            />
           }
 
           @if (field.type === 'textarea') {
@@ -30,7 +33,7 @@ import { FormsModule } from '@angular/forms';
         </div>
       }
 
-      <div class="d-flex justify-content-end" style="gap: 12px">
+      <div class="d-flex justify-content-end gap-12">
         <button class="btn-secondary" (click)="cancel()">Cancelar</button>
         <button class="btn-primary" (click)="submit()">{{ formConfig.submitLabel }}</button>
       </div>

@@ -49,8 +49,8 @@ export class ActionsComponent {
           type: 'select',
           id: 'new-status',
           label: 'Nuevo estado:',
+          placeholder: 'Seleccionar estado',
           options: [
-            { value: '', label: 'Seleccionar estado' },
             { value: 'resolved', label: 'Atendido' },
             { value: 'closed', label: 'Cerrado' },
             { value: 'cancelled', label: 'Cancelado' }
@@ -72,8 +72,8 @@ export class ActionsComponent {
           type: 'select',
           id: 'new-priority',
           label: 'Nueva prioridad:',
+          placeholder: 'Seleccionar prioridad',
           options: [
-            { value: '', label: 'Seleccionar prioridad' },
             { value: 'low', label: 'Baja' },
             { value: 'medium', label: 'Media' },
             { value: 'high', label: 'Alta' },
@@ -96,8 +96,8 @@ export class ActionsComponent {
           type: 'select',
           id: 'assign-employee',
           label: 'Asignar a:',
+          placeholder: 'Seleccionar empleado',
           options: [
-            { value: '', label: 'Seleccionar empleado' },
             { value: '1', label: 'Ana Gómez' },
             { value: '2', label: 'Carlos Ruiz' },
             { value: '3', label: 'Laura Martínez' },
