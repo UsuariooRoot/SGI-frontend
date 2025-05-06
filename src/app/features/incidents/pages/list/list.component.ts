@@ -24,7 +24,7 @@ import { FilterService } from '@features/incidents/services/filter.service';
 export class ListComponent implements OnInit {
   private readonly incidentService = inject(IncidentService);
   private readonly authService = inject(AuthService);
-  private user$: Observable<User> = this.authService.user();
+  private $user: Observable<User> = this.authService.user();
   private filterService = inject(FilterService);
 
   @Input({required: true}) filter!: IncidentTicketFilter;
@@ -36,7 +36,7 @@ export class ListComponent implements OnInit {
     this.filterService.$currentFilters.subscribe(filters => {
       this.applyFilters(filters);
     });
-    this.user$.subscribe({
+    this.$user.subscribe({
       next: user => {
         this.idItTeam = this.getIdItTeam(user);
         this.getTicketRows({ id_it_team: user.id_it_team });

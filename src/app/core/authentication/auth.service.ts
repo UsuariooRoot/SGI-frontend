@@ -12,10 +12,10 @@ export class AuthService {
   private readonly loginService = inject(LoginService);
   private readonly tokenService = inject(TokenService);
 
-  private user$ = new BehaviorSubject<User>({});
+  private $user = new BehaviorSubject<User>({});
 
   // Observable that calls this.assignUser() when the token changes or refreshes. Returns an Observable<User>
-  private change$ = merge(
+  private $change = merge(
     this.tokenService.change(),
     this.tokenService.refresh().pipe(switchMap(() => this.refresh()))
   ).pipe(
@@ -24,11 +24,11 @@ export class AuthService {
   );
 
   init() {
-    return new Promise<void>(resolve => this.change$.subscribe(() => resolve()));
+    return new Promise<void>(resolve => this.$change.subscribe(() => resolve()));
   }
 
   change() {
-    return this.change$;
+    return this.$change;
   }
 
   check() {
@@ -60,7 +60,7 @@ export class AuthService {
   }
 
   user() {
-    return this.user$.pipe(share());
+    return this.$user.pipe(share());
   }
 
   menu() {
@@ -70,13 +70,13 @@ export class AuthService {
   // Returns an Observable of a User or {} if the JWT token is not valid
   private assignUser() {
     if (!this.check()) {
-      return of({}).pipe(tap(user => this.user$.next(user)));
+      return of({}).pipe(tap(user => this.$user.next(user)));
     }
 
-    if (!isEmptyObject(this.user$.getValue())) {
-      return of(this.user$.getValue());
+    if (!isEmptyObject(this.$user.getValue())) {
+      return of(this.$user.getValue());
     }
 
-    return this.loginService.user().pipe(tap(user => this.user$.next(user)));
+    return this.loginService.user().pipe(tap(user => this.$user.next(user)));
   }
 }

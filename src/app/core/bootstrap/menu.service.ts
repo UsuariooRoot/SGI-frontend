@@ -34,34 +34,34 @@ export interface Menu {
   providedIn: 'root',
 })
 export class MenuService {
-  private readonly menu$ = new BehaviorSubject<Menu[]>([]);
+  private readonly $menu = new BehaviorSubject<Menu[]>([]);
 
   /** Get all the menu data. */
   getAll() {
-    return this.menu$.asObservable();
+    return this.$menu.asObservable();
   }
 
   /** Observe the change of menu data. */
   change() {
-    return this.menu$.pipe(share());
+    return this.$menu.pipe(share());
   }
 
   /** Initialize the menu data. */
   set(menu: Menu[]) {
-    this.menu$.next(menu);
-    return this.menu$.asObservable();
+    this.$menu.next(menu);
+    return this.$menu.asObservable();
   }
 
   /** Add one item to the menu data. */
   add(menu: Menu) {
-    const tmpMenu = this.menu$.value;
+    const tmpMenu = this.$menu.value;
     tmpMenu.push(menu);
-    this.menu$.next(tmpMenu);
+    this.$menu.next(tmpMenu);
   }
 
   /** Reset the menu data. */
   reset() {
-    this.menu$.next([]);
+    this.$menu.next([]);
   }
 
   /** Delete empty values and rebuild route. */
@@ -108,7 +108,7 @@ export class MenuService {
   /** Get the menu level. */
   getLevel(routeArr: string[]): string[] {
     let tmpArr: any[] = [];
-    this.menu$.value.forEach(item => {
+    this.$menu.value.forEach(item => {
       // Breadth-first traverse
       let unhandledLayer = [{ item, parentNamePathList: [], realRouteArr: [] }];
       while (unhandledLayer.length > 0) {

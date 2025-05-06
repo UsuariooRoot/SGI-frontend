@@ -55,7 +55,7 @@ export class SidemenuComponent {
 
   private readonly menu = inject(MenuService);
 
-  menu$ = this.menu.getAll();
+  $menu = this.menu.getAll();
 
   buildRoute = this.menu.buildRoute;
 }

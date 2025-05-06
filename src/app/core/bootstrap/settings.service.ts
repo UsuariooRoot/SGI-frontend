@@ -20,10 +20,10 @@ export class SettingsService {
   private readonly store = inject(LocalStorageService);
   private readonly mediaMatcher = inject(MediaMatcher);
 
-  private readonly notify$ = new BehaviorSubject<Partial<AppSettings>>({});
+  private readonly $notify = new BehaviorSubject<Partial<AppSettings>>({});
 
   get notify() {
-    return this.notify$.asObservable();
+    return this.$notify.asObservable();
   }
 
   private htmlElement = this.document.querySelector('html')!;
@@ -48,7 +48,7 @@ export class SettingsService {
   setOptions(options?: Partial<AppSettings>) {
     this.options = Object.assign(defaults, this.options, options);
     this.store.set(this.key, this.options);
-    this.notify$.next(this.options);
+    this.$notify.next(this.options);
   }
 
   getThemeColor() {

@@ -19,13 +19,13 @@ import { Observable } from 'rxjs';
 export class OwnedComponent {
   private readonly incidentService = inject(IncidentService);
   private readonly authService = inject(AuthService);
-  private user$: Observable<User> = this.authService.user();
+  private $user: Observable<User> = this.authService.user();
 
   idItTeam = 0;
   ticketRows: TicketRow[] = [];
 
   ngOnInit(): void {
-    this.user$.subscribe({
+    this.$user.subscribe({
       next: user => {
         this.idItTeam = this.getIdItTeam(user);
         this.getTicketRows({ employee_owner: user.id });

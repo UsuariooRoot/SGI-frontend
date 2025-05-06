@@ -16,10 +16,10 @@ export class TokenService implements OnDestroy {
   private readonly store = inject(LocalStorageService);
   private readonly factory = inject(TokenFactory);
 
-  private readonly change$ = new BehaviorSubject<BaseToken | undefined>(undefined);
-  private readonly refresh$ = new Subject<BaseToken | undefined>();
+  private readonly $change = new BehaviorSubject<BaseToken | undefined>(undefined);
+  private readonly $refresh = new Subject<BaseToken | undefined>();
 
-  private timer$?: Subscription;
+  private $timer?: Subscription;
 
   private _token?: BaseToken;
 
@@ -32,13 +32,13 @@ export class TokenService implements OnDestroy {
   }
 
   change() {
-    return this.change$.pipe(share());
+    return this.$change.pipe(share());
   }
 
   refresh() {
     this.buildRefresh();
 
-    return this.refresh$.pipe(share());
+    return this.$refresh.pipe(share());
   }
 
   set(token?: Token) {
@@ -79,7 +79,7 @@ export class TokenService implements OnDestroy {
       this.store.set(this.key, filterObject(value));
     }
 
-    this.change$.next(this.token);
+    this.$change.next(this.token);
     this.buildRefresh();
   }
 
@@ -87,15 +87,15 @@ export class TokenService implements OnDestroy {
     this.clearRefresh();
 
     if (this.token?.needRefresh()) {
-      this.timer$ = timer(this.token.getRefreshTime() * 1000).subscribe(() => {
-        this.refresh$.next(this.token);
+      this.$timer = timer(this.token.getRefreshTime() * 1000).subscribe(() => {
+        this.$refresh.next(this.token);
       });
     }
   }
 
   private clearRefresh() {
-    if (this.timer$ && !this.timer$.closed) {
-      this.timer$.unsubscribe();
+    if (this.$timer && !this.$timer.closed) {
+      this.$timer.unsubscribe();
     }
   }
 }
