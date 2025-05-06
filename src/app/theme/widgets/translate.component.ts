@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatPseudoCheckbox } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { SettingsService } from '@core';
+import { SettingsService } from '@core/bootstrap/settings.service';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -34,6 +34,7 @@ export class TranslateComponent {
   options = this.settings.options;
 
   langs = [
+    { value: 'es', name: 'es' },
     { value: 'en-US', name: 'en_us' },
     { value: 'zh-CN', name: 'zh_cn' },
     { value: 'zh-TW', name: 'zh_tw' },

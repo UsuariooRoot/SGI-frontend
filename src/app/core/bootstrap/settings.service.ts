@@ -13,7 +13,7 @@ import { AppSettings, AppTheme, defaults } from '../settings';
 export class SettingsService {
 
   // name with which the settings will be saved in local storage
-  private readonly key = 'csjlima-sgi-settings';
+  private readonly key = 'sgi-settings';
 
   private readonly document = inject(DOCUMENT);
   private readonly translate = inject(TranslateService);
@@ -79,7 +79,7 @@ export class SettingsService {
   getTranslateLang() {
     if (this.options.language === 'auto') {
       const browserLang = navigator.language;
-      return this.languages.includes(browserLang) ? browserLang : 'en-US';
+      return this.languages.includes(browserLang) ? browserLang : 'es';
     }
     return this.options.language;
   }
