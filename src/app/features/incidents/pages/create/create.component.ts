@@ -39,12 +39,11 @@ export class CreateComponent implements OnInit {
         const incidentList: any = [];
 
         for (const { name: categoryName, incidents } of data) {
-          for (const { id, name } of incidents) {
-            incidentList.push({ id, name, categoryName });
+          for (const { id, description } of incidents) {
+            incidentList.push({ id, name: description, categoryName });
           }
         }
 
-        console.log(incidentList)
         this.incidentCategory = incidentList;
       },
       error: err => console.error('Error al obtener incidentes:', err),

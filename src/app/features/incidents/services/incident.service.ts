@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Employee, Incident, TicketStatus } from '../typings';
 import { IncidentTicketFilter } from '../components/filters/filters.component';
-import { INCIDENT_CATEGORIES, INCIDENT_TICKETS } from '../data/todos';
+import { INCIDENT_TICKETS } from '../data/todos';
 
 export interface IncidentTicketResponse {
   id: number;
@@ -20,8 +20,14 @@ export interface IncidentTicketResponse {
 export interface IncidentCategory {
   id: number;
   name: string;
-  id_it_team: number;
-  incidents: Incident[];
+  itTeam: {
+    id: number;
+    name: string;
+  };
+  incidents: {
+    id: number;
+    description: string;
+  }[];
 }
 
 @Injectable({
@@ -30,40 +36,28 @@ export interface IncidentCategory {
 export class IncidentService {
   private readonly http = inject(HttpClient);
 
-  /**
-   * Obtiene la lista de tickets desde el archivo JSON simulado.
-   * @returns Observable con un array de ITicket[]
-   */
   getIncidentTickets(filter?: IncidentTicketFilter): Observable<IncidentTicketResponse[]> {
     return of(INCIDENT_TICKETS);
-    /*
-    let params = new HttpParams();
-    if (filter) {
-      const filterParameters = Object.entries(filter);
-      filterParameters.forEach(([key, value]) => {
-        params = params.set(key, value)
-      })
-    }
-    return this.http
-      .get<{ data: IncidentTicketResponse[] }>('api/tickets/incidents', { params })
-      .pipe(
-        map(response => {
-          return response.data;
-        })
-      );
-      */
+    // let params = new HttpParams();
+    // if (filter) {
+    //   const filterParameters = Object.entries(filter);
+    //   filterParameters.forEach(([key, value]) => {
+    //     params = params.set(key, value);
+    //   });
+    // }
+
+    // return this.http
+    //   .get<{ data: IncidentTicketResponse[] }>('http://localhost:8080/api/tickets/incidents', { params })
+    //   .pipe(
+    //     map(response => {
+    //       return response.data;
+    //     })
+    //   );
   }
 
-  /**
-   * Obtiene la lista categoría de incidentes desde el archivo JSON simulado.
-   * @returns Observable con un array de IncidentCategory[]
-   */
   getIncidentCategory(): Observable<IncidentCategory[]> {
-    return of(INCIDENT_CATEGORIES);
-    /*
     return this.http
-      .get<{ data: IncidentCategory[] }>('api/incidents')
+      .get<{ data: IncidentCategory[] }>('http://localhost:8080/api/incidents/categorized')
       .pipe(map(response => response.data));
-      */
   }
 }
