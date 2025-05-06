@@ -15,14 +15,12 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import { provideDateFnsDatetimeAdapter } from '@ng-matero/extensions-date-fns-adapter';
 import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { provideToastr } from 'ngx-toastr';
 
 
 import { environment } from '@env/environment';
 import { PaginatorI18nService } from '@shared';
-import { InMemDataService } from '@shared/in-mem/in-mem-data.service';
 import { routes } from './app.routes';
 import { FormlyConfigModule } from './formly-config';
 import { apiInterceptor, BASE_URL, baseUrlInterceptor, errorInterceptor, loggingInterceptor, noopInterceptor, settingsInterceptor, tokenInterceptor } from '@core/interceptors';
@@ -69,11 +67,6 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(
       NgxPermissionsModule.forRoot(),
       FormlyConfigModule.forRoot(),
-      // 👇 ❌ This is only used for demo purpose, remove it in the realworld application
-      InMemoryWebApiModule.forRoot(InMemDataService, {
-        dataEncapsulation: false,
-        passThruUnknownUrl: true,
-      })
     ),
     {
       provide: MatPaginatorIntl,

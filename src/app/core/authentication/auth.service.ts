@@ -11,7 +11,6 @@ import { TokenService } from './token.service';
 export class AuthService {
   private readonly loginService = inject(LoginService);
   private readonly tokenService = inject(TokenService);
-
   private $user = new BehaviorSubject<User>({});
 
   // Observable that calls this.assignUser() when the token changes or refreshes. Returns an Observable<User>
@@ -66,6 +65,7 @@ export class AuthService {
   menu() {
     return iif(() => this.check(), this.loginService.menu(), of([]));
   }
+
 
   // Returns an Observable of a User or {} if the JWT token is not valid
   private assignUser() {

@@ -8,6 +8,11 @@ export interface User {
   role?: string;
   id_it_team?: number;
   permissions?: any[];
+
+  // Añadimos campos específicos para nuestra API
+  employeeId?: number;
+  itTeam?: number;
+  authorities?: string;
 }
 
 export interface Token {
@@ -18,4 +23,15 @@ export interface Token {
   expires_in?: number;
   exp?: number;
   refresh_token?: string;
+}
+
+// Interfaz para extraer la información del payload JWT
+export interface JwtPayload {
+  role: string;
+  employeeId: number;
+  authorities: string;
+  itTeam: number;
+  sub: string;
+  iat: number;
+  exp: number;
 }

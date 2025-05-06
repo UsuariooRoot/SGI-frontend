@@ -1,5 +1,5 @@
 import { base64, capitalize, currentTimestamp, timeLeft } from './helpers';
-import { Token } from './interface';
+import { JwtPayload, Token, User } from './interface';
 
 export abstract class BaseToken {
   constructor(protected attributes: Token) {}
@@ -50,7 +50,7 @@ export abstract class BaseToken {
 export class SimpleToken extends BaseToken {}
 
 export class JwtToken extends SimpleToken {
-  private _payload?: { exp?: number };
+  private _payload?: JwtPayload;
 
   static is(accessToken: string): boolean {
     try {
@@ -67,21 +67,62 @@ export class JwtToken extends SimpleToken {
     return this.payload?.exp;
   }
 
-  private get payload(): { exp?: number } {
-    if (!this.access_token) {
+  get sub() {
+    return this.payload?.sub;
+  }
+
+  get role() {
+    return this.payload?.role;
+  }
+
+  get employeeId() {
+    return this.payload?.employeeId;
+  }
+
+  get authorities() {
+    return this.payload?.authorities;
+  }
+
+  get itTeam() {
+    return this.payload?.itTeam;
+  }
+
+  // Método para obtener información del usuario desde el JWT
+  getUserFromToken(): User | {} {
+    if (!this.payload) {
       return {};
+    }
+
+    return {
+      id: this.payload.employeeId,
+      name: this.payload.sub,
+      role: this.payload.role,
+      id_it_team: this.payload.itTeam,
+      authorities: this.payload.authorities ? [this.payload.authorities] : []
+    };
+  }
+
+  private get payload(): JwtPayload | undefined {
+    if (!this.access_token) {
+      return undefined;
     }
 
     if (this._payload) {
       return this._payload;
     }
 
-    const [, payload] = this.access_token.split('.');
-    const data = JSON.parse(base64.decode(payload));
-    if (!data.exp) {
-      data.exp = this.attributes.exp;
-    }
+    try {
+      const [, payload] = this.access_token.split('.');
+      const data = JSON.parse(base64.decode(payload));
 
-    return (this._payload = data);
+      if (!data.exp) {
+        data.exp = this.attributes.exp;
+      }
+
+      return (this._payload = data as JwtPayload);
+    } catch (e) {
+      console.error('Error al decodificar el JWT', e);
+      return undefined;
+    }
   }
 }
