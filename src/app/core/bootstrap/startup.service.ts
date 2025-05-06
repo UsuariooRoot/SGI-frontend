@@ -40,9 +40,9 @@ export class StartupService {
   }
 
   private setPermissions(user: User) {
-    const permissions = user.permissions ?? ['canRead'];
+    const permissions = user.permissions ?? [];
     this.permissonsService.loadPermissions(permissions); // load user-specific permissions
     this.rolesService.flushRoles(); // removes all roles registered in NgxPermissionsService -> https://github.com/AlexKhymenko/ngx-permissions?tab=readme-ov-file#removing-roles
-    this.rolesService.addRole(user.role ? user.role : 'GUEST', ['canRead']) // add a role with its own permissions
+    this.rolesService.addRole(user.role ? user.role : 'GUEST', []) // add a role with its own permissions
   }
 }

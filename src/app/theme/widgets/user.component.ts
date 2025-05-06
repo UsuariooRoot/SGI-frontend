@@ -13,7 +13,8 @@ import { debounceTime, tap } from 'rxjs';
   selector: 'app-user',
   template: `
     <button mat-icon-button [matMenuTriggerFor]="menu">
-      <img class="avatar" [src]="user.avatar" width="24" alt="avatar" />
+      <img class="avatar" src="images/avatar.jpg" width="24" alt="avatar" />
+      <!-- <img class="avatar" [src]="user.avatar" width="24" alt="avatar" /> -->
     </button>
 
     <mat-menu #menu="matMenu">

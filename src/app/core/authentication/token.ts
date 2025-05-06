@@ -54,10 +54,12 @@ export class JwtToken extends SimpleToken {
 
   static is(accessToken: string): boolean {
     try {
-      const [_header] = accessToken.split('.');
-      const header = JSON.parse(base64.decode(_header));
+      // const [_header] = accessToken.split('.');
+      // const header = JSON.parse(base64.decode(_header));
 
-      return header.typ.toUpperCase().includes('JWT');
+      // return header.typ.toUpperCase().includes('JWT');
+      const parts = accessToken.split('.');
+      return parts.length === 3;
     } catch (e) {
       return false;
     }
@@ -76,15 +78,15 @@ export class JwtToken extends SimpleToken {
   }
 
   get employeeId() {
-    return this.payload?.employeeId;
+    return this.payload?.employee_id;
   }
 
   get authorities() {
-    return this.payload?.authorities;
+    return this.payload?.permissions;
   }
 
   get itTeam() {
-    return this.payload?.itTeam;
+    return this.payload?.id_it_team;
   }
 
   // Método para obtener información del usuario desde el JWT
@@ -94,11 +96,12 @@ export class JwtToken extends SimpleToken {
     }
 
     return {
-      id: this.payload.employeeId,
+      id: this.payload.employee_id,
       name: this.payload.sub,
       role: this.payload.role,
-      id_it_team: this.payload.itTeam,
-      authorities: this.payload.authorities ? [this.payload.authorities] : []
+      id_it_team: this.payload.id_it_team,
+      permissions: this.payload.permissions ? [this.payload.permissions] : [],
+      employee_id: this.payload.employee_id,
     };
   }
 

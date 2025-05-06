@@ -19,7 +19,7 @@
         </div>
       }
     </div>
-    <ng-template [ngxPermissionsOnly]="['IT_TEAM_LEADER', 'IT_EMPLOYEE']">
+    <ng-template [ngxPermissionsExcept]="['EMPLEADO_NO_TI']">
       <div class="form-group m-t-16">
         <div class="form-field">
           <label>Por persona a cargo</label>

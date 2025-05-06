@@ -8,7 +8,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FilterService } from '@features/incidents/services/filter.service';
 import { Employee } from '@features/incidents/typings';
-import { MtxSelectModule } from '@ng-matero/extensions/select';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { ToastrService } from 'ngx-toastr';
 import { SelectComponent } from "@shared/components/select/select.component";
@@ -41,7 +40,6 @@ export interface IncidentTicketFilter {
     MatCheckboxModule,
     MatCardModule,
     SelectComponent,
-    // MtxSelectModule,
     MatDatepickerModule,
     MatFormFieldModule,
     MatInputModule,

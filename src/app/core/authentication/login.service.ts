@@ -5,7 +5,7 @@ import { catchError, map, of } from 'rxjs';
 import { Token, User } from './interface';
 import { Menu } from '@core/bootstrap/menu.service';
 import { TokenService } from './token.service';
-import { JwtToken, SimpleToken } from './token';
+import { JwtToken } from './token';
 
 @Injectable({
   providedIn: 'root',
@@ -44,12 +44,11 @@ export class LoginService {
   // Método para extraer información del usuario del JWT
   getUserInfoFromToken(): User | {} {
     const token = this.tokenService['token'];
-    // console.log(token)
-    console.log(token instanceof JwtToken) // false
+
     if (token instanceof JwtToken) {
-      //nunca entra aquí
       return token.getUserFromToken();
     }
+
     return {};
   }
 }
