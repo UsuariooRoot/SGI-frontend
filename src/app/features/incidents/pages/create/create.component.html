@@ -3,7 +3,7 @@
     <h2 class="m-0 text-center">Crea un ticket</h2>
   </header>
   <main class="m-t-16">
-    <form class="form">
+    <form class="form" [formGroup]="ticketForm">
       <div class="form-field">
         <label>Incident:</label>
         <app-select
@@ -11,7 +11,7 @@
           groupBy="categoryName"
           bindLabel="name"
           bindValue="id"
-          [(ngModel)]="newIncident.incident"
+          formControlName="incident"
           placeholder="Selecciona un incidente"
         ></app-select>
       </div>
@@ -23,13 +23,13 @@
           placeholder="Ejemplo: No puedo acceder al SIJ..."
           style="resize: none"
           rows="10"
-          [(ngModel)]="newIncident.description"
+          formControlName="description"
         ></textarea>
       </div>
 
       <div class="d-flex justify-content-end m-t-8 gap-12">
         <button class="btn-secondary" type="button">Cancel</button>
-        <button class="btn-primary" (click)="submit()">Submit</button>
+        <button class="btn-primary" (click)="submit()" [disabled]="!ticketForm.valid">Submit</button>
       </div>
     </form>
   </main>
