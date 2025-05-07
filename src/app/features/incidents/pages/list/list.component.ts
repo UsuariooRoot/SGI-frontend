@@ -39,7 +39,7 @@ export class ListComponent implements OnInit {
     this.$user.subscribe({
       next: user => {
         this.idItTeam = this.getIdItTeam(user);
-        this.getTicketRows({ id_it_team: user.id_it_team });
+        this.getTicketRows();
       },
     });
   }

@@ -1,9 +1,14 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, of } from 'rxjs';
-import { Employee, TicketStatus } from '../typings';
+import { Employee } from '../typings';
 import { IncidentTicketFilter } from '../components/filters/filters.component';
 import { PERSONAL_EMPLOYEES, REQUESTER_EMPLOYEES, TICKET_STATUSES } from '../data/filter-data';
+
+export interface TicketStatus {
+  id: number;
+  name: string;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -39,13 +44,8 @@ export class FilterService {
 
 
   getIncidentTicketStatuses(): Observable<TicketStatus[]> {
-    return of(TICKET_STATUSES);
-    /*
-    return this.http.get<{ data: TicketStatus[] }>('api/tickets/statuses').pipe(
-      map(response => {
-        return response.data
-      })
+    return this.http.get<{ data: TicketStatus[] }>('http://localhost:8080/api/tickets/statuses').pipe(
+      map(response => response.data)
     );
-    */
   }
 }
