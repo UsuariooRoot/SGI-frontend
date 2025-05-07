@@ -2,9 +2,17 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Employee, Incident, TicketStatus } from '../typings';
+import { Incident, TicketStatus } from '../typings';
 import { IncidentTicketFilter } from '../components/filters/filters.component';
 import { INCIDENT_TICKETS } from '../data/todos';
+
+interface Employee {
+  id: number;
+  fullname: string;
+  email: string;
+  id_role: number;
+  id_it_team: number;
+}
 
 export interface IncidentTicketResponse {
   id: number;

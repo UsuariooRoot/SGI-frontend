@@ -1,14 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, of } from 'rxjs';
-import { Employee } from '../typings';
+import { Employee, TicketStatus } from '../typings';
 import { IncidentTicketFilter } from '../components/filters/filters.component';
-import { PERSONAL_EMPLOYEES, REQUESTER_EMPLOYEES, TICKET_STATUSES } from '../data/filter-data';
-
-export interface TicketStatus {
-  id: number;
-  name: string;
-}
 
 @Injectable({
   providedIn: 'root',
@@ -22,30 +16,23 @@ export class FilterService {
     this.filtersSource.next(filters);
   }
 
-  getEmployeesByItTeam(idItTeam: number): Observable<Employee[]> {
-    return of(PERSONAL_EMPLOYEES);
-    /*
-    const params = new HttpParams().set('id_it_team', idItTeam);
+  getEmployeesByItTeam(itTeamId: number): Observable<Employee[]> {
+    const params = new HttpParams().set('it_team_id', itTeamId);
     return this.http
-      .get<{ data: Employee[] }>("api/employees", { params})
+      .get<{ data: Employee[] }>('http://localhost:8080/api/employees', { params })
       .pipe(map(response => response.data));
-    */
   }
 
-  getRequestersByItTeam(idItTeam: number): Observable<Employee[]> {
-    return of(REQUESTER_EMPLOYEES);
-    /*
-    const params = new HttpParams().set('id_it_team', idItTeam);
+  getRequestersByItTeam(itTeamId: number): Observable<Employee[]> {
+    const params = new HttpParams().set('itTeamId', itTeamId);
     return this.http
-      .get<{ data: Employee[] }>("api/requesters", { params })
-      .pipe(map(response => response.data));
-    */
+      .get<{ data: any[] }>('http://localhost:8080/api/tickets', { params })
+      .pipe(map(response => response.data.map(ticket => ticket.owner as Employee)));
   }
-
 
   getIncidentTicketStatuses(): Observable<TicketStatus[]> {
-    return this.http.get<{ data: TicketStatus[] }>('http://localhost:8080/api/tickets/statuses').pipe(
-      map(response => response.data)
-    );
+    return this.http
+      .get<{ data: TicketStatus[] }>('http://localhost:8080/api/tickets/statuses')
+      .pipe(map(response => response.data));
   }
 }

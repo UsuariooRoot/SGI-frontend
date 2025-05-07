@@ -1,13 +1,13 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
-import { FiltersComponent, IncidentTicketFilter } from '@features/incidents/components/filters/filters.component';
+import {
+  FiltersComponent,
+  IncidentTicketFilter,
+} from '@features/incidents/components/filters/filters.component';
 import {
   IncidentTableComponent,
   TicketRow,
 } from '@features/incidents/components/incident-table/incident-table.component';
-import {
-  IncidentService,
-  IncidentTicketResponse,
-} from '@features/incidents/services/incident.service';
+import { IncidentService } from '@features/incidents/services/incident.service';
 import { ActionsComponent } from '../../components/actions/actions.component';
 import { User } from '@core/authentication/interface';
 import { AuthService } from '@core/authentication/auth.service';
@@ -27,9 +27,9 @@ export class ListComponent implements OnInit {
   private $user: Observable<User> = this.authService.user();
   private filterService = inject(FilterService);
 
-  @Input({required: true}) filter!: IncidentTicketFilter;
+  @Input({ required: true }) filter!: IncidentTicketFilter;
 
-  idItTeam = 0;
+  itTeamId = 0;
   ticketRows: TicketRow[] = [];
 
   ngOnInit(): void {
@@ -38,7 +38,7 @@ export class ListComponent implements OnInit {
     });
     this.$user.subscribe({
       next: user => {
-        this.idItTeam = this.getIdItTeam(user);
+        this.itTeamId = this.getIdItTeam(user);
         this.getTicketRows();
       },
     });

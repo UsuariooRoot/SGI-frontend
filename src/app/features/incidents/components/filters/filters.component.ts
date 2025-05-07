@@ -7,10 +7,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FilterService } from '@features/incidents/services/filter.service';
-import { Employee } from '@features/incidents/typings';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { ToastrService } from 'ngx-toastr';
-import { SelectComponent } from "@shared/components/select/select.component";
+import { SelectComponent } from '@shared/components/select/select.component';
+import { Employee } from '@features/incidents/typings';
 
 export interface GenericEmployee {
   id: number;
@@ -24,13 +24,12 @@ export interface TicketStatus {
 }
 
 export interface IncidentTicketFilter {
-  news?: boolean;
-  statuses?: number[];
-  id_it_team?: number;
-  assigned_employee?: number;
-  employee_owner?: number;
-  from?: Date;
-  to?: Date;
+  showNewTickets?: boolean;
+  statusIds?: number[];
+  assignedEmployeeId?: number;
+  ownerEmployeeId?: number;
+  dateFrom?: Date;
+  dateTo?: Date;
 }
 
 @Component({
@@ -45,8 +44,8 @@ export interface IncidentTicketFilter {
     MatInputModule,
     MatButtonModule,
     NgxPermissionsModule,
-    SelectComponent
-],
+    SelectComponent,
+  ],
   templateUrl: './filters.component.html',
   styleUrl: './filters.component.scss',
 })
@@ -54,41 +53,37 @@ export class FiltersComponent implements OnInit {
   private readonly filterService = inject(FilterService);
   private readonly toast = inject(ToastrService);
 
-
-  @Input({ required: true }) idItTeam!: number;
+  @Input({ required: true }) itTeamId!: number;
 
   TICKET_STATUSES: TicketStatus[] = [];
-  IT_TEAM_EMPLOYEES: Employee[] = [];
-  REQUESTER_EMPLOYEES: Employee[] = [];
+  IT_TEAM_EMPLOYEES: GenericEmployee[] = [];
+  REQUESTER_EMPLOYEES: GenericEmployee[] = [];
 
   statuses: any = [];
   filters: IncidentTicketFilter = {};
 
   ngOnInit() {
-    this.getIncidentTicketStatuses();
-    this.getEmployeesByItTeam(this.idItTeam);
-    this.getRequestersByItTeam(this.idItTeam);
+    this.loadTicketStatuses();
+    this.loadEmployees(this.itTeamId);
   }
 
-  private getEmployeesByItTeam(idItTeam: number) {
-    return this.filterService.getEmployeesByItTeam(idItTeam).subscribe({
+  private loadEmployees(itTeamId: number) {
+    this.filterService.getEmployeesByItTeam(itTeamId).subscribe({
       next: data => {
-        this.IT_TEAM_EMPLOYEES = data;
+        this.IT_TEAM_EMPLOYEES = data.map(this.mapEmployeeToGenericEmployee);
       },
       error: err => console.error('Error al obtener empleados por equipo TI:', err),
     });
-  }
 
-  private getRequestersByItTeam(idItTeam: number) {
-    return this.filterService.getRequestersByItTeam(idItTeam).subscribe({
+    this.filterService.getRequestersByItTeam(itTeamId).subscribe({
       next: data => {
-        this.REQUESTER_EMPLOYEES = data;
+        this.REQUESTER_EMPLOYEES = data.map(this.mapEmployeeToGenericEmployee);
       },
       error: err => console.error('Error al obtener solicitantes por equipo de TI:', err),
     });
   }
 
-  private getIncidentTicketStatuses() {
+  private loadTicketStatuses() {
     this.filterService.getIncidentTicketStatuses().subscribe({
       next: statuses => {
         const formattedStatuses: TicketStatus[] = statuses.map(status => {
@@ -109,7 +104,7 @@ export class FiltersComponent implements OnInit {
   applyFilters() {
     const statuses = this.TICKET_STATUSES.filter(ticket => ticket.active).map(ticket => ticket.id);
 
-    this.filters.statuses = statuses;
+    this.filters.statusIds = statuses;
 
     this.toast.success(JSON.stringify(this.filters));
   }
@@ -117,5 +112,12 @@ export class FiltersComponent implements OnInit {
   cleanFilters() {
     this.TICKET_STATUSES = JSON.parse(this.statuses);
     this.filters = {};
+  }
+
+  private mapEmployeeToGenericEmployee(employee: Employee): GenericEmployee {
+    return {
+      id: employee.id,
+      fullName: `${employee.name} ${employee.paternalSurname} ${employee.maternalSurname}`,
+    };
   }
 }

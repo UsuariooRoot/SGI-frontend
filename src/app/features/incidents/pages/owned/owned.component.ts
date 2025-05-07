@@ -21,13 +21,13 @@ export class OwnedComponent {
   private readonly authService = inject(AuthService);
   private $user: Observable<User> = this.authService.user();
 
-  idItTeam = 0;
+  itTeamId = 0;
   ticketRows: TicketRow[] = [];
 
   ngOnInit(): void {
     this.$user.subscribe({
       next: user => {
-        this.idItTeam = this.getIdItTeam(user);
+        this.itTeamId = this.getIdItTeam(user);
         this.getTicketRows({ employee_owner: user.id });
       },
     });

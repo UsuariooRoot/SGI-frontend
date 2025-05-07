@@ -10,10 +10,12 @@ export interface ItTeam {
 
 export interface Employee {
   id: number;
-  fullname: string;
+  name: string;
+  paternalSurname: string;
+  maternalSurname: string;
   email: string;
-  id_role: number;
-  id_it_team: number;
+  role: ItTeam;
+  itTeam: ItTeam;
 }
 
 export interface TicketStatus {
