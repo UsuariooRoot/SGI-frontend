@@ -35,25 +35,25 @@ export interface IncidentCategory {
 export class IncidentService {
   private readonly http = inject(HttpClient);
 
-  getIncidentTickets(filter?: IncidentTicketFilter, itTeamId?: number): Observable<TicketResponse[]> {
+  getIncidentTickets(filter: IncidentTicketFilter, itTeamId: number): Observable<TicketResponse[]> {
     let params = new HttpParams();
 
-    if (itTeamId) {
-      params = params.set('itTeamId', itTeamId)
-    }
-
-    if (filter) {
-      const filterParameters = Object.entries(filter);
-      filterParameters.forEach(([key, value]) => {
-        if (value === null || value === undefined) {
-          return;
-        }
-        params = params.set(key, value);
-      });
-    }
+    params = params.set('itTeamId', itTeamId)
+    const filterParameters = Object.entries(filter);
+    filterParameters.forEach(([key, value]) => {
+      if (value === null || value === undefined) {
+        return;
+      }
+      params = params.set(key, value);
+    });
 
     return this.http
       .get<{ data: TicketResponse[] }>('http://localhost:8080/api/tickets', { params })
+      .pipe(map(response => response.data));
+  }
+
+  getIncidentTicketsByRequester(employeeId: number): Observable<TicketResponse[]> {
+    return this.http.get<{ data: TicketResponse[] }>(`http://localhost:8080/api/tickets/requester/${employeeId}`)
       .pipe(map(response => response.data));
   }
 

@@ -35,7 +35,7 @@ export class OwnedComponent {
 
   // diplock
   getTicketRows(filter?: any) {
-    this.incidentService.getIncidentTickets(filter).subscribe({
+    this.incidentService.getIncidentTickets(filter, this.itTeamId).subscribe({
       next: data => {
         console.log(data);
         this.ticketRows = data.map(mapIncidentTicketToRowTicket);
