@@ -53,7 +53,7 @@ export class FiltersComponent implements OnInit {
   private readonly filterService = inject(FilterService);
   private readonly toast = inject(ToastrService);
 
-  @Input({ required: true }) itTeamId!: number;
+  @Input() itTeamId?: number;
 
   TICKET_STATUSES: TicketStatus[] = [];
   IT_TEAM_EMPLOYEES: GenericEmployee[] = [];
@@ -64,7 +64,7 @@ export class FiltersComponent implements OnInit {
 
   ngOnInit() {
     this.loadTicketStatuses();
-    this.loadEmployees(this.itTeamId);
+    this.loadEmployees(this.itTeamId ?? 0);
   }
 
   private loadEmployees(itTeamId: number) {

@@ -47,7 +47,7 @@ export class ListComponent implements OnInit {
   getTicketRows(filter: IncidentTicketFilter) {
     this.incidentService.getIncidentTickets(filter, this.itTeamId).subscribe({
       next: data => {
-        this.ticketRows = data.map(mapIncidentTicketToRowTicket);
+        this.ticketRows = data.map(ticket => mapIncidentTicketToRowTicket(ticket));
       },
       error: err => console.error('Error al obtener incidentes:', err),
     });

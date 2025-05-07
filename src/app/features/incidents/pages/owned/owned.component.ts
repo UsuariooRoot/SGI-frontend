@@ -21,23 +21,21 @@ export class OwnedComponent {
   private readonly authService = inject(AuthService);
   private $user: Observable<User> = this.authService.user();
 
-  itTeamId = 0;
+  employeeId = 0;
   ticketRows: TicketRow[] = [];
 
   ngOnInit(): void {
     this.$user.subscribe({
       next: user => {
-        this.itTeamId = this.getIdItTeam(user);
+        this.employeeId = user.employee_id ?? 0;
         this.getTicketRows({ employee_owner: user.id });
       },
     });
   }
 
-  // diplock
   getTicketRows(filter?: any) {
-    this.incidentService.getIncidentTickets(filter, this.itTeamId).subscribe({
+    this.incidentService.getIncidentTicketsByRequester(filter, this.employeeId).subscribe({
       next: data => {
-        console.log(data);
         this.ticketRows = data.map(mapIncidentTicketToRowTicket);
       },
       error: err => console.error('Error al obtener incidentes:', err),

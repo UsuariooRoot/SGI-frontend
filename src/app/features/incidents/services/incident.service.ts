@@ -52,8 +52,18 @@ export class IncidentService {
       .pipe(map(response => response.data));
   }
 
-  getIncidentTicketsByRequester(employeeId: number): Observable<TicketResponse[]> {
-    return this.http.get<{ data: TicketResponse[] }>(`http://localhost:8080/api/tickets/requester/${employeeId}`)
+  getIncidentTicketsByRequester(filter: IncidentTicketFilter, employeeId: number): Observable<TicketResponse[]> {
+    let params = new HttpParams()
+
+    const filterParameters = Object.entries(filter);
+    filterParameters.forEach(([key, value]) => {
+      if (value === null || value === undefined) {
+        return;
+      }
+      params = params.set(key, value);
+    });
+
+    return this.http.get<{ data: TicketResponse[] }>(`http://localhost:8080/api/tickets/requester/${employeeId}`, { params })
       .pipe(map(response => response.data));
   }
 
