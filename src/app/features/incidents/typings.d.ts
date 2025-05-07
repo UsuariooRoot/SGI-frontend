@@ -36,9 +36,9 @@ export interface IncidentCategory {
 
 export interface Incident {
   id: number;
-  name: string;
-  category_id: number;
-  priority_id: number;
+  description: string;
+  categoryId: number;
+  priorityId: number;
 }
 
 export interface TicketAction {

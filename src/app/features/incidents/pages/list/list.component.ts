@@ -27,20 +27,20 @@ export class ListComponent implements OnInit {
   private $user: Observable<User> = this.authService.user();
   private filterService = inject(FilterService);
 
-  @Input({ required: true }) filter!: IncidentTicketFilter;
+  @Input({ required: true }) filters!: IncidentTicketFilter;
 
   itTeamId = 0;
   ticketRows: TicketRow[] = [];
 
   ngOnInit(): void {
-    this.filterService.$currentFilters.subscribe(filters => {
-      this.applyFilters(filters);
-    });
     this.$user.subscribe({
       next: user => {
-        this.itTeamId = this.getIdItTeam(user);
-        this.getTicketRows();
+        this.itTeamId = user.id_it_team ?? 0;
+        this.loadTickets(this.filters, this.itTeamId);
       },
+    });
+    this.filterService.$currentFilters.subscribe(filters => {
+      this.loadTickets(filters, this.itTeamId);
     });
   }
 
@@ -53,11 +53,9 @@ export class ListComponent implements OnInit {
     });
   }
 
-  getIdItTeam(user: User): number {
-    return user?.id_it_team ?? 0;
-  }
-
-  applyFilters(filters: IncidentTicketFilter) {
-    this.getTicketRows(filters);
+  private loadTickets(filters: IncidentTicketFilter, itTeamId: number) {
+    this.incidentService.getIncidentTickets(filters, itTeamId).subscribe(tickets => {
+      this.ticketRows = tickets.map(ticket => mapIncidentTicketToRowTicket(ticket));
+    });
   }
 }

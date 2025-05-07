@@ -106,7 +106,9 @@ export class FiltersComponent implements OnInit {
 
     this.filters.statusIds = statuses;
 
-    this.toast.success(JSON.stringify(this.filters));
+    this.filterService.updateFilters(this.filters);
+
+    // this.toast.success(JSON.stringify(this.filters));
   }
 
   cleanFilters() {

@@ -1,16 +1,21 @@
-import { TicketRow } from "../components/incident-table/incident-table.component";
+import { TicketRow } from '../components/incident-table/incident-table.component';
+import { TicketResponse } from '../services/incident.service';
 
 // diplock
-export function mapIncidentTicketToRowTicket(data: any): TicketRow {
-  const { id, created_at, description, incident, reported_by, status, assigned_to } = data;
+export function mapIncidentTicketToRowTicket(ticket: TicketResponse): TicketRow {
+  const { id, owner, description, incident, created, status, assignedEmployee } = ticket;
+  const reported_by = `${owner.name} ${owner.paternalSurname} ${owner.maternalSurname}`;
+  const assigned_to = assignedEmployee
+    ? `${assignedEmployee.name} ${assignedEmployee.paternalSurname} ${assignedEmployee.maternalSurname}`
+    : 'Sin asignar';
 
   return {
     id,
-    title: incident.name,
-    description,
+    title: incident.description,
+    description: description,
+    created_at: created.toLocaleString(),
     status: status.name,
-    created_at: created_at.toString(),
-    reported_by: reported_by.fullname,
-    assigned_to: assigned_to?.fullname ?? '---',
+    reported_by,
+    assigned_to,
   };
 }
