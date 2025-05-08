@@ -30,6 +30,7 @@ export class OwnedComponent {
     this.$user.subscribe({
       next: user => {
         this.employeeId = user.employee_id ?? 0;
+        this.loadTickets({});
       },
     });
     this.filterService.$currentFilters.subscribe(filters => {
@@ -38,12 +39,8 @@ export class OwnedComponent {
   }
 
   private loadTickets(filters: IncidentTicketFilter) {
-      this.incidentService.getIncidentTicketsByRequester(filters, this.employeeId).subscribe(tickets => {
-        this.ticketRows = tickets.map(ticket => mapIncidentTicketToRowTicket(ticket));
-      });
-    }
-
-  getIdItTeam(user: User): number {
-    return user?.id_it_team ?? 0;
+    this.incidentService.getIncidentTicketsByRequester(filters, this.employeeId).subscribe(tickets => {
+      this.ticketRows = tickets.map(ticket => mapIncidentTicketToRowTicket(ticket));
+    });
   }
 }

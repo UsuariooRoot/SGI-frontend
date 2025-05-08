@@ -35,6 +35,14 @@ export interface CreateTicketForm {
   description?: string;
 }
 
+export interface ActionTicketForm {
+  employeeId: number;
+  ticketId: number;
+  actionId: number;
+  updateValue: number;
+  comment: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -87,5 +95,9 @@ export class IncidentService {
 
   createIncidentTicket(ticket: CreateTicketForm): Observable<TicketResponse> {
     return this.http.post<TicketResponse>('http://localhost:8080/api/tickets', ticket);
+  }
+
+  executeAction(action: ActionTicketForm) {
+    return this.http.post<TicketResponse>('http://localhost:8080/api/tickets/action', action);
   }
 }

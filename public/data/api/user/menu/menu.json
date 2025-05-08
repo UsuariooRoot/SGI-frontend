@@ -14,6 +14,12 @@
           "badge": {
             "color": "red-50",
             "value": "5"
+          },
+          "permissions": {
+            "only": [
+              "EMPLEADO_TI",
+              "LIDER_EQUIPO_TI"
+            ]
           }
         },
         {
@@ -24,6 +30,11 @@
           "badge": {
             "color": "red-50",
             "value": "5"
+          },
+          "permissions": {
+            "only": [
+              "EMPLEADO_TI"
+            ]
           }
         },
         {
@@ -34,19 +45,35 @@
           "badge": {
             "color": "red-50",
             "value": "5"
+          },
+          "permissions": {
+            "only": [
+              "EMPLEADO_NO_TI"
+            ]
           }
         },
         {
           "route": "create",
           "name": "create",
           "type": "link",
-          "icon": "add"
+          "icon": "add",
+          "permissions": {
+            "only": [
+              "EMPLEADO_NO_TI"
+            ]
+          }
         },
         {
           "route": "register",
           "name": "register",
           "type": "link",
-          "icon": "search"
+          "icon": "search",
+          "permissions": {
+            "only": [
+              "EMPLEADO_TI",
+              "LIDER_EQUIPO_TI"
+            ]
+          }
         },
         {
           "route": "search-solution",

@@ -52,10 +52,11 @@ export class AuthService {
   }
 
   logout() {
-    return this.loginService.logout().pipe(
-      tap(() => this.tokenService.clear()),
-      map(() => !this.check())
-    );
+    this.tokenService.clear();
+    // return this.loginService.logout().pipe(
+    //   tap(() => this.tokenService.clear()),
+    //   map(() => !this.check())
+    // );
   }
 
   user() {
@@ -65,7 +66,6 @@ export class AuthService {
   menu() {
     return iif(() => this.check(), this.loginService.menu(), of([]));
   }
-
 
   // Returns an Observable of a User or {} if the JWT token is not valid
   private assignUser() {

@@ -14,6 +14,7 @@ import { AuthService } from '@core/authentication/auth.service';
 import { Observable } from 'rxjs';
 import { mapIncidentTicketToRowTicket } from '@features/incidents/utils/mappers';
 import { FilterService } from '@features/incidents/services/filter.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -24,6 +25,7 @@ import { FilterService } from '@features/incidents/services/filter.service';
 export class ListComponent implements OnInit {
   private readonly incidentService = inject(IncidentService);
   private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
   private $user: Observable<User> = this.authService.user();
   private filterService = inject(FilterService);
 
@@ -35,6 +37,9 @@ export class ListComponent implements OnInit {
   ngOnInit(): void {
     this.$user.subscribe({
       next: user => {
+        if (user.id_it_team === 0) {
+          this.router.navigateByUrl('/incidents/owned')
+        }
         this.itTeamId = user.id_it_team ?? 0;
         this.loadTickets(this.filters, this.itTeamId);
       },

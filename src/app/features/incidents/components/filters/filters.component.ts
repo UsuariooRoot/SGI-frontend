@@ -102,13 +102,18 @@ export class FiltersComponent implements OnInit {
   }
 
   applyFilters() {
-    const statuses = this.TICKET_STATUSES.filter(ticket => ticket.active).map(ticket => ticket.id);
+    const statuses = this.TICKET_STATUSES.filter(({ id, active }) => {
+      if (id === 0) {
+        this.filters.showNewTickets = true;
+        return false;
+      }
+      return active;
+    }).map(ticket => ticket.id);
 
     this.filters.statusIds = statuses;
+    console.log(this.filters);
 
     this.filterService.updateFilters(this.filters);
-
-    // this.toast.success(JSON.stringify(this.filters));
   }
 
   cleanFilters() {

@@ -10,10 +10,9 @@ export const routes: Routes = [
   {
     path: 'incidents',
     component: GeneralLayoutComponent,
-    canActivate: [authGuard],
-    // canActivateChild: [authGuard, ngxPermissionsGuard],
     canActivateChild: [authGuard],
-    loadChildren: () => import('./features/incidents/incidents-routing.module').then(m => m.IncidentsRoutingModule)
+    loadChildren: () =>
+      import('./features/incidents/incidents-routing.module').then(m => m.IncidentsRoutingModule),
   },
   {
     path: 'auth',

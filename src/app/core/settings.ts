@@ -15,5 +15,5 @@ export const defaults: AppSettings = {
   headerPos: 'fixed',
   sidenavOpened: true,
   sidenavCollapsed: false,
-  language: 'auto',
+  language: 'es',
 };
