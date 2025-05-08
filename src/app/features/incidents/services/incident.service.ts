@@ -6,17 +6,17 @@ import { Employee, Incident, ItTeam } from '../typings';
 import { IncidentTicketFilter } from '../components/filters/filters.component';
 
 export interface TicketResponse {
-  id:               number;
-  creator:          Employee;
-  owner:            Employee;
-  incident:         Incident;
-  description:      string;
+  id: number;
+  creator: Employee;
+  owner: Employee;
+  incident: Incident;
+  description: string;
   currentHistoryId: number;
   assignedEmployee: null | Employee;
-  status:           ItTeam;
-  priority:         ItTeam;
-  itTeam:           ItTeam;
-  created:          Date;
+  status: ItTeam;
+  priority: ItTeam;
+  itTeam: ItTeam;
+  created: Date;
 }
 
 export interface IncidentCategory {
@@ -29,6 +29,12 @@ export interface IncidentCategory {
   }[];
 }
 
+export interface CreateTicketForm {
+  incidentId: number;
+  employeeId: number;
+  description?: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -38,7 +44,7 @@ export class IncidentService {
   getIncidentTickets(filter: IncidentTicketFilter, itTeamId: number): Observable<TicketResponse[]> {
     let params = new HttpParams();
 
-    params = params.set('itTeamId', itTeamId)
+    params = params.set('itTeamId', itTeamId);
     const filterParameters = Object.entries(filter);
     filterParameters.forEach(([key, value]) => {
       if (value === null || value === undefined) {
@@ -52,8 +58,11 @@ export class IncidentService {
       .pipe(map(response => response.data));
   }
 
-  getIncidentTicketsByRequester(filter: IncidentTicketFilter, employeeId: number): Observable<TicketResponse[]> {
-    let params = new HttpParams()
+  getIncidentTicketsByRequester(
+    filter: IncidentTicketFilter,
+    employeeId: number
+  ): Observable<TicketResponse[]> {
+    let params = new HttpParams();
 
     const filterParameters = Object.entries(filter);
     filterParameters.forEach(([key, value]) => {
@@ -63,7 +72,10 @@ export class IncidentService {
       params = params.set(key, value);
     });
 
-    return this.http.get<{ data: TicketResponse[] }>(`http://localhost:8080/api/tickets/requester/${employeeId}`, { params })
+    return this.http
+      .get<{
+        data: TicketResponse[];
+      }>(`http://localhost:8080/api/tickets/requester/${employeeId}`, { params })
       .pipe(map(response => response.data));
   }
 
@@ -71,5 +83,9 @@ export class IncidentService {
     return this.http
       .get<{ data: IncidentCategory[] }>('http://localhost:8080/api/incidents/categorized')
       .pipe(map(response => response.data));
+  }
+
+  createIncidentTicket(ticket: CreateTicketForm): Observable<TicketResponse> {
+    return this.http.post<TicketResponse>('http://localhost:8080/api/tickets', ticket);
   }
 }
