@@ -62,7 +62,7 @@ export class IncidentService {
     });
 
     return this.http
-      .get<{ data: TicketResponse[] }>('http://localhost:8080/api/tickets', { params })
+      .get<{ data: TicketResponse[] }>('/api/tickets', { params })
       .pipe(map(response => response.data));
   }
 
@@ -83,21 +83,21 @@ export class IncidentService {
     return this.http
       .get<{
         data: TicketResponse[];
-      }>(`http://localhost:8080/api/tickets/requester/${employeeId}`, { params })
+      }>(`/api/tickets/requester/${employeeId}`, { params })
       .pipe(map(response => response.data));
   }
 
   getIncidentCategory(): Observable<IncidentCategory[]> {
     return this.http
-      .get<{ data: IncidentCategory[] }>('http://localhost:8080/api/incidents/categorized')
+      .get<{ data: IncidentCategory[] }>('/api/incidents/categorized')
       .pipe(map(response => response.data));
   }
 
   createIncidentTicket(ticket: CreateTicketForm): Observable<TicketResponse> {
-    return this.http.post<TicketResponse>('http://localhost:8080/api/tickets', ticket);
+    return this.http.post<TicketResponse>('/api/tickets', ticket);
   }
 
   executeAction(action: ActionTicketForm) {
-    return this.http.post<TicketResponse>('http://localhost:8080/api/tickets/action', action);
+    return this.http.post<TicketResponse>('/api/tickets/action', action);
   }
 }

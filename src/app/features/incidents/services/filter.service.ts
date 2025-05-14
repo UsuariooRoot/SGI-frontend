@@ -19,20 +19,20 @@ export class FilterService {
   getEmployeesByItTeam(itTeamId: number): Observable<Employee[]> {
     const params = new HttpParams().set('it_team_id', itTeamId);
     return this.http
-      .get<{ data: Employee[] }>('http://localhost:8080/api/employees', { params })
+      .get<{ data: Employee[] }>('/api/employees', { params })
       .pipe(map(response => response.data));
   }
 
   getRequestersByItTeam(itTeamId: number): Observable<Employee[]> {
     const params = new HttpParams().set('itTeamId', itTeamId);
     return this.http
-      .get<{ data: any[] }>('http://localhost:8080/api/tickets', { params })
+      .get<{ data: any[] }>('/api/tickets', { params })
       .pipe(map(response => response.data.map(ticket => ticket.owner as Employee)));
   }
 
   getIncidentTicketStatuses(): Observable<TicketStatus[]> {
     return this.http
-      .get<{ data: TicketStatus[] }>('http://localhost:8080/api/tickets/statuses')
+      .get<{ data: TicketStatus[] }>('/api/tickets/statuses')
       .pipe(map(response => response.data));
   }
 }

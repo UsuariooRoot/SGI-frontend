@@ -12,11 +12,11 @@ export function apiInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) {
     return next(req);
   }
 
-  let authReq = req;
+  let authReq = req.clone({ url: 'http://localhost:8080' + req.url });
 
   if (tokenService.valid()) {
-    authReq = req.clone({
-      headers: req.headers.set('Authorization', tokenService.getBearerToken())
+    authReq = authReq.clone({
+      headers: req.headers.set('Authorization', tokenService.getBearerToken()),
     });
   }
 
