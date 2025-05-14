@@ -54,12 +54,10 @@ export class JwtToken extends SimpleToken {
 
   static is(accessToken: string): boolean {
     try {
-      // const [_header] = accessToken.split('.');
-      // const header = JSON.parse(base64.decode(_header));
+      const [_header] = accessToken.split('.');
+      const header = JSON.parse(base64.decode(_header));
 
-      // return header.typ.toUpperCase().includes('JWT');
-      const parts = accessToken.split('.');
-      return parts.length === 3;
+      return header.typ.toUpperCase().includes('JWT');
     } catch (e) {
       return false;
     }
@@ -89,7 +87,7 @@ export class JwtToken extends SimpleToken {
     return this.payload?.id_it_team;
   }
 
-  // Método para obtener información del usuario desde el JWT
+  // Method for obtaining user information from the JWT
   getUserFromToken(): User | {} {
     if (!this.payload) {
       return {};

@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -17,9 +17,8 @@ import { filter } from 'rxjs/operators';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   imports: [
-    FormsModule,
     ReactiveFormsModule,
-    RouterLink,
+    // RouterLink,
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
