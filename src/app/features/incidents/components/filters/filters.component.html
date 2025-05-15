@@ -3,68 +3,87 @@
     <h2 class="m-0">Filtros</h2>
   </header>
   <main class="m-t-16">
-    <div class="d-flex flex-wrap gap-12">
-      @for (status of TICKET_STATUSES; track $index) {
+    <form [formGroup]="filterForm">
+      <div class="d-flex flex-wrap gap-12">
         <div class="cbx">
-          <input type="checkbox" [id]="status.id" [(ngModel)]="status.active" />
-          <label [htmlFor]="status.id">
+          <input type="checkbox" id="showNewTickets" formControlName="showNewTickets" />
+          <label for="showNewTickets">
             <div>
               <span></span>
               <svg fill="none" viewBox="0 0 15 14" height="14" width="15">
                 <path d="M2 8.36364L6.23077 12L13 2"></path>
               </svg>
             </div>
-            {{ status.name }}
+            Nuevo
           </label>
         </div>
-      }
-    </div>
-    <ng-template [ngxPermissionsExcept]="['EMPLEADO_NO_TI']">
-      <div class="form-group m-t-16">
-        <div class="form-field">
-          <label>Por persona a cargo</label>
-          <app-select
-            [items]="IT_TEAM_EMPLOYEES"
-            bindLabel="fullName"
-            bindValue="id"
-            [(ngModel)]="filters.assignedEmployeeId"
-            [tabIndex]="1"
-          />
+
+        @for (status of TICKET_STATUSES; track $index) {
+          <div class="cbx">
+            <input
+              type="checkbox"
+              [id]="'status-' + status.id"
+              [checked]="filterForm.value.statusIds?.includes(status.id)"
+              (change)="toggleStatusId(status.id)"
+            />
+            <label [htmlFor]="'status-' + status.id">
+              <div>
+                <span></span>
+                <svg fill="none" viewBox="0 0 15 14" height="14" width="15">
+                  <path d="M2 8.36364L6.23077 12L13 2"></path>
+                </svg>
+              </div>
+              {{ status.name }}
+            </label>
+          </div>
+        }
+      </div>
+      <ng-template [ngxPermissionsExcept]="['EMPLEADO_NO_TI']">
+        <div class="form-group m-t-16">
+          <div class="form-field">
+            <label>Por persona a cargo</label>
+            <app-select
+              [items]="IT_TEAM_EMPLOYEES"
+              bindLabel="fullName"
+              bindValue="id"
+              formControlName="assignedEmployeeId"
+              [tabIndex]="1"
+            />
+          </div>
+          <div class="form-field">
+            <label>Por solicitante</label>
+            <app-select
+              [items]="REQUESTER_EMPLOYEES"
+              bindLabel="fullName"
+              bindValue="id"
+              formControlName="ownerEmployeeId"
+              [tabIndex]="2"
+            />
+          </div>
         </div>
-        <div class="form-field">
-          <label>Por solicitante</label>
-          <app-select
-            [items]="REQUESTER_EMPLOYEES"
-            bindLabel="fullName"
-            bindValue="id"
-            [(ngModel)]="filters.ownerEmployeeId"
-            [tabIndex]="2"
-          />
+      </ng-template>
+      <div class="d-flex flex-wrap gap-16 m-t-16">
+        <div>
+          <label>Desde</label>
+          <div class="input-base d-flex align-items-center p-x-0">
+            <input class="input-base h-full border-none" [matDatepicker]="picker_from" formControlName="dateFrom" [tabIndex]="3" />
+            <mat-datepicker-toggle [for]="picker_from"></mat-datepicker-toggle>
+            <mat-datepicker #picker_from></mat-datepicker>
+          </div>
+        </div>
+        <div>
+          <label>Hasta</label>
+          <div class="input-base d-flex align-items-center p-x-0">
+            <input class="input-base h-full border-none" [matDatepicker]="picker_to" formControlName="dateTo" [tabIndex]="4" />
+            <mat-datepicker-toggle [for]="picker_to"></mat-datepicker-toggle>
+            <mat-datepicker #picker_to></mat-datepicker>
+          </div>
         </div>
       </div>
-    </ng-template>
-    <div class="d-flex flex-wrap gap-16 m-t-16">
-      <mat-form-field>
-        <mat-label>Desde</mat-label>
-        <input
-          matInput
-          [matDatepicker]="picker_from"
-          [(ngModel)]="filters.dateFrom"
-          [tabIndex]="3"
-        />
-        <mat-datepicker-toggle matIconSuffix [for]="picker_from"></mat-datepicker-toggle>
-        <mat-datepicker #picker_from></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Hasta</mat-label>
-        <input matInput [matDatepicker]="picker_to" [(ngModel)]="filters.dateTo" [tabIndex]="4" />
-        <mat-datepicker-toggle matIconSuffix [for]="picker_to"></mat-datepicker-toggle>
-        <mat-datepicker #picker_to></mat-datepicker>
-      </mat-form-field>
-    </div>
-    <div class="d-flex justify-content-end gap-12">
-      <button class="btn-secondary" (click)="cleanFilters()">Limpiar</button>
-      <button class="btn-primary" (click)="applyFilters()">Filtrar</button>
-    </div>
+      <div class="d-flex justify-content-end gap-12 m-t-16">
+        <button class="btn-secondary" type="button" (click)="cleanFilters()">Limpiar</button>
+        <button class="btn-primary" type="submit" (click)="applyFilters()">Filtrar</button>
+      </div>
+    </form>
   </main>
 </section>

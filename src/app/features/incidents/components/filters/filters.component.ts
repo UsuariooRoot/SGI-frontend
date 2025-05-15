@@ -1,26 +1,14 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { FilterService } from '@features/incidents/services/filter.service';
 import { NgxPermissionsModule } from 'ngx-permissions';
-import { ToastrService } from 'ngx-toastr';
 import { SelectComponent } from '@shared/components/select/select.component';
-import { Employee } from '@features/incidents/typings';
+import { Employee, TicketStatus } from '@features/incidents/typings';
 
 export interface GenericEmployee {
   id: number;
   fullName: string;
-}
-
-export interface TicketStatus {
-  id: number;
-  name: string;
-  active?: boolean;
 }
 
 export interface IncidentTicketFilter {
@@ -34,40 +22,37 @@ export interface IncidentTicketFilter {
 
 @Component({
   selector: 'app-filters',
-  imports: [
-    FormsModule,
-    MatCheckboxModule,
-    MatCardModule,
-    SelectComponent,
-    MatDatepickerModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    NgxPermissionsModule,
-    SelectComponent,
-  ],
+  imports: [ReactiveFormsModule, MatDatepickerModule, NgxPermissionsModule, SelectComponent],
   templateUrl: './filters.component.html',
   styleUrl: './filters.component.scss',
 })
 export class FiltersComponent implements OnInit {
   private readonly filterService = inject(FilterService);
-  private readonly toast = inject(ToastrService);
+  private readonly formBuilder = inject(FormBuilder);
 
-  @Input() itTeamId?: number;
+  @Input() itTeamId!: number;
 
   TICKET_STATUSES: TicketStatus[] = [];
   IT_TEAM_EMPLOYEES: GenericEmployee[] = [];
   REQUESTER_EMPLOYEES: GenericEmployee[] = [];
 
-  statuses: any = [];
-  filters: IncidentTicketFilter = {};
+  filterForm = this.formBuilder.group({
+    showNewTickets: [false],
+    statusIds: [[] as number[]],
+    assignedEmployeeId: [''],
+    ownerEmployeeId: [''],
+    dateFrom: [''],
+    dateTo: [''],
+  });
 
   ngOnInit() {
     this.loadTicketStatuses();
-    this.loadEmployees(this.itTeamId ?? 0);
+    this.loadEmployees(this.itTeamId);
   }
 
   private loadEmployees(itTeamId: number) {
+    if (itTeamId < 1) return;
+
     this.filterService.getEmployeesByItTeam(itTeamId).subscribe({
       next: data => {
         this.IT_TEAM_EMPLOYEES = data.map(this.mapEmployeeToGenericEmployee);
@@ -86,39 +71,36 @@ export class FiltersComponent implements OnInit {
   private loadTicketStatuses() {
     this.filterService.getIncidentTicketStatuses().subscribe({
       next: statuses => {
-        const formattedStatuses: TicketStatus[] = statuses.map(status => {
-          return { ...status, active: false };
-        });
-        const newStatus: TicketStatus = {
-          id: 0,
-          name: 'Nuevo',
-          active: false,
-        };
-        this.TICKET_STATUSES = [newStatus, ...formattedStatuses];
-        this.statuses = JSON.stringify(this.TICKET_STATUSES);
+        this.TICKET_STATUSES = statuses;
       },
       error: err => console.error('Error al obtener los estados de los ticket de incidentes:', err),
     });
   }
 
   applyFilters() {
-    const statuses = this.TICKET_STATUSES.filter(({ id, active }) => {
-      if (id === 0) {
-        this.filters.showNewTickets = true;
-        return false;
-      }
-      return active;
-    }).map(ticket => ticket.id);
-
-    this.filters.statusIds = statuses;
-    console.log(this.filters);
-
-    this.filterService.updateFilters(this.filters);
+    // console.log(this.filterForm.value)
   }
 
   cleanFilters() {
-    this.TICKET_STATUSES = JSON.parse(this.statuses);
-    this.filters = {};
+    this.filterForm.reset({
+      showNewTickets: false,
+      statusIds: [],
+      assignedEmployeeId: '',
+      ownerEmployeeId: '',
+      dateFrom: '',
+      dateTo: '',
+    });
+  }
+
+  toggleStatusId(statusId: number) {
+    const control = this.filterForm.get('statusIds') as any;
+    const current: number[] = control?.value || [];
+
+    if (current.includes(statusId)) {
+      control?.setValue(current.filter(id => id !== statusId));
+    } else {
+      control?.setValue([...current, statusId]);
+    }
   }
 
   private mapEmployeeToGenericEmployee(employee: Employee): GenericEmployee {

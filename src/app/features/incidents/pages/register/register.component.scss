@@ -31,25 +31,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #FFF;
-  border-radius: 12px;
-  border: 1px solid #E0E0E0;
-  overflow: hidden;
-  cursor: pointer;
+  padding-right: 0;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.075);
 
   & > input {
     border: none;
+    height: 100%;
+    padding-inline: 0 12px;
     flex: 1;
   }
 
   & > button {
-    height: 44px;
+    height: 100%;
     aspect-ratio: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #FFF;
+    display: grid;
+    place-content: center;
+    background-color: transparent;
     border: none;
     cursor: pointer;
   }
