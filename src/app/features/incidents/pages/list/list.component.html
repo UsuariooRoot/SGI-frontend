@@ -1,6 +1,6 @@
 <section class="incident-controls">
-  <app-filters [itTeamId]="itTeamId"></app-filters>
-  <app-actions [ticketId]="selectedTicketId" (actionDone)="reloadTickets()"></app-actions>
+  <app-filters [itTeamId]="user.id_it_team ?? 0"></app-filters>
+  <app-actions [ticketId]="selectedTicketId" (actionDone)="reloadTickets()" [employeeId]="user.employee_id ?? 0" ></app-actions>
 </section>
 
 <app-incident-table

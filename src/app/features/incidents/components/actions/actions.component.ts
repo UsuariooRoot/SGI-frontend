@@ -1,16 +1,8 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  inject,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { SelectComponent } from '@shared/components/select/select.component';
-import { AuthService } from '@core/authentication/auth.service';
 import { FilterService } from '@features/incidents/services/filter.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -38,17 +30,16 @@ interface GeneralAction {
   templateUrl: './actions.component.html',
   styleUrls: ['./actions.component.scss'],
 })
-export class ActionsComponent implements OnInit {
+export class ActionsComponent {
   private readonly http = inject(HttpClient);
-  private readonly authService = inject(AuthService);
   private readonly filterService = inject(FilterService);
   private readonly formBuilder = inject(FormBuilder);
   private readonly toastr = inject(ToastrService);
 
   @Output() actionDone = new EventEmitter<void>();
   @Input() ticketId: number = 0;
+  @Input({ required: true }) employeeId!: number;
 
-  employeeId: number = 0;
   actions: GeneralAction[] = [
     {
       id: 1,
@@ -91,15 +82,6 @@ export class ActionsComponent implements OnInit {
     comment: [''],
   });
 
-  ngOnInit(): void {
-    this.authService.user().subscribe({
-      next: user => {
-        this.employeeId = user.employee_id || 0;
-        this.loadEmployees(user.id_it_team ?? 0);
-      },
-    });
-  }
-
   showAction(action: GeneralAction): void {
     this.currentAction = action;
     this.actionForm.reset();
@@ -110,21 +92,24 @@ export class ActionsComponent implements OnInit {
   }
 
   submitAction(): void {
-    const currentActionId = this.currentAction.id;
     const updateValue = Number(this.actionForm.get('updateValue')?.value);
-    const comment = this.actionForm.get('comment')?.value ?? '';
 
     if (this.ticketId === 0) {
       this.toastr.error('No hay ticket seleccionado');
       return;
     }
 
+    if (updateValue === 0) {
+      this.toastr.error('Seleccione una opción');
+      return;
+    }
+
     const action: ActionTicketForm = {
       employeeId: this.employeeId,
       ticketId: this.ticketId,
-      actionId: currentActionId,
+      actionId: this.currentAction.id,
       updateValue,
-      comment: comment || '',
+      comment: this.actionForm.get('comment')?.value ?? '',
     };
 
     console.log('action: ' + JSON.stringify(action));
@@ -157,12 +142,14 @@ export class ActionsComponent implements OnInit {
       next: data => {
         const actionAssingIndex = this.actions.findIndex(action => action.id === 3);
 
-        this.actions[actionAssingIndex].options = data.map(({ id, name, paternalSurname, maternalSurname }) => {
-          return {
-            value: id,
-            label: `${name} ${paternalSurname} ${maternalSurname}`,
-          };
-        });
+        this.actions[actionAssingIndex].options = data.map(
+          ({ id, name, paternalSurname, maternalSurname }) => {
+            return {
+              value: id,
+              label: `${name} ${paternalSurname} ${maternalSurname}`,
+            };
+          }
+        );
       },
       error: err => console.error('Error al obtener empleados por equipo TI:', err),
     });

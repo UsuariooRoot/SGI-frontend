@@ -31,7 +31,7 @@ export class ListComponent implements OnInit {
 
   @Input({ required: true }) filters!: IncidentTicketFilter;
 
-  itTeamId = 0;
+  user: User = {}
   ticketRows: TicketRow[] = [];
   selectedTicketId = 0;
 
@@ -41,17 +41,18 @@ export class ListComponent implements OnInit {
         if (user.id_it_team === 0) {
           this.router.navigateByUrl('/incidents/owned')
         }
-        this.itTeamId = user.id_it_team ?? 0;
-        this.loadTickets(this.filters, this.itTeamId);
+        this.user = user;
+        this.loadTickets(this.filters);
       },
     });
     this.filterService.$currentFilters.subscribe(filters => {
-      this.loadTickets(filters, this.itTeamId);
+      this.loadTickets(filters);
     });
   }
 
   loadTicketRows(filter: IncidentTicketFilter) {
-    this.incidentService.getIncidentTickets(filter, this.itTeamId).subscribe({
+    if (!this.user.id_it_team) return;
+    this.incidentService.getIncidentTickets(filter, this.user.id_it_team).subscribe({
       next: data => {
         this.ticketRows = data.map(ticket => mapIncidentTicketToRowTicket(ticket));
       },
@@ -59,8 +60,9 @@ export class ListComponent implements OnInit {
     });
   }
 
-  private loadTickets(filters: IncidentTicketFilter, itTeamId: number) {
-    this.incidentService.getIncidentTickets(filters, itTeamId).subscribe(tickets => {
+  private loadTickets(filters: IncidentTicketFilter) {
+    if (!this.user.id_it_team) return;
+    this.incidentService.getIncidentTickets(filters, this.user.id_it_team).subscribe(tickets => {
       this.ticketRows = tickets.map(ticket => mapIncidentTicketToRowTicket(ticket));
     });
   }
@@ -72,6 +74,6 @@ export class ListComponent implements OnInit {
   // Expose loadTickets for use from the template
   reloadTickets() {
     console.log("recargando")
-    this.loadTickets(this.filters, this.itTeamId);
+    this.loadTickets(this.filters);
   }
 }
