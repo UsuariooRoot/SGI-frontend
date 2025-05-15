@@ -33,6 +33,7 @@ export class ListComponent implements OnInit {
 
   itTeamId = 0;
   ticketRows: TicketRow[] = [];
+  selectedTicketId = 0;
 
   ngOnInit(): void {
     this.$user.subscribe({
@@ -49,7 +50,7 @@ export class ListComponent implements OnInit {
     });
   }
 
-  getTicketRows(filter: IncidentTicketFilter) {
+  loadTicketRows(filter: IncidentTicketFilter) {
     this.incidentService.getIncidentTickets(filter, this.itTeamId).subscribe({
       next: data => {
         this.ticketRows = data.map(ticket => mapIncidentTicketToRowTicket(ticket));
@@ -62,5 +63,15 @@ export class ListComponent implements OnInit {
     this.incidentService.getIncidentTickets(filters, itTeamId).subscribe(tickets => {
       this.ticketRows = tickets.map(ticket => mapIncidentTicketToRowTicket(ticket));
     });
+  }
+
+  onRowSelected(ticketId: number) {
+    this.selectedTicketId = ticketId;
+  }
+
+  // Expose loadTickets for use from the template
+  reloadTickets() {
+    console.log("recargando")
+    this.loadTickets(this.filters, this.itTeamId);
   }
 }

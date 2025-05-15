@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MtxGridColumn, MtxGridModule } from '@ng-matero/extensions/grid';
 
 export interface TicketRow {
@@ -19,6 +19,9 @@ export interface TicketRow {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IncidentTableComponent {
+  @Input() ticketRows: TicketRow[] = [];
+  @Output() rowSelected = new EventEmitter<number>();
+
   columns: MtxGridColumn[] = [
     { header: 'Ticket ID', field: 'id' },
     { header: 'Título', field: 'title' },
@@ -46,5 +49,7 @@ export class IncidentTableComponent {
     { header: 'Asignado', field: 'assigned_to' },
   ];
 
-  @Input() ticketRows: TicketRow[] = [];
+  onRowClick(event: any) {
+    this.rowSelected.emit(event.rowData.id)
+  }
 }

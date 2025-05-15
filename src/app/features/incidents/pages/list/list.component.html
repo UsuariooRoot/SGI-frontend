@@ -1,5 +1,9 @@
 <section class="incident-controls">
-  <app-filters [itTeamId]="itTeamId" />
-  <app-actions />
+  <app-filters [itTeamId]="itTeamId"></app-filters>
+  <app-actions [ticketId]="selectedTicketId" (actionDone)="reloadTickets()"></app-actions>
 </section>
-<app-incident-table [ticketRows]="ticketRows" />
+
+<app-incident-table
+  [ticketRows]="ticketRows"
+  (rowSelected)="onRowSelected($event)"
+></app-incident-table>

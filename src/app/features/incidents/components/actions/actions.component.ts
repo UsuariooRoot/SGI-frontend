@@ -1,27 +1,45 @@
-import { Component } from '@angular/core';
-import { FormSectionComponent } from './form-section.component';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, inject } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { SelectComponent } from '@shared/components/select/select.component';
+import { AuthService } from '@core/authentication/auth.service';
+import { FilterService } from '@features/incidents/services/filter.service';
+import { ToastrService } from 'ngx-toastr';
 
-interface FormField {
-  type: 'select' | 'textarea';
-  id: string;
-  label: string;
-  placeholder?: string;
-  options?: {value: string, label: string}[];
-}
-
-interface FormConfig {
-  title: string;
-  fields: FormField[];
-  submitLabel: string;
+interface ActionTicketForm {
+  employeeId: number;
+  ticketId: number;
+  actionId: number;
+  updateValue: number;
+  comment: string;
 }
 
 @Component({
   selector: 'app-actions',
-  imports: [FormSectionComponent],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, SelectComponent],
   templateUrl: './actions.component.html',
-  styleUrls: ['./actions.component.scss']
+  styleUrls: ['./actions.component.scss'],
 })
-export class ActionsComponent {
+export class ActionsComponent implements OnInit, OnChanges {
+  private readonly http = inject(HttpClient);
+  private readonly authService = inject(AuthService);
+  private readonly filterService = inject(FilterService);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly toastr = inject(ToastrService);
+
+  @Output() actionDone = new EventEmitter<void>();
+
+  @Input() ticketId: number = 0;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['ticketId']) {
+      console.log('Ticket ID seleccionado:', this.ticketId);
+    }
+  }
+
+  employeeId: number = 0;
 
   currentAction = 'change-status';
 
@@ -29,96 +47,127 @@ export class ActionsComponent {
     { id: 'change-status', label: 'Cambiar estado' },
     { id: 'change-priority', label: 'Cambiar prioridad' },
     { id: 'assign', label: 'Asignar' },
-    { id: 'others', label: 'Otros' }
   ];
 
-  otherActions = [
-    'Ver incidente',
-    'Ver historico',
-    'Descargar como PDF',
-    'Adjuntar archivo',
-    'Notificar por correo',
-    'Reportar'
+  statusOptions = [
+    { value: 1, label: 'Pendiente' },
+    { value: 2, label: 'Asignado' },
+    { value: 3, label: 'Atendido' },
+    { value: 4, label: 'Cancelado' },
   ];
 
-  formConfigs: Record<string, FormConfig> = {
-    'change-status': {
-      title: 'Cambiar estado',
-      fields: [
-        {
-          type: 'select',
-          id: 'new-status',
-          label: 'Nuevo estado:',
-          placeholder: 'Seleccionar estado',
-          options: [
-            { value: 'resolved', label: 'Atendido' },
-            { value: 'closed', label: 'Cerrado' },
-            { value: 'cancelled', label: 'Cancelado' }
-          ]
-        },
-        {
-          type: 'textarea',
-          id: 'status-comment',
-          label: 'Comentario:',
-          placeholder: 'Agregar comentario sobre el cambio de estado...'
-        }
-      ],
-      submitLabel: 'Aplicar'
-    },
-    'change-priority': {
-      title: 'Cambiar prioridad',
-      fields: [
-        {
-          type: 'select',
-          id: 'new-priority',
-          label: 'Nueva prioridad:',
-          placeholder: 'Seleccionar prioridad',
-          options: [
-            { value: 'low', label: 'Baja' },
-            { value: 'medium', label: 'Media' },
-            { value: 'high', label: 'Alta' },
-            { value: 'critical', label: 'Crítica' }
-          ]
-        },
-        {
-          type: 'textarea',
-          id: 'status-comment',
-          label: 'Comentario:',
-          placeholder: 'Agregar comentario sobre el cambio de prioridad...'
-        }
-      ],
-      submitLabel: 'Aplicar'
-    },
-    'assign': {
-      title: 'Asignar',
-      fields: [
-        {
-          type: 'select',
-          id: 'assign-employee',
-          label: 'Asignar a:',
-          placeholder: 'Seleccionar empleado',
-          options: [
-            { value: '1', label: 'Ana Gómez' },
-            { value: '2', label: 'Carlos Ruiz' },
-            { value: '3', label: 'Laura Martínez' },
-            { value: '4', label: 'Miguel Torres' },
-            { value: '5', label: 'Patricia Vega' }
-          ]
-        },
-        {
-          type: 'textarea',
-          id: 'assign-comment',
-          label: 'Instrucciones para el asignado:',
-          placeholder: 'Agregar instrucciones o información relevante...'
-        }
-      ],
-      submitLabel: 'Asignar'
-    }
-  };
+  priorityOptions = [
+    { value: 1, label: 'Baja' },
+    { value: 2, label: 'Media' },
+    { value: 3, label: 'Alta' },
+    { value: 4, label: 'Crítica' },
+  ];
 
+  employeeOptions: {
+    value: number;
+    label: string;
+  }[] = [];
 
-  showAction(action: string) {
-    this.currentAction = action;
+  actionForm = this.formBuilder.group({
+    newStatus: [''],
+    statusComment: [''],
+    newPriority: [''],
+    priorityComment: [''],
+    assignEmployee: [''],
+    assignComment: [''],
+  });
+
+  ngOnInit(): void {
+    this.authService.user().subscribe({
+      next: user => {
+        this.employeeId = user.employee_id || 0;
+        this.loadEmployees(user.id_it_team ?? 0);
+      },
+    });
   }
 
+  showAction(action: string): void {
+    this.currentAction = action;
+    this.actionForm.reset();
+  }
+
+  cancelAction(): void {
+    this.actionForm.reset();
+  }
+
+  submitAction(): void {
+    if (this.ticketId === 0) {
+      this.toastr.error('No hay ticket seleccionado')
+      return;
+    }
+
+    let actionId: number;
+    let updateValue: number;
+    let comment: string;
+
+    switch (this.currentAction) {
+      case 'change-status':
+        actionId = 3;
+        updateValue = Number(this.actionForm.get('newStatus')?.value);
+        comment = this.actionForm.get('statusComment')?.value ?? '';
+        break;
+      case 'change-priority':
+        actionId = 2;
+        updateValue = Number(this.actionForm.get('newPriority')?.value);
+        comment = this.actionForm.get('priorityComment')?.value ?? '';
+        break;
+      case 'assign':
+        actionId = 4;
+        updateValue = Number(this.actionForm.get('assignEmployee')?.value);
+        comment = this.actionForm.get('assignComment')?.value ?? '';
+        break;
+      default:
+        console.error('Acción no válida');
+        return;
+    }
+
+    const action: ActionTicketForm = {
+      employeeId: this.employeeId,
+      ticketId: this.ticketId,
+      actionId,
+      updateValue,
+      comment: comment || '',
+    };
+
+    console.log('action: ' + JSON.stringify(action));
+    // this.executeAction(action);
+  }
+
+  executeAction(action: ActionTicketForm) {
+    this.http.post('http://localhost:8080/api/tickets/action', action, {
+      responseType: 'text'
+    }).subscribe({
+      next: (response) => {
+        this.cancelAction();
+        this.actionDone.emit();
+      },
+      error: (error) => {
+        this.cancelAction();
+        this.actionDone.emit();
+      }
+    });
+  }
+
+  executeOtherAction(action: string): void {
+    console.log(`Ejecutando acción: ${action}`);
+  }
+
+  private loadEmployees(itTeamId: number) {
+    this.filterService.getEmployeesByItTeam(itTeamId).subscribe({
+      next: data => {
+        this.employeeOptions = data.map(({ id, name, paternalSurname, maternalSurname }) => {
+          return {
+            value: id,
+            label: `${name} ${paternalSurname} ${maternalSurname}`,
+          };
+        });
+      },
+      error: err => console.error('Error al obtener empleados por equipo TI:', err),
+    });
+  }
 }
