@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Employee, Incident, ItTeam } from '../typings';
@@ -51,18 +51,27 @@ export class IncidentService {
 
   getIncidentTickets(filter: IncidentTicketFilter, itTeamId: number): Observable<TicketResponse[]> {
     let params = new HttpParams();
-
     params = params.set('itTeamId', itTeamId);
-    const filterParameters = Object.entries(filter);
-    filterParameters.forEach(([key, value]) => {
-      if (value === null || value === undefined) {
-        return;
-      }
-      params = params.set(key, value);
-    });
+    // to avoid cached requests
+    params = params.set('_t', new Date().getTime().toString());
+
+    if (filter && typeof filter === 'object') {
+      Object.entries(filter).forEach(([key, value]) => {
+        if (Boolean(value)) {
+          params = params.set(key, value);
+        }
+      });
+    }
 
     return this.http
-      .get<{ data: TicketResponse[] }>('/api/tickets', { params })
+      .get<{ data: TicketResponse[] }>('/api/tickets', {
+        params,
+        headers: new HttpHeaders({
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache',
+          'Expires': '0',
+        }),
+      })
       .pipe(map(response => response.data));
   }
 
