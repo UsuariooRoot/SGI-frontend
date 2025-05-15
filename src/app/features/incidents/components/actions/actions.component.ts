@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, inject } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  inject,
+} from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -15,6 +22,15 @@ interface ActionTicketForm {
   comment: string;
 }
 
+interface GeneralAction {
+  id: number;
+  name: string;
+  label: string;
+  options: { value: number; label: string }[];
+  selectPlaceholder: string;
+  commentPlaceholder: string;
+}
+
 @Component({
   selector: 'app-actions',
   standalone: true,
@@ -22,7 +38,7 @@ interface ActionTicketForm {
   templateUrl: './actions.component.html',
   styleUrls: ['./actions.component.scss'],
 })
-export class ActionsComponent implements OnInit, OnChanges {
+export class ActionsComponent implements OnInit {
   private readonly http = inject(HttpClient);
   private readonly authService = inject(AuthService);
   private readonly filterService = inject(FilterService);
@@ -30,51 +46,49 @@ export class ActionsComponent implements OnInit, OnChanges {
   private readonly toastr = inject(ToastrService);
 
   @Output() actionDone = new EventEmitter<void>();
-
   @Input() ticketId: number = 0;
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['ticketId']) {
-      console.log('Ticket ID seleccionado:', this.ticketId);
-    }
-  }
-
   employeeId: number = 0;
-
-  currentAction = 'change-status';
-
-  actions = [
-    { id: 'change-status', label: 'Cambiar estado' },
-    { id: 'change-priority', label: 'Cambiar prioridad' },
-    { id: 'assign', label: 'Asignar' },
+  actions: GeneralAction[] = [
+    {
+      id: 1,
+      name: 'Cambiar estado',
+      label: 'Nuevo estado',
+      options: [
+        { value: 1, label: 'Pendiente' },
+        { value: 3, label: 'Atendido' },
+        { value: 4, label: 'Cancelado' },
+      ],
+      selectPlaceholder: 'Nuevo estado',
+      commentPlaceholder: 'Agregar comentario sobre el cambio de estado...',
+    },
+    {
+      id: 2,
+      name: 'Cambiar prioridad',
+      label: 'Nueva prioridad',
+      options: [
+        { value: 1, label: 'Baja' },
+        { value: 2, label: 'Media' },
+        { value: 3, label: 'Alta' },
+        { value: 4, label: 'Crítica' },
+      ],
+      selectPlaceholder: 'Nueva prioridad',
+      commentPlaceholder: 'Agregar comentario sobre el cambio de prioridad...',
+    },
+    {
+      id: 3,
+      name: 'Asignar',
+      label: 'Asignar a',
+      options: [],
+      selectPlaceholder: 'Asignar a',
+      commentPlaceholder: 'Agregar instrucciones o información relevante...',
+    },
   ];
-
-  statusOptions = [
-    { value: 1, label: 'Pendiente' },
-    { value: 2, label: 'Asignado' },
-    { value: 3, label: 'Atendido' },
-    { value: 4, label: 'Cancelado' },
-  ];
-
-  priorityOptions = [
-    { value: 1, label: 'Baja' },
-    { value: 2, label: 'Media' },
-    { value: 3, label: 'Alta' },
-    { value: 4, label: 'Crítica' },
-  ];
-
-  employeeOptions: {
-    value: number;
-    label: string;
-  }[] = [];
+  currentAction = this.actions[0];
 
   actionForm = this.formBuilder.group({
-    newStatus: [''],
-    statusComment: [''],
-    newPriority: [''],
-    priorityComment: [''],
-    assignEmployee: [''],
-    assignComment: [''],
+    updateValue: [''],
+    comment: [''],
   });
 
   ngOnInit(): void {
@@ -86,7 +100,7 @@ export class ActionsComponent implements OnInit, OnChanges {
     });
   }
 
-  showAction(action: string): void {
+  showAction(action: GeneralAction): void {
     this.currentAction = action;
     this.actionForm.reset();
   }
@@ -96,40 +110,19 @@ export class ActionsComponent implements OnInit, OnChanges {
   }
 
   submitAction(): void {
+    const currentActionId = this.currentAction.id;
+    const updateValue = Number(this.actionForm.get('updateValue')?.value);
+    const comment = this.actionForm.get('comment')?.value ?? '';
+
     if (this.ticketId === 0) {
-      this.toastr.error('No hay ticket seleccionado')
+      this.toastr.error('No hay ticket seleccionado');
       return;
-    }
-
-    let actionId: number;
-    let updateValue: number;
-    let comment: string;
-
-    switch (this.currentAction) {
-      case 'change-status':
-        actionId = 3;
-        updateValue = Number(this.actionForm.get('newStatus')?.value);
-        comment = this.actionForm.get('statusComment')?.value ?? '';
-        break;
-      case 'change-priority':
-        actionId = 2;
-        updateValue = Number(this.actionForm.get('newPriority')?.value);
-        comment = this.actionForm.get('priorityComment')?.value ?? '';
-        break;
-      case 'assign':
-        actionId = 4;
-        updateValue = Number(this.actionForm.get('assignEmployee')?.value);
-        comment = this.actionForm.get('assignComment')?.value ?? '';
-        break;
-      default:
-        console.error('Acción no válida');
-        return;
     }
 
     const action: ActionTicketForm = {
       employeeId: this.employeeId,
       ticketId: this.ticketId,
-      actionId,
+      actionId: currentActionId,
       updateValue,
       comment: comment || '',
     };
@@ -139,18 +132,20 @@ export class ActionsComponent implements OnInit, OnChanges {
   }
 
   executeAction(action: ActionTicketForm) {
-    this.http.post('http://localhost:8080/api/tickets/action', action, {
-      responseType: 'text'
-    }).subscribe({
-      next: (response) => {
-        this.cancelAction();
-        this.actionDone.emit();
-      },
-      error: (error) => {
-        this.cancelAction();
-        this.actionDone.emit();
-      }
-    });
+    this.http
+      .post('http://localhost:8080/api/tickets/action', action, {
+        responseType: 'text',
+      })
+      .subscribe({
+        next: response => {
+          this.cancelAction();
+          this.actionDone.emit();
+        },
+        error: error => {
+          this.cancelAction();
+          this.actionDone.emit();
+        },
+      });
   }
 
   executeOtherAction(action: string): void {
@@ -160,7 +155,9 @@ export class ActionsComponent implements OnInit, OnChanges {
   private loadEmployees(itTeamId: number) {
     this.filterService.getEmployeesByItTeam(itTeamId).subscribe({
       next: data => {
-        this.employeeOptions = data.map(({ id, name, paternalSurname, maternalSurname }) => {
+        const actionAssingIndex = this.actions.findIndex(action => action.id === 3);
+
+        this.actions[actionAssingIndex].options = data.map(({ id, name, paternalSurname, maternalSurname }) => {
           return {
             value: id,
             label: `${name} ${paternalSurname} ${maternalSurname}`,

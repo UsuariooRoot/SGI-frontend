@@ -5,127 +5,44 @@
   <main class="m-t-16">
     <!-- Pestañas de acción -->
     <ul class="action-tabs">
-      <li
-        *ngFor="let action of actions"
-        [class.active]="currentAction === action.id"
-        (click)="showAction(action.id)"
-      >
-        {{ action.label }}
-      </li>
+      @for (action of actions; track $index) {
+        <li [class.active]="currentAction.id === action.id" (click)="showAction(action)">
+          {{ action.name }}
+        </li>
+      }
     </ul>
 
-    <!-- Cambiar Estado -->
-    <div *ngIf="currentAction === 'change-status'" class="form-group">
-      <form [formGroup]="actionForm">
-        <div class="form-field">
-          <label>Nuevo estado:</label>
-          <app-select
-            [items]="statusOptions"
-            bindLabel="label"
-            bindValue="value"
-            formControlName="newStatus"
-            placeholder="Seleccionar estado"
-          ></app-select>
-        </div>
-        <div class="form-field m-t-12">
-          <label>Comentario:</label>
-          <textarea
-            formControlName="statusComment"
-            placeholder="Agregar comentario sobre el cambio de estado..."
-            style="resize: none"
-            rows="8"
-          ></textarea>
-        </div>
-        <div class="d-flex justify-content-end gap-12 m-t-12">
-          <button type="button" class="btn-secondary" (click)="cancelAction()">
-            Cancelar
-          </button>
-          <button
-            type="button"
-            class="btn-primary"
-            (click)="submitAction()"
-            [disabled]="!actionForm.get('newStatus')?.valid"
-          >
-            Aplicar
-          </button>
-        </div>
-      </form>
-    </div>
-
-    <!-- Cambiar Prioridad -->
-    <div *ngIf="currentAction === 'change-priority'" class="form-group">
-      <form [formGroup]="actionForm">
-        <div class="form-field">
-          <label>Nueva prioridad:</label>
-          <app-select
-            [items]="priorityOptions"
-            bindLabel="label"
-            bindValue="value"
-            formControlName="newPriority"
-            placeholder="Seleccionar prioridad"
-          ></app-select>
-        </div>
-        <div class="form-field m-t-12">
-          <label>Comentario:</label>
-          <textarea
-            formControlName="priorityComment"
-            placeholder="Agregar comentario sobre el cambio de prioridad..."
-            style="resize: none"
-            rows="8"
-          ></textarea>
-        </div>
-        <div class="d-flex justify-content-end gap-12 m-t-12">
-          <button type="button" class="btn-secondary" (click)="cancelAction()">
-            Cancelar
-          </button>
-          <button
-            type="button"
-            class="btn-primary"
-            (click)="submitAction()"
-            [disabled]="!actionForm.get('newPriority')?.valid"
-          >
-            Aplicar
-          </button>
-        </div>
-      </form>
-    </div>
-
-    <!-- Asignar -->
-    <div *ngIf="currentAction === 'assign'" class="form-group">
-      <form [formGroup]="actionForm">
-        <div class="form-field">
-          <label>Asignar a:</label>
-          <app-select
-            [items]="employeeOptions"
-            bindLabel="label"
-            bindValue="value"
-            formControlName="assignEmployee"
-            placeholder="Seleccionar empleado"
-          ></app-select>
-        </div>
-        <div class="form-field m-t-12">
-          <label>Instrucciones para el asignado:</label>
-          <textarea
-            formControlName="assignComment"
-            placeholder="Agregar instrucciones o información relevante..."
-            style="resize: none"
-            rows="8"
-          ></textarea>
-        </div>
-        <div class="d-flex justify-content-end gap-12 m-t-12 m-t-12">
-          <button type="button" class="btn-secondary" (click)="cancelAction()">
-            Cancelar
-          </button>
-          <button
-            type="button"
-            class="btn-primary"
-            (click)="submitAction()"
-            [disabled]="!actionForm.get('assignEmployee')?.valid"
-          >
-            Asignar
-          </button>
-        </div>
-      </form>
-    </div>
+    <form [formGroup]="actionForm" class="form-group">
+      <div class="form-field">
+        <label>{{currentAction.label}}</label>
+        <app-select
+          [items]="currentAction.options"
+          bindLabel="label"
+          bindValue="value"
+          formControlName="updateValue"
+          [placeholder]="currentAction.selectPlaceholder"
+        ></app-select>
+      </div>
+      <div class="form-field m-t-12">
+        <label>Comentario:</label>
+        <textarea
+          formControlName="comment"
+          [placeholder]="currentAction.commentPlaceholder"
+          style="resize: none"
+          rows="8"
+        ></textarea>
+      </div>
+      <div class="d-flex justify-content-end gap-12 m-t-12">
+        <button type="button" class="btn-secondary" (click)="cancelAction()">Cancelar</button>
+        <button
+          type="button"
+          class="btn-primary"
+          (click)="submitAction()"
+          [disabled]="!actionForm.get('updateValue')?.valid"
+        >
+          Aplicar
+        </button>
+      </div>
+    </form>
   </main>
 </section>
