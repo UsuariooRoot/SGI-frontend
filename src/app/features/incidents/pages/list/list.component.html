@@ -1,9 +1,10 @@
 <section class="incident-controls">
   <app-filters [itTeamId]="user.id_it_team ?? 0"></app-filters>
-  <app-actions [ticketId]="selectedTicketId" (actionDone)="reloadTickets()" [employeeId]="user.employee_id ?? 0" ></app-actions>
+  <app-actions [ticketId]="selectedTicketId" (actionDone)="loadTickets()" [employeeId]="user.employee_id ?? 0" ></app-actions>
 </section>
 
 <app-incident-table
+  [loading]="loading"
   [ticketRows]="ticketRows"
   (rowSelected)="onRowSelected($event)"
 ></app-incident-table>

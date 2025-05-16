@@ -19,6 +19,7 @@ export interface TicketRow {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IncidentTableComponent {
+  @Input() loading: boolean = false;
   @Input() ticketRows: TicketRow[] = [];
   @Output() rowSelected = new EventEmitter<number>();
 
