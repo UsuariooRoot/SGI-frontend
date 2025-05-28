@@ -27,7 +27,7 @@ export interface JwtPayload {
   id: number;
   role: string;
   employee_id: number;
-  permissions: string[];
+  permissions: string | string[];
   id_it_team: number;
   sub: string;
   iat: number;

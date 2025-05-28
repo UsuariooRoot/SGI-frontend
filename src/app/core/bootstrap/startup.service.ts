@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { NgxPermissionsService, NgxRolesService } from 'ngx-permissions';
-import { switchMap, tap } from 'rxjs';
+import { switchMap, take, tap } from 'rxjs';
 import { Menu, MenuService } from './menu.service';
 import { AuthService } from '@core/authentication/auth.service';
 import { User } from '@core/authentication/interface';
@@ -40,9 +40,20 @@ export class StartupService {
   }
 
   private setPermissions(user: User) {
-    const permissions = user.permissions ?? [];
-    this.permissonsService.loadPermissions(permissions); // load user-specific permissions
-    this.rolesService.flushRoles(); // removes all roles registered in NgxPermissionsService -> https://github.com/AlexKhymenko/ngx-permissions?tab=readme-ov-file#removing-roles
-    this.rolesService.addRole(user.role ? user.role : 'GUEST', []) // add a role with its own permissions
+    // Clear previous roles and permissions
+    this.permissonsService.flushPermissions();
+    this.rolesService.flushRoles();
+
+    // If the user has a role, assign it
+    if (user && user.role) {
+      // Assign the user's primary role
+      this.rolesService.addRole(user.role, []);
+
+      // Also load the specific permissions if they exist
+      const permissions = user.permissions ?? [];
+      if (permissions.length > 0) {
+        this.permissonsService.loadPermissions(permissions);
+      }
+    }
   }
 }

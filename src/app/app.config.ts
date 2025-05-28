@@ -18,12 +18,20 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { provideToastr } from 'ngx-toastr';
 
-
 import { environment } from '@env/environment';
 import { PaginatorI18nService } from '@shared';
 import { routes } from './app.routes';
 import { FormlyConfigModule } from './formly-config';
-import { apiInterceptor, BASE_URL, baseUrlInterceptor, errorInterceptor, loggingInterceptor, noopInterceptor, settingsInterceptor, tokenInterceptor } from '@core/interceptors';
+import {
+  apiInterceptor,
+  BASE_URL,
+  baseUrlInterceptor,
+  errorInterceptor,
+  loggingInterceptor,
+  noopInterceptor,
+  settingsInterceptor,
+  tokenInterceptor,
+} from '@core/interceptors';
 import { TranslateLangService } from '@core/bootstrap/translate-lang.service';
 import { StartupService } from '@core/bootstrap/startup.service';
 import { SettingsService } from '@core/bootstrap/settings.service';
@@ -64,10 +72,7 @@ export const appConfig: ApplicationConfig = {
         deps: [HttpClient],
       },
     }),
-    importProvidersFrom(
-      NgxPermissionsModule.forRoot(),
-      FormlyConfigModule.forRoot(),
-    ),
+    importProvidersFrom(NgxPermissionsModule.forRoot(), FormlyConfigModule.forRoot()),
     {
       provide: MatPaginatorIntl,
       useFactory: (paginatorI18nSrv: PaginatorI18nService) => paginatorI18nSrv.getPaginatorIntl(),

@@ -93,12 +93,37 @@ export class JwtToken extends SimpleToken {
       return {};
     }
 
+    // ensure that the role is handled correctly
+    let role = this.payload.role;
+
+    // handle the case where permissions is a string (ROLE_XXX)
+    let permissions: string[] = [];
+    if (this.payload.permissions) {
+      const permValue = this.payload.permissions;
+      if (typeof permValue === 'string') {
+        // If it is a string like "ROLE_LIDER_EQUIPO_TI", extract the actual role
+        if (permValue.startsWith('ROLE_')) {
+          const extractedRole = permValue.replace('ROLE_', '');
+          permissions = [extractedRole];
+
+          // If we don't have a role but we have a permission that indicates the role, use it
+          if (!role && extractedRole) {
+            role = extractedRole;
+          }
+        } else {
+          permissions = [permValue];
+        }
+      } else if (Array.isArray(permValue)) {
+        permissions = permValue;
+      }
+    }
+
     return {
       id: this.payload.employee_id,
       name: this.payload.sub,
-      role: this.payload.role,
+      role: role,
       id_it_team: this.payload.id_it_team,
-      permissions: this.payload.permissions ? [this.payload.permissions] : [],
+      permissions: permissions,
       employee_id: this.payload.employee_id,
     };
   }

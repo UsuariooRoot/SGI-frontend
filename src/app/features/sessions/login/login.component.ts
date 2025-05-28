@@ -6,19 +6,17 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '@core/authentication/auth.service';
 import { MtxButtonModule } from '@ng-matero/extensions/button';
 import { TranslateModule } from '@ngx-translate/core';
-import { filter } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
   imports: [
     ReactiveFormsModule,
-    // RouterLink,
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
@@ -36,8 +34,8 @@ export class LoginComponent {
   isSubmitting = false;
 
   loginForm = this.fb.nonNullable.group({
-    username: ['1-rogelio', [Validators.required]],
-    password: ['1-rogelio', [Validators.required]],
+    username: ['rogelio', [Validators.required]],
+    password: ['123456', [Validators.required]],
     rememberMe: [false],
   });
 
@@ -61,8 +59,26 @@ export class LoginComponent {
       .pipe(filter(authenticated => authenticated))
       .subscribe({
         next: () => {
-          // redirect to a previous route if there was one
-          this.router.navigateByUrl('/incidents');
+          // Get user information to determine the appropriate redirect
+          this.auth
+            .user()
+            .pipe(take(1))
+            .subscribe(user => {
+              let redirectionUrl = '/auth/login';
+              if (user && user.role) {
+                // Redirect based on user role
+                if (user.role === 'EMPLEADO_NO_TI') {
+                  redirectionUrl = '/incidents/owned';
+                } else if (user.role === 'EMPLEADO_TI' || user.role === 'LIDER_EQUIPO_TI') {
+                  redirectionUrl = '/incidents';
+                } else {
+                  // Default fallback
+                  redirectionUrl = '/incidents';
+                }
+              }
+
+              this.router.navigateByUrl(redirectionUrl);
+            });
         },
         error: (errorRes: HttpErrorResponse) => {
           if (errorRes.status === 401) {

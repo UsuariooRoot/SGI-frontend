@@ -11,9 +11,8 @@ import { TokenService } from './token.service';
 export class AuthService {
   private readonly loginService = inject(LoginService);
   private readonly tokenService = inject(TokenService);
-  private $user = new BehaviorSubject<User>({});
 
-  // Observable that calls this.assignUser() when the token changes or refreshes. Returns an Observable<User>
+  private $user = new BehaviorSubject<User>({});
   private $change = merge(
     this.tokenService.change(),
     this.tokenService.refresh().pipe(switchMap(() => this.refresh()))
@@ -21,10 +20,6 @@ export class AuthService {
     switchMap(() => this.assignUser()),
     share()
   );
-
-  init() {
-    return new Promise<void>(resolve => this.$change.subscribe(() => resolve()));
-  }
 
   change() {
     return this.$change;
@@ -74,7 +69,7 @@ export class AuthService {
     }
 
     if (!isEmptyObject(this.$user.getValue())) {
-      return of(this.$user.getValue());
+      return of(this.$user.getValue()).pipe(tap(user => this.$user.next(user)));
     }
 
     return this.loginService.user().pipe(tap(user => this.$user.next(user)));

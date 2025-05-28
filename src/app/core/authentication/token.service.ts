@@ -27,12 +27,11 @@ export class TokenService implements OnDestroy {
     if (!this._token) {
       this._token = this.factory.create(this.store.get(this.key));
     }
-
     return this._token;
   }
 
   change() {
-    return this.$change.pipe(share());
+    return this.$change.asObservable();
   }
 
   refresh() {
@@ -67,6 +66,7 @@ export class TokenService implements OnDestroy {
     this.clearRefresh();
   }
 
+  // save or delete (if the parameter is a FALSY value) the token from local storage
   private save(token?: Token) {
     this._token = undefined;
 

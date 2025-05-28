@@ -27,7 +27,7 @@ export class LoginService {
   }
 
   user() {
-    return of(this.getUserInfoFromToken());
+    return of(this.getUserFromToken());
   }
 
   menu() {
@@ -37,8 +37,7 @@ export class LoginService {
     );
   }
 
-  // Método para extraer información del usuario del JWT
-  getUserInfoFromToken(): User | {} {
+  getUserFromToken(): User | {} {
     const token = this.tokenService['token'];
 
     if (token instanceof JwtToken) {
