@@ -48,7 +48,6 @@ export class CreateComponent implements OnInit {
 
     this.incidentService.createIncidentTicket(form).subscribe({
       next: (response) => {
-        console.log('Ticket creado:', response);
         this.router.navigate(['/incidents/owned']);
       },
       error: (error) => {

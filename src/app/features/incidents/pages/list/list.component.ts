@@ -11,7 +11,7 @@ import { IncidentService } from '@features/incidents/services/incident.service';
 import { ActionsComponent } from '../../components/actions/actions.component';
 import { User } from '@core/authentication/interface';
 import { AuthService } from '@core/authentication/auth.service';
-import { Subject, takeUntil, combineLatest } from 'rxjs';
+import { Subject, takeUntil, combineLatest, take } from 'rxjs';
 import { mapIncidentTicketToRowTicket } from '@features/incidents/utils/mappers';
 import { FilterService } from '@features/incidents/services/filter.service';
 import { Router } from '@angular/router';
@@ -40,16 +40,20 @@ export class ListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Use combineLatest to react when both observables (user and filters) have values
-    combineLatest([this.authService.user(), this.filterService.$currentFilters])
+    // Take the first user value to prevent infinite loops from user changes
+    // But continue to react to filter changes
+    const user$ = this.authService.user().pipe(take(1));
+
+    combineLatest([user$, this.filterService.$currentFilters])
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: ([user, filters]) => {
-          this.user = user;
+          // Cast the user to the correct type
+          this.user = user as User;
           this.currentFilters = filters;
 
-          // Check if we have a valid IT device
-          // diplock -> The routing system should take care of this
-          if (!user || user.id_it_team === 0) {
+          // Check if we have a valid IT team
+          if (!this.user || !this.user.id_it_team) {
             this.router.navigateByUrl('/incidents/owned');
             return;
           }
@@ -69,7 +73,6 @@ export class ListComponent implements OnInit, OnDestroy {
 
   /**
   * Loads incident tickets based on the current filters and user.
-  * This method is public so it can be called from the template.
   */
   loadTickets(): void {
     // Check if we have filters and user to load tickets
