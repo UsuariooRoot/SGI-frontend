@@ -4,7 +4,7 @@ import { IncidentService } from '@features/incidents/services/incident.service';
 import { SelectComponent } from "@shared/components/select/select.component";
 import { Router } from '@angular/router';
 import { AuthService } from '@core/authentication/auth.service';
-import { Observable } from 'rxjs';
+import { filter, Subject, take, takeUntil } from 'rxjs';
 import { User } from '@core/authentication/interface';
 import { ToastrService } from 'ngx-toastr';
 
@@ -23,31 +23,47 @@ export class CreateComponent implements OnInit {
   private readonly formBuilder = inject(FormBuilder);
   private readonly toastr = inject(ToastrService);
   private readonly router = inject(Router);
-  private $user: Observable<User> = this.authService.user();
+
+  private destroy$ = new Subject<void>();
 
   ticketForm = this.formBuilder.group({
     incidentId: ['', Validators.required],
     description: ['']
   })
 
-  empoyeeId = 0;
-
+  user = {} as User;
   incidentCategory = []
 
+  ngOnInit(): void {
+    this.authService.user().pipe(take(1))
+      .pipe(
+        takeUntil(this.destroy$),
+        filter(user => !!user.employee_id)
+      )
+      .subscribe({
+        next: (user) => {
+          this.user = user as User;
+          this.getIncidentOptions()
+        },
+        error: err => {
+          this.toastr.error('Error en la inicialización del componente:', err)
+        },
+      });
+  }
+
   submit() {
-    if (this.empoyeeId === 0) {
-      this.toastr.error('No se ha podido obtener el ID del empleado.');
+    if (!this.user.employee_id) {
       return;
     }
 
     const form = {
       incidentId: Number(this.ticketForm.get('incidentId')?.value),
       description: this.ticketForm.get('description')?.value ?? '',
-      employeeId: this.empoyeeId,
+      employeeId: this.user.employee_id,
     }
 
     this.incidentService.createIncidentTicket(form).subscribe({
-      next: (response) => {
+      next: () => {
         this.router.navigate(['/incidents/owned']);
       },
       error: (error) => {
@@ -56,16 +72,8 @@ export class CreateComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.$user.subscribe({
-      next: user => {
-        this.empoyeeId = user.employee_id ?? 0;
-      },
-    });
-    this.getIncidentOptions();
-  }
 
-  getIncidentOptions() {
+  private getIncidentOptions() {
     this.incidentService.getIncidentCategory().subscribe({
       next: data => {
         const incidentList: any = [];

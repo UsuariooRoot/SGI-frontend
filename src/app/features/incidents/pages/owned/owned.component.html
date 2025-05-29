@@ -1,4 +1,8 @@
 <section class="incident-controls">
-  <app-filters />
+  <app-filters [itTeamId]="user.id_it_team ?? 0" />
 </section>
-<app-incident-table [ticketRows]="ticketRows"/>
+<app-incident-table
+  [loading]="loading"
+  [ticketRows]="ticketRows"
+  (rowSelected)="onRowSelected($event)"
+></app-incident-table>
