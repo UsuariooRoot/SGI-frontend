@@ -47,11 +47,10 @@ export class AuthService {
   }
 
   logout() {
-    this.tokenService.clear();
-    // return this.loginService.logout().pipe(
-    //   tap(() => this.tokenService.clear()),
-    //   map(() => !this.check())
-    // );
+    return this.loginService.logout().pipe(
+      tap(() => this.tokenService.clear()),
+      map(() => !this.check())
+    );
   }
 
   user() {
