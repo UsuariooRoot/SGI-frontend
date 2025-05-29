@@ -34,7 +34,7 @@ export class FiltersComponent implements OnInit, OnChanges, OnDestroy {
   private readonly formBuilder = inject(FormBuilder);
   private destroy$ = new Subject<void>();
 
-  @Input() itTeamId!: number;
+  @Input({ required: true }) itTeamId!: number;
 
   TICKET_STATUSES: TicketStatus[] = [];
   IT_TEAM_EMPLOYEES: GenericEmployee[] = [];
@@ -83,7 +83,14 @@ export class FiltersComponent implements OnInit, OnChanges, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: data => {
-          this.REQUESTER_EMPLOYEES = data.map(this.mapEmployeeToGenericEmployee);
+          const employeeIds = new Set();
+          this.REQUESTER_EMPLOYEES = data.map(
+            this.mapEmployeeToGenericEmployee
+          ).filter(({ id }) => {
+            if (employeeIds.has(id)) return false;
+            employeeIds.add(id);
+            return true;
+          });
         },
         error: err => this.toastr.error('Error al obtener solicitantes por equipo de TI:', err),
       });
